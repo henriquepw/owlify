@@ -4,38 +4,25 @@
 #include "WiFiClient.h"
 
 #include "pages.h"
-
-/* 
- * Equivalencia das saidas Digitais entre NodeMCU e ESP8266
- * D0 = 16
- * D1 = 5
- * D2 = 4
- * D3 = 0
- * D4 = 2
- * D5 = 14
- * D6 = 12
- * D7 = 13
- * D8 = 15
- * D9 = 3
- * D10 = 1
- */
  
 typedef struct {
   float temperature;
   float humidity;
 } Data;
 
-
 /*
  * Access point address
  */
-IPAddress local_IP(192,169,4,22);
-IPAddress local_gateway(192,169,4,1);
+IPAddress local_IP(192,168,4,22);
+IPAddress local_gateway(192,168,4,9);
 IPAddress local_subnet(255,255,255,0);
 
 const char* local_ssid = "fibosensor";
 const char* local_password = "12345678";
 
+/*
+ * Server
+ */ 
 ESP8266WebServer server (80);
 ESP8266HTTPUpdateServer upServer;
 
@@ -44,12 +31,11 @@ void setup() {
   Serial.println();
 
   initAP();
-  
   connectWiFi();
 }
 
 void loop () {
-  // server.handleClient();
+  server.handleClient();
 }
 
 /*
@@ -68,15 +54,26 @@ void initAP() {
   initServices();
 }
 
+void handleRootGet() {
+  String buff = rootPage(1, "2");
+  server.send(200, "text/html", buff);
+}
+
+void handleStatus() {
+  String buff = statusPage(10, 80);
+  server.send(200, "text/html", buff);
+}
+
 /*
  * Starting html pages
  */
 void initServices() {
   upServer.setup(&server);
-  // server.on("/", HTTP_GET, handleRootGet);
+  server.on("/", HTTP_GET, handleRootGet);
   // server.on("/", HTTP_POST, handleRootPost);
   // server.on("/form", handleForm);
-  // server.on("/status", handleStatus);
+  server.on("/status", handleStatus);
+  server.begin();
 }
 
 /*
@@ -85,9 +82,10 @@ void initServices() {
 void connectWiFi(){
   Serial.print("Conecting to WiFi...");
   
-  const char *ssid = "Assert-Guest";
-  const char *password = "pass:guest!";
+  const char *ssid = "Doriedson";
+  const char *password = "78623517";
   
+  //WiFi.mode(WIFI_AP_STA);
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED){

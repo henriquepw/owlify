@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Fibosensor</title>
+</head>
+<body>
+  <div class="root">
+    <h1>Fibosensor</h1>
+    <ul>
+      <li>
+        <strong>ID: </strong>
+        <p>@</p>
+      </li>
+      <li>
+        <strong>Network conectada: </strong>
+        <p>@</p>
+      </li>
+    </ul>
+    <button type="button">Configurar</button>
+  </div>
+</body>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+
+    font-family: sans-serif;
+    color: #333;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+
+    font-size: 20px;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f3f3f3;
+  }
+
+  button {
+    width: 100%;
+    height: 32px;
+
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+
+    text-transform: uppercase;
+    font-weight: 600;
+    background: #81C9E0;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    transition: 0.2s;
+  }
+
+  button:hover {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    background: #69C3E0;
+  }
+
+  button:active {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    transform: translate(1px, 1px);
+  }
+
+  .root {
+    margin: auto;
+    padding: 20px;
+    border-radius: 4px;
+  }
+
+  .root ul {
+    list-style: none;
+  }
+
+  .root ul li {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+</style>
+</html>
