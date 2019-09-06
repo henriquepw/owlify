@@ -4,6 +4,7 @@
 #include "WiFiClient.h"
 
 #include "pages.h"
+#include "env.h"
  
 typedef struct {
   float temperature;
@@ -82,8 +83,8 @@ void initServices() {
 void connectWiFi(){
   Serial.print("Conecting to WiFi...");
   
-  const char *ssid = "Doriedson";
-  const char *password = "78623517";
+  const char *ssid = SSID;
+  const char *password = PASSWORD;
   
   //WiFi.mode(WIFI_AP_STA);
   WiFi.begin(ssid, password);
