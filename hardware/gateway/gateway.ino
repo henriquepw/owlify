@@ -20,7 +20,7 @@ IPAddress local_IP(192,168,4,22);
 IPAddress local_gateway(192,168,4,9);
 IPAddress local_subnet(255,255,255,0);
 
-const char* local_ssid = "fibosensor";
+const char* local_ssid = "Panaceia";
 const char* local_password = "12345678";
 
 int id = -1;
@@ -141,7 +141,7 @@ void initServices() {
 void connectWiFi(){
   Serial.print("Conecting to WiFi...");
   
-  //WiFi.mode(WIFI_AP_STA);
+  WiFi.mode(WIFI_AP_STA);
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED){

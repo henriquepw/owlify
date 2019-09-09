@@ -1,5 +1,5 @@
 String initPage(bool refresh) {
-  String page = "<!DOCTYPE html><html lang=en><head><meta charset=utf-8/>";
+  String page = "<!DOCTYPE html><html lang=en><head><meta charset=\"utf-8\"/>";
   page += "<meta name=viewport content=\"width=device-width, initial-scale=1\">";
   page += "<meta http-equiv=X-UA-Compatible content=\"ie=edge\">";
   
