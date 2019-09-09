@@ -8,18 +8,15 @@
 </head>
 <body>
   <div class="root">
-    <h1>Fibosensor</h1>
-    <ul>
-      <li>
-        <strong>ID: </strong>
-        <p>@</p>
-      </li>
-      <li>
-        <strong>Network conectada: </strong>
-        <p>@</p>
-      </li>
-    </ul>
-    <button type="button">Configurar</button>
+    <h1>Settings</h1>
+    <form action="/settings" method="POST">
+      <input type="text" name="id" id="id" placeholder="ID">
+      <input type="text" name="network" id="network" placeholder="Network name">
+      <input type="password" name="password" id="password" placeholder="Network password">
+    </form>
+
+    <button type="submit">Save</button>
+    <button type="button" onclick="window.location.href='/'">Back</button>
   </div>
 </body>
 <style>
@@ -35,7 +32,6 @@
   html, body {
     width: 100%;
     height: 100%;
-
     font-size: 20px;
   }
 
@@ -47,9 +43,14 @@
     background: #f3f3f3;
   }
 
+  h1 {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
   button {
     width: 100%;
-    height: 32px;
+    height: 42px;
 
     border: 0;
     border-radius: 4px;
@@ -60,6 +61,7 @@
     background: #81C9E0;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
     transition: 0.2s;
+    margin-top: 20px;
   }
 
   button:hover {
@@ -76,16 +78,40 @@
     margin: auto;
     padding: 20px;
     border-radius: 4px;
+
+    width: 100%;
+    max-width: 300px;
   }
 
-  .root ul {
-    list-style: none;
-  }
-
-  .root ul li {
+  .root form {
     display: flex;
-    justify-content: space-between;
-    margin: 20px 0;
+    flex-direction: column;
+  }
+
+  .root form input {
+    position: relative;
+    border: 0;
+    height: 32px;
+    padding: 0 5px;
+    margin: 15px 0;
+    outline: 0;
+    font-size: 0.8rem;
+
+    background: transparent;
+    border-bottom: 2px solid #ccc;
+    transition: 0.2s;
+  }
+
+  .root form input::after {
+    content: " ";
+    position: absolute;
+    height: 10px;
+    width: 100%;
+    background: #000;
+  }
+
+  .root form input:focus {
+    border-color: #69C3E0;
   }
 </style>
 </html>

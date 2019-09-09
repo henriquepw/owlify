@@ -56,12 +56,12 @@ void initAP() {
 }
 
 void handleRootGet() {
-  String buff = rootPage(1, "2");
+  String buff = rootPage(1, "2", 20, 80);
   server.send(200, "text/html", buff);
 }
 
-void handleStatus() {
-  String buff = statusPage(10, 80);
+void handleSettings() {
+  String buff = settingsPage();
   server.send(200, "text/html", buff);
 }
 
@@ -73,7 +73,7 @@ void initServices() {
   server.on("/", HTTP_GET, handleRootGet);
   // server.on("/", HTTP_POST, handleRootPost);
   // server.on("/form", handleForm);
-  server.on("/status", handleStatus);
+  server.on("/settings", handleSettings);
   server.begin();
 }
 
