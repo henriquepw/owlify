@@ -3,6 +3,8 @@
 #include "ESP8266WiFi.h"
 #include "WiFiClient.h"
 
+#include "EEPROM.h"
+
 #include "pages.h"
 #include "env.h"
  
@@ -20,6 +22,10 @@ IPAddress local_subnet(255,255,255,0);
 
 const char* local_ssid = "fibosensor";
 const char* local_password = "12345678";
+
+int id = -1;
+String ssid = SSID;
+String password = PASSWORD;
 
 /*
  * Server
@@ -39,6 +45,25 @@ void loop () {
   server.handleClient();
 }
 
+String EEPROMReadString(int init){
+  String value = "";
+  int len = EEPROM.read(init);
+  
+  for(int i = 0; i < len; i++) 
+    value += (char) EEPROM.read(init + i + 1);
+    
+  return value;
+}
+
+void EEPROMWriteString(int limit, int init, String value){
+  int len = value.length() > limit ? limit : value.length();
+  
+  EEPROM.write(init, len);
+
+  for(int i = 0; i < len; i++)
+    EEPROM.write(init + i + 1, value[i]);
+}
+
 /*
  * Starting access point network
  */
@@ -56,8 +81,40 @@ void initAP() {
 }
 
 void handleRootGet() {
-  String buff = rootPage(1, "2", 20, 80);
+  Data data = getData();
+  String buff = rootPage(id, ssid, data.temperature, data.humidity);
   server.send(200, "text/html", buff);
+}
+
+void handleRootPost() {
+  if (server.hasArg("id") && server.hasArg("network") && server.hasArg("password")) {
+    EEPROM.begin(200);
+
+    EEPROM.write(0, 1); // condition
+
+    if(server.arg("id").length() > 0) {
+      EEPROM.write(1, server.arg("id").toInt()); // id
+      id = EEPROM.read(1);
+      Serial.println(id);
+    }
+    
+    if(server.arg("network").length() > 0) {
+      EEPROMWriteString(32, 2, server.arg("network"));
+      EEPROMWriteString(32, 36, server.arg("password"));
+
+      ssid = EEPROMReadString(2);
+      Serial.println(ssid);
+
+      password = EEPROMReadString(36);
+      Serial.println(password);
+      
+      connectWiFi();
+    }
+
+    EEPROM.end();
+  }
+
+  handleRootGet();
 }
 
 void handleSettings() {
@@ -70,10 +127,11 @@ void handleSettings() {
  */
 void initServices() {
   upServer.setup(&server);
+  
   server.on("/", HTTP_GET, handleRootGet);
-  // server.on("/", HTTP_POST, handleRootPost);
-  // server.on("/form", handleForm);
+  server.on("/", HTTP_POST, handleRootPost);
   server.on("/settings", handleSettings);
+
   server.begin();
 }
 
@@ -82,9 +140,6 @@ void initServices() {
  */
 void connectWiFi(){
   Serial.print("Conecting to WiFi...");
-  
-  const char *ssid = SSID;
-  const char *password = PASSWORD;
   
   //WiFi.mode(WIFI_AP_STA);
   WiFi.begin(ssid, password);
