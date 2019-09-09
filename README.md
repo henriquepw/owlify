@@ -1,4 +1,4 @@
-# fibosensor
+# Panaceia
  
 ### Development of a platform for temperature and humidity monitoring for quality control of vaccines
 
