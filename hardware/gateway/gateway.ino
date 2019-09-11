@@ -8,12 +8,16 @@
 #include "pages.h"
 #include "env.h"
  
+ /**
+  * For testing
+  * TODO: Remove 
+  */
 typedef struct {
   float temperature;
   float humidity;
 } Data;
 
-/*
+/**
  * Access point address
  */
 IPAddress local_IP(192,168,4,22);
@@ -27,7 +31,7 @@ int id = -1;
 String ssid = SSID;
 String password = PASSWORD;
 
-/*
+/**
  * Server
  */ 
 ESP8266WebServer server (80);
@@ -45,7 +49,10 @@ void loop () {
   server.handleClient();
 }
 
-String EEPROMReadString(int init){
+/**
+ * @param init   memory position on EEPROM
+ */
+String EEPROMReadString(int init) {
   String value = "";
   int len = EEPROM.read(init);
   
@@ -55,7 +62,12 @@ String EEPROMReadString(int init){
   return value;
 }
 
-void EEPROMWriteString(int limit, int init, String value){
+/**
+ * @param limit   max length of data
+ * @param init    initial memory position on EEPROM
+ * @param value   the data to be saved
+ */
+void EEPROMWriteString(int limit, int init, String value) {
   int len = value.length() > limit ? limit : value.length();
   
   EEPROM.write(init, len);
@@ -64,7 +76,7 @@ void EEPROMWriteString(int limit, int init, String value){
     EEPROM.write(init + i + 1, value[i]);
 }
 
-/*
+/**
  * Starting access point network
  */
 void initAP() {
@@ -122,7 +134,7 @@ void handleSettings() {
   server.send(200, "text/html", buff);
 }
 
-/*
+/**
  * Starting html pages
  */
 void initServices() {
@@ -135,16 +147,17 @@ void initServices() {
   server.begin();
 }
 
-/*
+/**
  * Conecting to wifi network
+ * TODO: escape from the loop if not connected a determined time
  */
-void connectWiFi(){
+void connectWiFi() {
   Serial.print("Conecting to WiFi...");
   
   WiFi.mode(WIFI_AP_STA);
   WiFi.begin(ssid, password);
 
-  while (WiFi.status() != WL_CONNECTED){
+  while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
@@ -153,8 +166,8 @@ void connectWiFi(){
   Serial.println(WiFi.localIP());
 }
 
-/*
- * get data from LoRa
+/**
+ * TODO: get data from LoRain
  */
 Data getData() {
   Data data;
