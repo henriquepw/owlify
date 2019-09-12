@@ -7,7 +7,7 @@ String initPage(bool refresh) {
   if(refresh) page += "<meta http-equiv=refresh content=5>";
   
   page += "<title>name-here</title>";
-  page += "</head> <body>";
+  page += "</head><body>";
 
   return page;
 }

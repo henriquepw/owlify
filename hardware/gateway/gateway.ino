@@ -20,12 +20,12 @@ typedef struct {
 /**
  * Access point address
  */
-IPAddress local_IP(192,168,4,22);
-IPAddress local_gateway(192,168,4,9);
-IPAddress local_subnet(255,255,255,0);
+IPAddress LOCAL_IP(192,168,4,22);
+IPAddress LOCAL_GATEWAY(192,168,4,9);
+IPAddress LOCAL_SUBNET(255,255,255,0);
 
-const char* local_ssid = "Panaceia";
-const char* local_password = "12345678";
+const char* LOCAL_SSID = "Panaceia";
+const char* LOCAL_PASSWORD = "12345678";
 
 int id = -1;
 String ssid = SSID;
@@ -81,10 +81,10 @@ void EEPROMWriteString(int limit, int init, String value) {
  */
 void initAP() {
   Serial.print("Configuring network... ");
-  Serial.println(WiFi.softAPConfig(local_IP, local_gateway, local_subnet) ? "Ready" : "Failed!");
+  Serial.println(WiFi.softAPConfig(LOCAL_IP, LOCAL_GATEWAY, LOCAL_SUBNET) ? "Ready" : "Failed!");
 
   Serial.print("Starting WiFi network... ");
-  Serial.println(WiFi.softAP(local_ssid) ? "Ready" : "Failed!");
+  Serial.println(WiFi.softAP(LOCAL_SSID, LOCAL_PASSWORD) ? "Ready" : "Failed!");
 
   Serial.print("IP address: ");
   Serial.println(WiFi.softAPIP());
@@ -157,17 +157,25 @@ void connectWiFi() {
   WiFi.mode(WIFI_AP_STA);
   WiFi.begin(ssid, password);
 
+  int count = 0;
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
+    count++;
+
+    if(count >= 30) break;
   }
 
-  Serial.print("Connected, IP: ");
-  Serial.println(WiFi.localIP());
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.print("\nConnected, IP: ");
+    Serial.println(WiFi.localIP());
+  } else {
+    Serial.println("\nErro to connect...");
+  }
 }
 
 /**
- * TODO: get data from LoRain
+ * TODO: get data from LoRa
  */
 Data getData() {
   Data data;
