@@ -13,13 +13,16 @@ void setup() {
     while (1);
   }
 }
-void loop(){
+
+void loop() {
   int packetSize = LoRa.parsePacket();
+
   if(packetSize){
     Serial.println("Packet Received");
-    while(LoRa.available()){
+
+    while(LoRa.available())
       Serial.print((char)LoRa.read());
-    }
+      
     Serial.println();
   }
 }
