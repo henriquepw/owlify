@@ -1,18 +1,19 @@
-#include <dht.h>
+#include <DHT.h>
+
 #define DHT dht;
 #define dht_pin A0;
+
 int lista_pins[6] = {A0, A1, A2, A3, A4, A5};
-class Date{
-  private:
-    dht date;
+
+class Data{
   public:
     String getTemp(){
-      return (String)this->date.temperature;
+      return (String)this->dht.readTemperature(true);
     }
     String getHumid(){
-      return (String)this->date.humidity;
+      return (String)this->dht.readHumidity();
     }
     void setPin(int n){
-      this->date.read11(lista_pins[n]);
+      this->dht.read(lista_pins[n]);
     }
 };

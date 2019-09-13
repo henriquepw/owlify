@@ -1,8 +1,8 @@
-//#include <dht.h>
+#include <DHT.h>
+#include <LoRa.h>
+#include <SPI.h>
+
 #include "Date_Sensor.h"
-#define DHT dht;
-#define <LoRa.h>
-#define <SPI.h>
 
 void setup() {
  Serial.begin(9600);
