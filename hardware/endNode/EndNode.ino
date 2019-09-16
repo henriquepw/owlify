@@ -1,19 +1,20 @@
-//#include <dht.h>
+
+#include <dht.h>
 #include "Date_Sensor.h"
+#include <LoRa.h>
 #define DHT dht;
-#define <LoRa.h>
-#define <SPI.h>
 
 void setup() {
- Serial.begin(9600);
- while(!Serial);
- Serial.println("LoRa Sender");
-if (!LoRa.begin(915E6)) {
-  Serial.println("Starting LoRa failed!");
-  while (1);
-  }
+  Serial.begin(9600);
+  while(!Serial);
+  
+  Serial.println("Sending something");
+  
+ if(!LoRa.begin(915E6)){
+  Serial.println("Error");
+  while(1);
+ }
 }
-
 String getJson(){
   Date d1;
   d1.setPin(0);
@@ -24,9 +25,9 @@ String getJson(){
 }
 
 void loop() {
-  Serial.println("Sending...");
+  
   LoRa.beginPacket();
-  LoRa.print(getJson());
+  LoRa.println(getJson());
   LoRa.endPacket();
   delay(1000);
 }
