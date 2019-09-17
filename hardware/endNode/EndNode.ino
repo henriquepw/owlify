@@ -1,33 +1,38 @@
-
-#include <dht.h>
-#include "Date_Sensor.h"
 #include <LoRa.h>
-#define DHT dht;
+#include "Data.h"
 
-void setup() {
-  Serial.begin(9600);
-  while(!Serial);
-  
-  Serial.println("Sending something");
-  
- if(!LoRa.begin(915E6)){
-  Serial.println("Error");
-  while(1);
- }
-}
-String getJson(){
-  Date d1;
+/**
+ * Convert data in json string 
+ */
+String jsonParser() {
+  Data d1;
   d1.setPin(0);
+
   String json = "{";
-  json += "Temperature: " + d1.getTemp() + ", " + "Humidity: " + d1.getHumid();
-  json+="}";
+  json += "Temperature: 1, Humidity: 22";
+  json += "}";
+
+  Serial.println(json);
+
   return json;
 }
 
+void setup() {
+  Serial.begin(9600);
+  while (!Serial);
+
+  Serial.println("Sending something");
+
+  if (!LoRa.begin(915E6)) {
+    Serial.println("Error");
+    while (1);
+  }
+}
+
 void loop() {
-  
   LoRa.beginPacket();
-  LoRa.println(getJson());
+  LoRa.print(jsonParser());
   LoRa.endPacket();
+
   delay(1000);
 }
