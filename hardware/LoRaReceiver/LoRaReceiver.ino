@@ -1,7 +1,8 @@
 
 #include <LoRa.h>
 #include <SPI.h>
-
+int packets_receive = 0;
+int packetS_error = 0;
 void setup() {
   Serial.begin(9600);
   while (!Serial);
@@ -38,22 +39,27 @@ double getHumi(String s){
   double humi_d = temp.toDouble();
   return humi_d;
 }
+/**
+ * 
+ */
 bool isNum(String data){
   double t = getTemp(data);
   double h = getHumi(data);
   String s_temp = "";
-  for(int i = 16, j = 0; i<21; i++, j++){
+  for(int i = 16, j = 0; i < 21; i++, j++) {
     s_temp += data[i];
   }
+
   String s_humi = "";
-  for(int i = 35, j = 0; i<40; i++, j++){
+  for(int i = 35, j = 0; i < 40; i++, j++) {
     s_humi += data[i];
   }
+  
   String aux_temp(t);
   String aux_humi(h);
   if(!s_temp.compareTo(aux_temp)){
     if(!s_humi.compareTo(aux_humi)){
-      return true; 
+      return true;
     }
     else{
       return false;
@@ -63,18 +69,51 @@ bool isNum(String data){
     return false;
   }
 }
-void loop() {
+
+bool packet_correct(String data, double temp, double humi){
+  String Default("{\"Temperature\": ");
+  Default += String(temp);
+  Default += ", \"Humidity\": ";
+  Default += String(humi);
+  int n = random(0, 1000);
+  Serial.println(n);
+  if(n > 500){
+    Default += "";
+  }
+  else{
+    Default += "}";
+  }
   
+  if(!Default.compareTo(data)){
+    return true;
+  }
+  else{
+    return false;
+  }
+  
+}
+
+void loop() {
   int packetSize = LoRa.parsePacket();
 
   if(packetSize){
+    packets_receive++;
     String data = getString();
-    if(isNum(data)){
-      Serial.println(data);
-    }
-    else{
-      Serial.println("ERROR!");
-    }
-   
+
+    if(!packet_correct(data, getTemp(data), getHumi(data))){
+      packetS_error++;
+      Serial.println("Packet Crashed!");
+    }  
+
+    Serial.println(data);  
+    Serial.print("Packets receive: ");
+    Serial.print(packets_receive);
+    Serial.print(", Packets Crashed: ");
+    Serial.print((packetS_error/packets_receive)*100);
+    Serial.print(packetS_error);
+    Serial.print(" ");
+    Serial.println(packets_receive);
+    Serial.println("%");
+    Serial.println();
   }
 }
