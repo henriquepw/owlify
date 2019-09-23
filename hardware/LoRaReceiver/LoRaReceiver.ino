@@ -1,8 +1,10 @@
 
 #include <LoRa.h>
 #include <SPI.h>
-int packets_receive = 0;
-int packetS_error = 0;
+
+float packets_receive = 0.0;
+float packets_error = 0.0;
+
 void setup() {
   Serial.begin(9600);
   while (!Serial);
@@ -75,15 +77,9 @@ bool packet_correct(String data, double temp, double humi){
   Default += String(temp);
   Default += ", \"Humidity\": ";
   Default += String(humi);
-  int n = random(0, 1000);
-  Serial.println(n);
-  if(n > 500){
-    Default += "";
-  }
-  else{
-    Default += "}";
-  }
-  
+  Default += "}";
+ 
+
   if(!Default.compareTo(data)){
     return true;
   }
@@ -101,19 +97,14 @@ void loop() {
     String data = getString();
 
     if(!packet_correct(data, getTemp(data), getHumi(data))){
-      packetS_error++;
-      Serial.println("Packet Crashed!");
+      packets_error++;
     }  
-
-    Serial.println(data);  
+    
+    Serial.println(data);
     Serial.print("Packets receive: ");
     Serial.print(packets_receive);
-    Serial.print(", Packets Crashed: ");
-    Serial.print((packetS_error/packets_receive)*100);
-    Serial.print(packetS_error);
-    Serial.print(" ");
-    Serial.println(packets_receive);
+    Serial.print(", Packets error: ");
+    Serial.print((packets_error/packets_receive)*100);
     Serial.println("%");
-    Serial.println();
   }
 }
