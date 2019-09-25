@@ -11,8 +11,8 @@ class Database {
 
     const names = await this.influx.getDatabaseNames();
 
-    if (!names.includes('mydb')) {
-      await this.influx.createDatabase('mydb');
+    if (!names.includes(process.env.DB_NAME)) {
+      await this.influx.createDatabase(process.env.DB_NAME);
     }
   }
 }

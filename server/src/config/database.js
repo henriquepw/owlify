@@ -3,8 +3,8 @@ require('dotenv/config');
 const Influx = require('influx');
 
 module.exports = {
-  host: 'localhost',
-  database: 'mydb',
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
   schema: [
     {
       measurement: 'sensor',
