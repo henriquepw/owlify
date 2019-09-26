@@ -1,11 +1,13 @@
 {
   "name": "template-node",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "build": "sucrase ./src -d ./dist --transforms imports"
+    "dev": "nodemon",
+    "build": "sucrase ./src -d ./dist --transforms imports",
+    "start": "pm2 start dist/server.js",
+    "startup": "pm2 startup systemd"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -13,6 +15,7 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "influx": "^5.4.2",
+    "pm2": "^3.5.1",
     "youch": "^2.0.10"
   },
   "devDependencies": {
