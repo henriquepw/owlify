@@ -1,24 +1,54 @@
-#include <dht.h>
+#include "EEPROM.h"
+#include "DHT.h"
 
-#include "Date_Sensor.h"
+/* 
+ * DHT pinout
+ */
+#define DHTPIN 2
+#define DHTTYPE DHT11 // or DHT22
 
-#define DHT dht;
+
+DHT dht(DHTPIN, DHTTYPE, 15);
+
+typedef struct {
+  float temperature,
+  float humidity
+} Data;
 
 void setup() {
   Serial.begin(9600);
+  Serial.println();
+
+  dht.begin();
 }
 
-String getJson(){
-  Date d1;
-  d1.setPin(0);
+void loop () {
 
+}
+
+/*
+ * @fix
+ * to deal with errors
+ */
+Data get_data() {
+  Data data;
+
+  data.temperature = dht.readTemperature();
+  data.humidity = dht.readHumidity();
+  
+  return data;
+}
+
+/*
+ * Convert data to json string
+ */
+String json_parse(Data data){
   String json = "{";
-  json += "Temperature: " + d1.getTemp() + ", " + "Humidity: " + d1.getHumid();
-  json+="}";
+
+  json += "\"temperature\": " + String(data.temperature) + ", ";
+  json += "\"humidity\": " + String(data.humidity);
+
+  json += "}";
 
   return json;
-}
-
-void loop() {
-  delay(1000);
 }
