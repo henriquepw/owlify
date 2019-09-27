@@ -26,7 +26,7 @@ String  getString(){
 }
 double getTemp(String s){
   String temp = "";
-  for(int i = 16, j = 0; i<21; i++, j++){
+  for(int i = 16; i<21; i++){
     temp += s[i];
   }
   double temp_d = temp.toDouble();
@@ -35,7 +35,7 @@ double getTemp(String s){
 
 double getHumi(String s){
   String temp = "";
-  for(int i = 35, j = 0; i<40; i++, j++){
+  for(int i = 35,; i<40; i++){
     temp += s[i];
   }  
   double humi_d = temp.toDouble();
@@ -48,12 +48,12 @@ bool isNum(String data){
   double t = getTemp(data);
   double h = getHumi(data);
   String s_temp = "";
-  for(int i = 16, j = 0; i < 21; i++, j++) {
+  for(int i = 16; i < 21; i++) {
     s_temp += data[i];
   }
 
   String s_humi = "";
-  for(int i = 35, j = 0; i < 40; i++, j++) {
+  for(int i = 35; i < 40; i++) {
     s_humi += data[i];
   }
   
