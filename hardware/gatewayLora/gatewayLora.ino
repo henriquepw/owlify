@@ -13,8 +13,8 @@
 String RxString;
 String RxRSSI;
 
-float packets_receive = 0.0;
-float packets_error = 0.0;
+float packetsReceive = 0.0;
+float packetsError = 0.0;
 
 void setup() {
   Serial.begin(9600);
@@ -38,7 +38,7 @@ void setup() {
   LoRa.receive();
 }
 
-String getResponse() {
+String getLoRaResponse() {
   String response = "";
  
   while(LoRa.available())
@@ -77,7 +77,7 @@ bool isNum(String data) {
   for (int i = 35; i < 40; i++)
     strHumi += data[i];
 
-  if(!strTemp.compareTo(temp) && !strHumi.compareTo(humi))
+  if (!strTemp.compareTo(temp) && !strHumi.compareTo(humi))
     return true;
 
   return false;
@@ -90,27 +90,26 @@ bool isPacketCorrect(String data, double temperature, double humidity) {
   packet += String(humidity);
   packet += "}";
 
-  return packet.compareTo(data) ? false : true;
+  return !packet.compareTo(data) ? true : false;
 }
 
 void loop() {
   int packetSize = LoRa.parsePacket();
-  String data = "";
 
   if (packetSize) {
-    packets_receive++;
+    packetsReceive++;
     Serial.print("Received packet '");
 
-    String data = getResponse();
+    String data = getLoRaResponse();
 
     if (!isPacketCorrect(data, getTemp(data), getHumi(data)))
-      packets_error++;
+      packetsError++;
 
     Serial.println(data);
     Serial.print("Packets receive: ");
-    Serial.print(packets_receive);
+    Serial.print(packetsReceive);
     Serial.print(", Packets error: ");
-    Serial.print((packets_error/packets_receive)*100);
+    Serial.print((packetsError / packetsReceive) * 100);
     Serial.print("%");
     Serial.print(", RSSI: ");
     RxRSSI = LoRa.packetRssi();
