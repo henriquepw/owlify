@@ -45,8 +45,8 @@ const char* LOCAL_SSID = "Panaceia";
 const char* LOCAL_PASSWORD = "12345678";
 
 int id = -1;
-char* ssid = SSID;
-char* password = PASSWORD;
+String ssid = SSID;
+String password = PASSWORD;
 
 
 WebServer server(80);
@@ -138,7 +138,9 @@ void loop () {
     Heltec.display->display();
   }
 
-  delay(500);
+  // TODO: receive json
+  sendData("{ \"temperature\": 10, \"humidity\": 10}");
+  delay(1000);
 }
 
 /**
@@ -237,10 +239,10 @@ void handleRootPost() {
       EEPROMWriteString(32, 2, server.arg("network"));
       EEPROMWriteString(32, 36, server.arg("password"));
 
-      ssid = EEPROMReadString(2).c_str();
+      ssid = EEPROMReadString(2);
       Serial.println(ssid);
 
-      password = EEPROMReadString(36).c_str();
+      password = EEPROMReadString(36);
       Serial.println(password);
       
       connectWiFi();
@@ -294,7 +296,7 @@ void connectWiFi() {
   Serial.print("Conecting to WiFi...");
   
   WiFi.mode(WIFI_AP_STA);
-  WiFi.begin(ssid, password);
+  WiFi.begin(ssid.c_str(), password.c_str());
 
   int count = 0;
   while (WiFi.status() != WL_CONNECTED) {
@@ -319,11 +321,11 @@ void connectWiFi() {
 void sendData(String data) {
   if (client.connect(SERVER_AZURE, HTTP_PORT)) {
     Serial.print("Connected - ");
-    Serial.println(data);
+    Serial.println(data); 
 
     client.println("POST /sensors/test HTTP/1.1");
     client.print("Host: ");
-    client.println("Host");
+    client.println(SERVER_AZURE);
     client.println("User-Agent: Gateway");
     client.println("Content-Type: application/json");
     client.println("Connection: Close");
