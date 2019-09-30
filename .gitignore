@@ -1,3 +1,11 @@
+# General
 .vscode
+.env
 
+# Server
+./server/node_modules
+./server/dist
+
+# Allowed
 !.gitkeep
+!.keep
