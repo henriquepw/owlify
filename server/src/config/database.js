@@ -1,6 +1,6 @@
 require('dotenv/config');
 
-const Influx = require('influx');
+const { FieldType } = require('influx/lib/src/grammar/ds');
 
 module.exports = {
   host: process.env.DB_HOST,
@@ -9,8 +9,8 @@ module.exports = {
     {
       measurement: 'sensor',
       fields: {
-        temperature: Influx.FieldType.STRING,
-        humidity: Influx.FieldType.INTEGER,
+        temperature: FieldType.INTEGER,
+        humidity: FieldType.INTEGER,
       },
       tags: ['host'],
     },

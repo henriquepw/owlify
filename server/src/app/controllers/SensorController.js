@@ -1,4 +1,4 @@
-import { escape } from 'influx';
+import { escape } from 'influx/lib/src/grammar/escape';
 
 import influx from '../../database';
 

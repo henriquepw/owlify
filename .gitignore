@@ -5,6 +5,7 @@
 # Server
 ./server/node_modules
 ./server/dist
+node_modules
 
 # Allowed
 !.gitkeep

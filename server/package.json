@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "nodemon",
     "build": "sucrase ./src -d ./dist --transforms imports",
+    "startup": "pm2 startup systemd",
     "start": "pm2 start dist/server.js",
-    "startup": "pm2 startup systemd"
+    "stop": "pm2 stop server"
   },
   "dependencies": {
     "cors": "^2.8.5",
