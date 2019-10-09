@@ -14,5 +14,12 @@ module.exports = {
       },
       tags: ['host'],
     },
+    {
+      measurement: 'package',
+      fields: {
+        success: FieldType.BOOLEAN,
+      },
+      tags: ['host'],
+    },
   ],
 };

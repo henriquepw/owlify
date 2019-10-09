@@ -1,5 +1,5 @@
 import { InfluxDB } from 'influx';
-import influxConfig from '../config/database';
+import influxConfig from './config';
 
 class Database {
   constructor() {
