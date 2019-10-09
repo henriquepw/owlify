@@ -5,7 +5,8 @@
 
 #include <SPI.h>
 #include <EEPROM.h>
-#include "heltec.h"
+//#include "heltec.h"
+#include <LoRa.h>
 
 #include "pages.h"
 #include "env.h"
@@ -82,13 +83,13 @@ void EEPROMWriteString(int limit, int init, String value) {
 
 void setup() {
   Serial.begin(115200);
-  Heltec.begin(true /*DisplayEnable*/, true /*Heltec.LoRa*/, true /*Serial*/, true /*PABOOST*/, BAND);
+  //Heltec.begin(true /*DisplayEnable*/, true /*Heltec.LoRa*/, true /*Serial*/, true /*PABOOST*/, BAND);
   
   while (!Serial);
 
-  Heltec.display->init();
-  Heltec.display->flipScreenVertically();
-  Heltec.display->setFont(ArialMT_Plain_16);
+  //Heltec.display->init();
+  //Heltec.display->flipScreenVertically();
+  //Heltec.display->setFont(ArialMT_Plain_16);
 
   initAP();
   connectWiFi();
@@ -98,8 +99,14 @@ void setup() {
   SPI.begin(5, 19, 27, 18);
   LoRa.setPins(SS, LORA_RST, DIO0);
 
-  Heltec.display->drawString(0, 0, "Gateway");
-  Heltec.display->display();
+  
+  if (!LoRa.begin(BAND)) {
+    Serial.println("Error");
+    while (1);
+  }
+  
+  //Heltec.display->drawString(0, 0, "Gateway");
+  //Heltec.display->display();
 
   Serial.println("\nConnected");
   LoRa.receive();
@@ -110,6 +117,7 @@ void loop () {
 
   int packetSize = LoRa.parsePacket();
 
+  Serial.println(packetSize);
   if (packetSize) {
     packetsReceive++;
     Serial.print("Received packet '");
@@ -129,17 +137,17 @@ void loop () {
     RxRSSI = LoRa.packetRssi();
     Serial.println(RxRSSI);
 
-    Heltec.display->clear();
+    //Heltec.display->clear();
 
-    Heltec.display->drawString(0, 0, "Received " + String(packetSize) + " Bytes");
-    Heltec.display->drawString(0, 15, data);
-    Heltec.display->drawString(0, 26, "RSSi " + RxRSSI);
+    //Heltec.display->drawString(0, 0, "Received " + String(packetSize) + " Bytes");
+    //Heltec.display->drawString(0, 15, data);
+    //Heltec.display->drawString(0, 26, "RSSi " + RxRSSI);
 
-    Heltec.display->display();
+    //Heltec.display->display();
+
+    //sendData("{ \"temperature\": 10, \"humidity\": 10}");
   }
 
-  // TODO: receive json
-  sendData("{ \"temperature\": 10, \"humidity\": 10}");
   delay(1000);
 }
 
@@ -216,7 +224,6 @@ bool isPacketCorrect(String data, double temperature, double humidity) {
 /**
  * *WiFi
  */
-
 void handleRootGet() {
   Data data = getData();
   String buff = rootPage(id, ssid, data.temperature, data.humidity);
@@ -316,7 +323,7 @@ void connectWiFi() {
 }
 
 /**
- ** Send data to server
+ * *Send data to server
  */
 void sendData(String data) {
   if (client.connect(SERVER_AZURE, HTTP_PORT)) {

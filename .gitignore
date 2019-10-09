@@ -1,6 +1,7 @@
 # General
 .vscode
 .env
+env.h
 
 # Server
 ./server/node_modules

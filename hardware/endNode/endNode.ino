@@ -2,7 +2,7 @@
 #include <DHT.h>
 
 #define DHTPIN A2
-#define DHTTYPE DHT11
+#define DHTTYPE DHT22
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -54,5 +54,5 @@ void loop() {
   LoRa.print(jsonParser(getData()));
   LoRa.endPacket();
 
-  delay(5000);
+  delay(1000);
 }
