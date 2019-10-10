@@ -23,18 +23,18 @@ class PackageController {
 
   async store(req, res) {
     const { host } = req.params;
-    const { success } = req.body;
+    const { id, rssi, success } = req.body;
 
     try {
       await influx.writePoints([
         {
           measurement: 'package',
           tags: { host },
-          fields: { success },
+          fields: { id, rssi, success },
         },
       ]);
 
-      res.json({ success });
+      res.json({ id, rssi, success });
     } catch (err) {
       res.status(500).send(err.stack);
     }

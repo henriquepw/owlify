@@ -23,7 +23,7 @@ class SensorController {
 
   async store(req, res) {
     const { host } = req.params;
-    const { temperature, humidity } = req.body;
+    const { id, rssi, temperature, humidity } = req.body;
 
     try {
       await influx.writePoints([
@@ -35,11 +35,11 @@ class SensorController {
         {
           measurement: 'package',
           tags: { host },
-          fields: { success: true },
+          fields: { id, rssi, success: true },
         },
       ]);
 
-      res.json({ temperature, humidity });
+      res.json({ id, rssi, temperature, humidity });
     } catch (err) {
       res.status(500).send(err.stack);
     }
