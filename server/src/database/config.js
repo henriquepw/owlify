@@ -9,8 +9,17 @@ module.exports = {
     {
       measurement: 'sensor',
       fields: {
-        temperature: FieldType.INTEGER,
-        humidity: FieldType.INTEGER,
+        humidity: FieldType.FLOAT,
+        temperature: FieldType.FLOAT,
+      },
+      tags: ['host'],
+    },
+    {
+      measurement: 'package',
+      fields: {
+        id: FieldType.INTEGER,
+        rssi: FieldType.INTEGER,
+        success: FieldType.BOOLEAN,
       },
       tags: ['host'],
     },

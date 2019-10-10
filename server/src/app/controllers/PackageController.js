@@ -2,14 +2,14 @@ import { escape } from 'influx/lib/src/grammar/escape';
 
 import influx from '../../database';
 
-class SensorController {
+class PackageController {
   async index(req, res) {
     const { host } = req.params;
     const { page = 1 } = req.query;
 
     try {
       const result = await influx.query(`
-        select * from sensor
+        select * from package
         where host = ${escape.stringLit(host)}
         order by time desc
         limit ${page * 50}
@@ -23,27 +23,22 @@ class SensorController {
 
   async store(req, res) {
     const { host } = req.params;
-    const { id, rssi, temperature, humidity } = req.body;
+    const { id, rssi, success } = req.body;
 
     try {
       await influx.writePoints([
         {
-          measurement: 'sensor',
-          tags: { host },
-          fields: { temperature, humidity },
-        },
-        {
           measurement: 'package',
           tags: { host },
-          fields: { id, rssi, success: true },
+          fields: { id, rssi, success },
         },
       ]);
 
-      res.json({ id, rssi, temperature, humidity });
+      res.json({ id, rssi, success });
     } catch (err) {
       res.status(500).send(err.stack);
     }
   }
 }
 
-export default new SensorController();
+export default new PackageController();
