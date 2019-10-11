@@ -4,9 +4,9 @@
 #include <WebServer.h>
 
 #include <SPI.h>
-#include <EEPROM.h>
-//#include "heltec.h"
 #include <LoRa.h>
+#include <EEPROM.h>
+// #include "heltec.h"
 
 #include "pages.h"
 #include "env.h"
@@ -87,9 +87,11 @@ void setup() {
   
   while (!Serial);
 
-  //Heltec.display->init();
-  //Heltec.display->flipScreenVertically();
-  //Heltec.display->setFont(ArialMT_Plain_16);
+  /*
+  Heltec.display->init();
+  Heltec.display->flipScreenVertically();
+  Heltec.display->setFont(ArialMT_Plain_16);
+  */
 
   initAP();
   connectWiFi();
@@ -105,8 +107,10 @@ void setup() {
     while (1);
   }
   
-  //Heltec.display->drawString(0, 0, "Gateway");
-  //Heltec.display->display();
+  /*
+  Heltec.display->drawString(0, 0, "Gateway");
+  Heltec.display->display();
+  */
 
   Serial.println("\nConnected");
   LoRa.receive();
@@ -137,15 +141,17 @@ void loop () {
     RxRSSI = LoRa.packetRssi();
     Serial.println(RxRSSI);
 
-    //Heltec.display->clear();
+    /*
+    Heltec.display->clear();
 
-    //Heltec.display->drawString(0, 0, "Received " + String(packetSize) + " Bytes");
-    //Heltec.display->drawString(0, 15, data);
-    //Heltec.display->drawString(0, 26, "RSSi " + RxRSSI);
+    Heltec.display->drawString(0, 0, "Received " + String(packetSize) + " Bytes");
+    Heltec.display->drawString(0, 15, data);
+    Heltec.display->drawString(0, 26, "RSSi " + RxRSSI);
 
-    //Heltec.display->display();
+    Heltec.display->display();
 
-    //sendData("{ \"temperature\": 10, \"humidity\": 10}");
+    sendData("{ \"temperature\": 10, \"humidity\": 10}");
+    */
   }
 
   delay(1000);
@@ -325,14 +331,14 @@ void connectWiFi() {
 /**
  * *Send data to server
  */
-void sendData(String data) {
-  if (client.connect(SERVER_AZURE, HTTP_PORT)) {
+void sendData(String data, String url) {
+  if (client.connect(SERVER_UFPB, HTTP_PORT)) {
     Serial.print("Connected - ");
     Serial.println(data); 
 
-    client.println("POST /sensors/test HTTP/1.1");
+    client.println("POST /" + url + "/test HTTP/1.1");
     client.print("Host: ");
-    client.println(SERVER_AZURE);
+    client.println(SERVER_UFPB);
     client.println("User-Agent: Gateway");
     client.println("Content-Type: application/json");
     client.println("Connection: Close");
