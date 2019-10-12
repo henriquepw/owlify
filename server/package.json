@@ -1,5 +1,5 @@
 {
-  "name": "template-node",
+  "name": "pandora",
   "version": "1.0.0",
   "main": "src/server.js",
   "license": "MIT",
@@ -8,24 +8,25 @@
     "build": "sucrase ./src -d ./dist --transforms imports",
     "startup": "pm2 startup systemd",
     "start": "pm2 start dist/server.js",
-    "stop": "pm2 stop server"
+    "stop": "pm2 stop server",
+    "show": "pm2 show server"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^8.0.0",
+    "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "influx": "^5.4.2",
-    "pm2": "^3.5.1",
+    "pm2": "^4.0.0",
     "youch": "^2.0.10"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "nodemon": "^1.19.1",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "nodemon": "^1.19.3",
     "prettier": "^1.18.2",
     "sucrase": "^3.10.1"
   }

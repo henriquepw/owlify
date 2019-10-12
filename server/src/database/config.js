@@ -1,8 +1,9 @@
-require('dotenv/config');
+// const { FieldType } = require('influx/lib/src/grammar/ds');
+import { FieldType } from 'influx/lib/src/grammar/ds';
 
-const { FieldType } = require('influx/lib/src/grammar/ds');
+// require('dotenv/config');
 
-module.exports = {
+export default {
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
   schema: [
@@ -17,6 +18,7 @@ module.exports = {
     {
       measurement: 'package',
       fields: {
+        snr: FieldType.FLOAT,
         id: FieldType.INTEGER,
         rssi: FieldType.INTEGER,
         success: FieldType.BOOLEAN,
