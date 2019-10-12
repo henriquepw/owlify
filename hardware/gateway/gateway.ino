@@ -16,8 +16,11 @@
   * TODO: Remove 
   */
 typedef struct {
+  int rssi;
+  unsigned int id;
   float temperature;
   float humidity;
+  float snr;
 } Data;
 
 /**
@@ -139,7 +142,8 @@ void loop () {
     Serial.print("%");
     Serial.print(", RSSI: ");
     RxRSSI = LoRa.packetRssi();
-    Serial.println(RxRSSI);
+    Serial.print("SNR: ");
+    Serial.println(LoRa.packetSnr());
 
     /*
     Heltec.display->clear();
@@ -218,9 +222,9 @@ bool isNum(String data) {
 }
 
 bool isPacketCorrect(String data, double temperature, double humidity) {
-  String packet = "{\"Temperature\": ";
+  String packet = "{\"temperature\": ";
   packet += String(temperature);
-  packet += ", \"Humidity\": ";
+  packet += ", \"humidity\": ";
   packet += String(humidity);
   packet += "}";
 
@@ -332,13 +336,13 @@ void connectWiFi() {
  * *Send data to server
  */
 void sendData(String data, String url) {
-  if (client.connect(SERVER_UFPB, HTTP_PORT)) {
+  if (client.connect(SERVER, HTTP_PORT)) {
     Serial.print("Connected - ");
     Serial.println(data); 
 
-    client.println("POST /" + url + "/test HTTP/1.1");
+    client.println("POST /" + url + "/test/1 HTTP/1.1");
     client.print("Host: ");
-    client.println(SERVER_UFPB);
+    client.println(SERVER);
     client.println("User-Agent: Gateway");
     client.println("Content-Type: application/json");
     client.println("Connection: Close");
