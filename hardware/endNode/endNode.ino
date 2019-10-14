@@ -4,36 +4,34 @@
 #define DHTPIN A2
 #define DHTTYPE DHT22
 
-DHT dht(DHTPIN, DHTTYPE);
-
 typedef struct {
   float temperature;
   float humidity;
+  unsigned int id;
 } Data;
 
+DHT dht(DHTPIN, DHTTYPE);
+Data data;
+
 /**
- * Convert data in json string 
+ * Convert data in package string 
  */
-String jsonParser(Data data) {
-  String json = "{";
-  json += "\"Temperature\": ";
-  json += data.temperature;
-  json += ", \"Humidity\": ";
-  json += data.humidity;
-  json += "}";
+String packageParser(Data data) {
+  String package = String(data.temperature);
+  package += ":";
+  package += String(data.humidity);
+  package += ":";
+  package += String(data.id);
 
-  Serial.println(json);
+  Serial.println(package);
 
-  return json;
+  return package;
 }
 
-Data getData() {
-  Data data;
-
+void getData() {
   data.temperature = dht.readTemperature();
   data.humidity = dht.readHumidity();
-
-  return data;
+  data.id++;
 }
 
 void setup() {
@@ -42,6 +40,10 @@ void setup() {
 
   dht.begin();
   Serial.println("Sending something");
+  data.temperature = 0;
+  data.humidity = 0;
+  data.id = 0;
+
 
   if (!LoRa.begin(915E6)) {
     Serial.println("Error");
@@ -50,9 +52,11 @@ void setup() {
 }
 
 void loop() {
+  getData();
+
   LoRa.beginPacket();
-  LoRa.print(jsonParser(getData()));
+  LoRa.print(packageParser(data));
   LoRa.endPacket();
 
-  delay(1000);
+  delay(3000);
 }
