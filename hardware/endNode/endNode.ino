@@ -5,10 +5,11 @@
 #define DHTTYPE DHT22
 
 DHT dht(DHTPIN, DHTTYPE);
-
+int count_packets = 0;
 typedef struct {
   float temperature;
   float humidity;
+  int id;
 } Data;
 
 /**
@@ -16,15 +17,15 @@ typedef struct {
  */
 String jsonParser(Data data) {
   String json = "{";
-  json += "\"Temperature\": ";
+  json += "\"temperature\":";
+  json += "\"humidity\":";
+  json += "\"id\"\n";
   json += data.temperature;
-  json += ", \"Humidity\": ";
+  json += "\":\"";
   json += data.humidity;
+  json += "\":\"";
+  json += data.id;
   json += "}";
-
-  Serial.println(json);
-
-  return json;
 }
 
 Data getData() {
@@ -32,7 +33,7 @@ Data getData() {
 
   data.temperature = dht.readTemperature();
   data.humidity = dht.readHumidity();
-
+  data.id = count_packets;
   return data;
 }
 
@@ -53,6 +54,6 @@ void loop() {
   LoRa.beginPacket();
   LoRa.print(jsonParser(getData()));
   LoRa.endPacket();
-
+  count_packets++;
   delay(1000);
 }
