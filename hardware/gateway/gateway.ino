@@ -115,8 +115,12 @@ void loop () {
     data.rssi = LoRa.packetRssi();
     data.snr = LoRa.packetSnr(); 
 
-    if (!isPacketCorrect(response, data))
+    if (!isPacketCorrect(response, data)){
+      sendDataFailure(data);
       packetsError++;
+    } else {
+      sendDataSuccess(data);
+    }
 
     Serial.print("\n\nResponse: ");
     Serial.println(response);
@@ -298,7 +302,7 @@ void sendData(String data, String url) {
     Serial.print("Connected - ");
     Serial.println(data); 
 
-    client.println("POST /" + url + "/test HTTP/1.1");
+    client.println("POST /" + url + "/" + HOST + " HTTP/1.1");
     client.print("Host: ");
     client.println(SERVER);
     client.println("User-Agent: Gateway");

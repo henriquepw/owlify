@@ -57,6 +57,7 @@ void loop() {
   LoRa.beginPacket();
   LoRa.print(packageParser(data));
   LoRa.endPacket();
+  LoRa.idle();
 
-  delay(3000);
+  delay(300000); // 5 minutos
 }
