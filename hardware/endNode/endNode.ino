@@ -51,9 +51,11 @@ void setup() {
 }
 
 void loop() {
+  LoRa.idle();
   LoRa.beginPacket();
   LoRa.print(jsonParser(getData()));
   LoRa.endPacket();
   count_packets++;
+  LoRa.sleep();
   delay(1000);
 }
