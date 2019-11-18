@@ -4,9 +4,9 @@
 #include <WebServer.h>
 
 #include <SPI.h>
-#include <EEPROM.h>
-//#include "heltec.h"
 #include <LoRa.h>
+#include <EEPROM.h>
+// #include "heltec.h"
 
 #include "pages.h"
 #include "env.h"
@@ -16,8 +16,11 @@
   * TODO: Remove 
   */
 typedef struct {
+  int rssi;
+  unsigned int id;
   float temperature;
   float humidity;
+  float snr;
 } Data;
 
 /**
@@ -28,9 +31,6 @@ typedef struct {
 #define DIO0      26
 
 #define BAND      915E6
-
-String RxString;
-String RxRSSI;
 
 float packetsReceive = 0.0;
 float packetsError = 0.0;
@@ -83,13 +83,9 @@ void EEPROMWriteString(int limit, int init, String value) {
 
 void setup() {
   Serial.begin(115200);
-  //Heltec.begin(true /*DisplayEnable*/, true /*Heltec.LoRa*/, true /*Serial*/, true /*PABOOST*/, BAND);
+  // Heltec.begin(true /*DisplayEnable*/, true /*Heltec.LoRa*/, true /*Serial*/, true /*PABOOST*/, BAND);
   
   while (!Serial);
-
-  //Heltec.display->init();
-  //Heltec.display->flipScreenVertically();
-  //Heltec.display->setFont(ArialMT_Plain_16);
 
   initAP();
   connectWiFi();
@@ -98,15 +94,11 @@ void setup() {
 
   SPI.begin(5, 19, 27, 18);
   LoRa.setPins(SS, LORA_RST, DIO0);
-
   
   if (!LoRa.begin(BAND)) {
     Serial.println("Error");
     while (1);
   }
-  
-  //Heltec.display->drawString(0, 0, "Gateway");
-  //Heltec.display->display();
 
   Serial.println("\nConnected");
   LoRa.receive();
@@ -115,40 +107,41 @@ void setup() {
 void loop () {
   server.handleClient();
 
-  int packetSize = LoRa.parsePacket();
-
-  Serial.println(packetSize);
-  if (packetSize) {
+  if (LoRa.parsePacket()) {
     packetsReceive++;
-    Serial.print("Received packet '");
 
-    String data = getLoRaResponse();
+    String response = getLoRaResponse();
+    Data data = dataParser(response);
+    data.rssi = LoRa.packetRssi();
+    data.snr = LoRa.packetSnr(); 
 
-    if (!isPacketCorrect(data, getTemp(data), getHumi(data)))
+    if (!isPacketCorrect(response, data)){
+      sendDataFailure(data);
       packetsError++;
+    } else {
+      sendDataSuccess(data);
+    }
 
-    Serial.println(data);
+    Serial.print("\n\nResponse: ");
+    Serial.println(response);
+
+    Serial.print("Data: ");
+    Serial.print(data.temperature); 
+    Serial.print(";");
+    Serial.print(data.humidity);
+    Serial.print(";");
+    Serial.println(data.id);
     Serial.print("Packets receive: ");
     Serial.print(packetsReceive);
     Serial.print(", Packets error: ");
-    Serial.print((packetsError / packetsReceive) * 100);
-    Serial.print("%");
+    Serial.print(packetsError);
     Serial.print(", RSSI: ");
-    RxRSSI = LoRa.packetRssi();
-    Serial.println(RxRSSI);
+    Serial.print(data.rssi);
+    Serial.print(", SNR: ");
+    Serial.println(data.snr);
 
-    //Heltec.display->clear();
-
-    //Heltec.display->drawString(0, 0, "Received " + String(packetSize) + " Bytes");
-    //Heltec.display->drawString(0, 15, data);
-    //Heltec.display->drawString(0, 26, "RSSi " + RxRSSI);
-
-    //Heltec.display->display();
-
-    //sendData("{ \"temperature\": 10, \"humidity\": 10}");
+    delay(3000);
   }
-
-  delay(1000);
 }
 
 /**
@@ -165,68 +158,47 @@ String getLoRaResponse() {
 }
 
 /**
- * TODO: get data from LoRa
+ * convert String to Data
  */
-Data getData() {
+Data dataParser(String response) {
   Data data;
-  data.temperature = random(-10, 40);
-  data.humidity = random(0, 100);
+
+  String tmp[] = {"", "", ""};
+  int j = 0;
+
+  for (int i = 0; i < response.length(); i++) {
+    if (response[i] == ':') {
+      j++;
+      continue;
+    }
+    
+    tmp[j] += response[i];
+  }
+
+  data.temperature = tmp[0].toFloat();
+  data.humidity = tmp[1].toFloat();
+  data.id = tmp[2].toInt();
 
   return data;
 }
 
-double getTemp(String str) {
-  String temperature = "";
+bool isPacketCorrect(String response, Data data) {
+  String packet = String(data.temperature);
+  packet += ":";
+  packet += String(data.humidity);
+  packet += ":";
+  packet += String(data.id);
 
-  for(int i = 16; i < 21; i++)
-    temperature += str[i];
-
-  return temperature.toDouble();
-}
-
-double getHumi(String str) {
-  String humidity = "";
-
-  for(int i = 35; i < 40; i++)
-    humidity += str[i]; 
-
-  return humidity.toDouble();
-}
-
-bool isNum(String data) {
-  String temp(getTemp(data));
-  String humi(getHumi(data));
-
-  String strTemp = "";
-  for (int i = 16; i < 21; i++)
-    strTemp += data[i];
-
-  String strHumi = "";
-  for (int i = 35; i < 40; i++)
-    strHumi += data[i];
-
-  if (!strTemp.compareTo(temp) && !strHumi.compareTo(humi))
-    return true;
-
-  return false;
-}
-
-bool isPacketCorrect(String data, double temperature, double humidity) {
-  String packet = "{\"Temperature\": ";
-  packet += String(temperature);
-  packet += ", \"Humidity\": ";
-  packet += String(humidity);
-  packet += "}";
-
-  return !packet.compareTo(data) ? true : false;
+  return !packet.compareTo(response) ? true : false;
 }
 
 /**
  * *WiFi
+ * TODO: fix data
  */
 void handleRootGet() {
-  Data data = getData();
-  String buff = rootPage(id, ssid, data.temperature, data.humidity);
+  Data data = dataParser("10.10:10.10:1");
+  String buff = rootPage(data.id, ssid, data.temperature, data.humidity);
   server.send(200, "text/html", buff);
 }
 
@@ -325,14 +297,14 @@ void connectWiFi() {
 /**
  * *Send data to server
  */
-void sendData(String data) {
-  if (client.connect(SERVER_AZURE, HTTP_PORT)) {
+void sendData(String data, String url) {
+  if (client.connect(SERVER, HTTP_PORT)) {
     Serial.print("Connected - ");
     Serial.println(data); 
 
-    client.println("POST /sensors/test HTTP/1.1");
+    client.println("POST /" + url + "/" + HOST + " HTTP/1.1");
     client.print("Host: ");
-    client.println(SERVER_AZURE);
+    client.println(SERVER);
     client.println("User-Agent: Gateway");
     client.println("Content-Type: application/json");
     client.println("Connection: Close");
@@ -348,4 +320,35 @@ void sendData(String data) {
   } else {
     Serial.println("Connection failed");
   }
+}
+
+void sendDataFailure(Data data) {
+  String json = "{";
+  json += "\"rssi\": ";
+  json += String(data.rssi);
+  json += ", \"snr\": ";
+  json += String(data.snr);
+  json += ", \"id\": ";
+  json += String(data.id);
+  json += ", \"success\": false";
+  json += "}";
+
+  sendData(json, "packages");
+}
+
+void sendDataSuccess(Data data) {
+  String json = "{";
+  json += "\"rssi\": ";
+  json += String(data.rssi);
+  json += ", \"snr\": ";
+  json += String(data.snr);
+  json += ", \"id\": ";
+  json += String(data.id);
+  json += ", \"temperature\": ";
+  json += String(data.temperature);
+  json += ", \"humidity\": ";
+  json += String(data.humidity);
+  json += "}";
+
+  sendData(json, "sensors");
 }
