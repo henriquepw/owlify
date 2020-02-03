@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "build": "sucrase ./src -d ./dist --transforms imports",
+    "build": "sucrase ./src -d ./dist --transforms typescript,imports",
     "startup": "pm2 startup systemd",
     "start": "pm2 start dist/server.js",
     "stop": "pm2 stop server",
@@ -22,6 +22,10 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.2",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.4.0",
@@ -29,6 +33,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "nodemon": "^1.19.3",
     "prettier": "^1.18.2",
-    "sucrase": "^3.10.1"
+    "sucrase": "^3.10.1",
+    "typescript": "^3.7.5"
   }
 }
