@@ -18,11 +18,13 @@
     "express-async-errors": "^3.1.1",
     "influx": "^5.5.1",
     "pm2": "^4.2.3",
-    "youch": "^2.0.10"
+    "youch": "^2.0.10",
+    "yup": "^0.28.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.2",
+    "@types/yup": "^0.26.29",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
     "eslint": "^6.8.0",
