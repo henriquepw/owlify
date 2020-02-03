@@ -8,6 +8,8 @@ import 'express-async-errors';
 import routes from './routes';
 
 class App {
+  public server: express.Application;
+
   constructor() {
     this.server = express();
 
@@ -16,21 +18,21 @@ class App {
     this.exceptionHandler();
   }
 
-  middlewares() {
+  private middlewares() {
     this.server.use(cors());
     this.server.use(express.json());
   }
 
-  routes() {
+  private routes() {
     this.server.use(routes);
   }
 
-  exceptionHandler() {
+  private exceptionHandler() {
     this.server.use(async (err, req, res, next) => {
       const erros =
         process.env.NODE_ENV === 'development'
-          ? await new Youch(err, req).toJSON()
-          : { error: 'Internal server error' };
+        ? await new Youch(err, req).toJSON()
+        : { error: 'Internal server error' };
 
       return res.status(500).json(erros);
     });

@@ -8,5 +8,3 @@ const { log } = console;
 http
   .createServer(app)
   .listen(process.env.PORT, () => log(`Listening on port ${process.env.PORT}`));
-
-// app.listen(3333);
