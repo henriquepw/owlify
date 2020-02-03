@@ -5,3 +5,6 @@ node_modules
 !.keep
 
 dist
+
+yarn-error.log
+package-lock.json

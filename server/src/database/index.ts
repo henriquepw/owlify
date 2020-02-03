@@ -2,6 +2,8 @@ import { InfluxDB } from 'influx';
 import influxConfig from './config';
 
 class Database {
+  public influx: InfluxDB;
+
   constructor() {
     this.init();
   }

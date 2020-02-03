@@ -1,4 +1,3 @@
-// const { FieldType } = require('influx/lib/src/grammar/ds');
 import { FieldType } from 'influx/lib/src/grammar/ds';
 
 // require('dotenv/config');
