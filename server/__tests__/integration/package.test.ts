@@ -19,9 +19,7 @@ describe('Package', () => {
   });
 
   it('should return status 500 if not provide a data', async () => {
-    const response = await request(app)
-      .post('/packages/test')
-      .send();
+    const response = await request(app).post('/packages/test');
 
     expect(response.status).toBe(500);
   });
