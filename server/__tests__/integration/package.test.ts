@@ -1,9 +1,15 @@
 import request from 'supertest';
 
 import app from '../../src/app';
+
+import cleanDB from '../util/cleanDB';
 import { packageFactory } from '../util/factories';
 
 describe('Package', () => {
+  beforeAll(async () => {
+    await cleanDB();
+  });
+
   it('should be able to register a package', async () => {
     const measurement = packageFactory();
 

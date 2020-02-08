@@ -21,17 +21,6 @@ class Database {
       await this.influx.createDatabase(process.env.DB_NAME);
     }
   }
-
-  public async dropDB() {
-    await this.influx.dropDatabase(process.env.DB_NAME);
-  }
 }
 
-const { influx, createDB, dropDB } = new Database();
-
-export default influx;
-
-export {
-  createDB,
-  dropDB,
-};
+export default new Database().influx;
