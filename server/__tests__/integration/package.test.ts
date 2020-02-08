@@ -1,14 +1,11 @@
 import request from 'supertest';
+
 import app from '../../src/app';
+import { packageFactory } from '../util/factories';
 
 describe('Package', () => {
   it('should be able to register a package', async () => {
-    const measurement = {
-      id: 1,
-      snr: 10,
-      rssi: 20,
-      success: false,
-    };
+    const measurement = packageFactory();
 
     const response = await request(app)
       .post('/packages/test')
@@ -25,12 +22,7 @@ describe('Package', () => {
   });
 
   it('should return a list of all host packages order by decrescent time', async () => {
-    const measurement = {
-      id: 1,
-      snr: 10,
-      rssi: 20,
-      success: false,
-    };
+    const measurement = packageFactory();
 
     await request(app).post('/packages/test').send(measurement);
 

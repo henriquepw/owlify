@@ -1,15 +1,18 @@
 import request from 'supertest';
+
 import app from '../../src/app';
+import { createDB, dropDB } from '../../src/database';
+
+import { sensorFactory } from '../util/factories';
 
 describe('Sensor', () => {
+  beforeAll(async () => {
+    await dropDB();
+    await createDB();
+  });
+
   it('should be able to register a sensor and package measurement', async () => {
-    const measurement = {
-      id: 1,
-      snr: 10,
-      rssi: 20,
-      humidity: 60,
-      temperature: 10,
-    };
+    const measurement = sensorFactory();
 
     const response = await request(app)
       .post('/sensors/test')
@@ -20,6 +23,8 @@ describe('Sensor', () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(measurement);
+
+    console.log(getSensors.body.lengh);
 
     expect(getSensors.body[0]).toMatchObject({
       host: 'test',
