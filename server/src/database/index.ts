@@ -8,12 +8,16 @@ class Database {
     this.init();
   }
 
-  async init() {
+  private async init() {
     this.influx = new InfluxDB(influxConfig);
 
-    const names = await this.influx.getDatabaseNames();
+    await this.createDB();
+  }
 
-    if (!names.includes(process.env.DB_NAME)) {
+  public async createDB() {
+    const databases = await this.influx.getDatabaseNames();
+
+    if (!databases.includes(process.env.DB_NAME)) {
       await this.influx.createDatabase(process.env.DB_NAME);
     }
   }

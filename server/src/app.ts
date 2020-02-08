@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import './bootstrap';
 
 import express, {
   Errback,
@@ -10,14 +10,18 @@ import 'express-async-errors';
 
 import cors from 'cors';
 import Youch from 'youch';
+import http from 'http';
 
 import routes from './routes';
 
 class App {
-  public server: express.Application;
+  private app: express.Application;
+
+  public server: http.Server;
 
   constructor() {
-    this.server = express();
+    this.app = express();
+    this.server = new http.Server(this.app);
 
     this.middlewares();
     this.routes();
@@ -25,16 +29,16 @@ class App {
   }
 
   private middlewares() {
-    this.server.use(cors());
-    this.server.use(express.json());
+    this.app.use(cors());
+    this.app.use(express.json());
   }
 
   private routes() {
-    this.server.use(routes);
+    this.app.use(routes);
   }
 
   private exceptionHandler() {
-    this.server.use(async (err: Errback, req: Request, res: Response, next: NextFunction) => {
+    this.app.use(async (err: Errback, req: Request, res: Response, next: NextFunction) => {
       const erros = process.env.NODE_ENV === 'development'
         ? await new Youch(err, req).toJSON()
         : { error: 'Internal server error' };

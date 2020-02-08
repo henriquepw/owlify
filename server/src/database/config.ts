@@ -1,7 +1,5 @@
 import { FieldType } from 'influx/lib/src/grammar/ds';
 
-// require('dotenv/config');
-
 export default {
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
