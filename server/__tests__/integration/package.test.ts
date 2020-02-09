@@ -30,7 +30,9 @@ describe('Package', () => {
   it('should return a list of all host packages order by decrescent time', async () => {
     const measurement = packageFactory();
 
-    await request(app).post('/packages/test').send(measurement);
+    await request(app)
+      .post('/packages/test')
+      .send(measurement);
 
     const response = await request(app).get('/packages/test');
 

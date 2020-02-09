@@ -35,12 +35,7 @@ class PackageController {
 
   public async store(req: Request, res: Response) {
     const { host } = req.params;
-    const {
-      id,
-      snr,
-      rssi,
-      success,
-    } = req.body as storeBody;
+    const { id, snr, rssi, success } = req.body as storeBody;
 
     try {
       const measurement = {

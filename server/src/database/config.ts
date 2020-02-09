@@ -1,4 +1,5 @@
 import { FieldType } from 'influx/lib/src/grammar/ds';
+import { ISingleHostConfig } from 'influx';
 
 export default {
   host: process.env.DB_HOST,
@@ -23,4 +24,4 @@ export default {
       tags: ['host'],
     },
   ],
-};
+} as ISingleHostConfig;
