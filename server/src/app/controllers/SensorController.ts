@@ -36,13 +36,7 @@ class SensorController {
 
   async store(req: Request, res: Response) {
     const { host } = req.params;
-    const {
-      id,
-      snr,
-      rssi,
-      temperature,
-      humidity,
-    } = req.body as storeBody;
+    const { id, snr, rssi, temperature, humidity } = req.body as storeBody;
 
     try {
       await influx.writePoints([

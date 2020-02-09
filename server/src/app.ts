@@ -1,11 +1,6 @@
 import './bootstrap';
 
-import express, {
-  Errback,
-  Request,
-  Response,
-  NextFunction,
-} from 'express';
+import express, { Errback, Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 
 import cors from 'cors';
@@ -38,13 +33,16 @@ class App {
   }
 
   private exceptionHandler() {
-    this.app.use(async (err: Errback, req: Request, res: Response, next: NextFunction) => {
-      const erros = process.env.NODE_ENV === 'development'
-        ? await new Youch(err, req).toJSON()
-        : { error: 'Internal server error' };
+    this.app.use(
+      async (err: Errback, req: Request, res: Response, next: NextFunction) => {
+        const erros =
+          process.env.NODE_ENV === 'development'
+            ? await new Youch(err, req).toJSON()
+            : { error: 'Internal server error' };
 
-      return res.status(500).json(erros);
-    });
+        return res.status(500).json(erros);
+      }
+    );
   }
 }
 

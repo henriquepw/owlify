@@ -5,9 +5,10 @@ module.exports = {
     jest: true,
   },
   extends: [
+    'airbnb-base',
     'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint',
-    'airbnb-base',
+    'plugin:prettier/recommended',
   ],
   globals: {
     Atomics: 'readonly',
@@ -17,15 +18,18 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
+    project: './tsconfig.json',
   },
   plugins: ['@typescript-eslint', 'prettier'],
   rules: {
-    camelcase: 'off',
-    'no-undef': 'off',
-    'no-unused-vars': 'off',
+    'prettier/prettier': 'error',
+    'no-underscore-dangle': 'off',
     'class-methods-use-this': 'off',
-    'no-param-reassign': 'off',
-    '@typescript-eslint/camelcase': 'off',
+    'no-await-in-loop': 'off',
+    'import/prefer-default-export': 'off',
+    // 'no-undef': 'off',
+    // 'no-unused-vars': 'off',
+    // 'no-param-reassign': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
@@ -38,8 +42,26 @@ module.exports = {
         ts: 'never',
       },
     ],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: ['**/*.spec.ts', 'src/utils/tests/*.ts'],
+      },
+    ],
   },
+  overrides: [
+    {
+      files: ['*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+  ],
   settings: {
+    'import/extensions': ['.ts', '.js'],
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.js'],
+    },
     'import/resolver': {
       node: {
         extensions: ['.js', '.ts'],
