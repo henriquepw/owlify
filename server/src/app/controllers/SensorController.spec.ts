@@ -1,9 +1,9 @@
 import request from 'supertest';
 
-import app from '../../src/app';
+import app from '../../app';
 
-import cleanDB from '../util/cleanDB';
-import { sensorFactory } from '../util/factories';
+import cleanDB from '../../util/tests/cleanDB';
+import { sensorFactory } from '../../util/tests/factories';
 
 describe('Sensor', () => {
   beforeAll(async () => {

@@ -1,4 +1,4 @@
-import influx from '../../src/database';
+import influx from '../../database';
 
 interface Env extends NodeJS.ProcessEnv {
   DB_NAME: string;

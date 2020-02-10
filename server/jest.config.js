@@ -1,5 +1,5 @@
-// For a detailed explanation regarding each configuration property, visit:
-// https://jestjs.io/docs/en/configuration.html
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const { compilerOptions } = require('./tsconfig');
 
 module.exports = {
   // All imported modules in your tests should be mocked automatically
@@ -33,10 +33,7 @@ module.exports = {
   // ],
 
   // A list of reporter names that Jest uses when writing coverage reports
-  coverageReporters: [
-    'text',
-    'lcov',
-  ],
+  coverageReporters: ['text', 'lcov'],
 
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: undefined,
@@ -82,7 +79,9 @@ module.exports = {
 
   // A map from regular expressions to module names that allow to stub out
   // resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: '<rootDir>/src/',
+  }),
 
   // An array of regexp pattern strings, matched against all module paths
   // before considered 'visible' to the module loader
@@ -147,9 +146,7 @@ module.exports = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  testMatch: [
-    '**/__tests__/**/*.test.ts',
-  ],
+  testMatch: ['<rootDir>/src/**/*.spec.ts'],
 
   // An array of regexp pattern strings that are matched against all test paths,
   // matched tests are skipped
@@ -175,7 +172,7 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '.(js|jsx|ts|tsx)': '@sucrase/jest-plugin',
+    '^.+\\.ts$': 'ts-jest',
   },
 
   // An array of regexp pattern strings that are matched against

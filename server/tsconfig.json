@@ -15,13 +15,12 @@
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
-    "typeRoots": [
-      "node_modules/@types",
-      "src/@types"
-    ],
+    "typeRoots": ["node_modules/@types", "src/@types"],
     "paths": {
-      "~/*": ["/*"],
+      "~/*": ["*"],
+      "@database/*": ["database/*"]
     }
   },
-  "include": ["src", "__tests__"]
+  "include": ["src"],
+  "exclude": ["__tests__/coverage"]
 }

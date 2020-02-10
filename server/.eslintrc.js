@@ -25,11 +25,9 @@ module.exports = {
     'prettier/prettier': 'error',
     'no-underscore-dangle': 'off',
     'class-methods-use-this': 'off',
+    'no-undef': 'off',
     'no-await-in-loop': 'off',
     'import/prefer-default-export': 'off',
-    // 'no-undef': 'off',
-    // 'no-unused-vars': 'off',
-    // 'no-param-reassign': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
@@ -45,7 +43,7 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       'error',
       {
-        devDependencies: ['**/*.spec.ts', 'src/utils/tests/*.ts'],
+        devDependencies: ['src/**/*.spec.ts', 'src/utils/tests/*.ts'],
       },
     ],
   },
