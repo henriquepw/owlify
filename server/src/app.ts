@@ -9,6 +9,8 @@ import http from 'http';
 
 import routes from './routes';
 
+import './database';
+
 class App {
   private app: express.Application;
 
