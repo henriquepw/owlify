@@ -1,5 +1,5 @@
 import { InfluxDB } from 'influx';
-import influxConfig from './config';
+import influxConfig from '../config/influx';
 
 class Database {
   public influx: InfluxDB;

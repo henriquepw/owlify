@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { escape } from 'influx/lib/src/grammar/escape';
 
-import influx from '../../database';
+import influx from '../../database/influx';
 
 type indexQuery = {
   page: number;
