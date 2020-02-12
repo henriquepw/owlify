@@ -39,12 +39,13 @@ module.exports = {
       'ignorePackages',
       {
         ts: 'never',
+        js: 'never',
       },
     ],
     'import/no-extraneous-dependencies': [
       'error',
       {
-        devDependencies: ['src/**/*.spec.ts', 'src/utils/tests/*.ts'],
+        devDependencies: ['src/**/*.spec.ts', 'src/util/tests/*.ts'],
       },
     ],
   },

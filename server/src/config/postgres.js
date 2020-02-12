@@ -6,11 +6,12 @@ dotenv.config({
 });
 
 module.exports = {
-  dialect: 'postgres',
+  dialect: process.env.PG_DIALECT || 'postgres',
   host: process.env.DB_HOST,
   username: process.env.PG_USER,
-  password: process.env.PG_PASSWORD,
+  password: process.env.PG_PASS,
   database: process.env.PG_NAME,
+  storage: './__tests__/database.sqlite',
   define: {
     timestamps: true,
     underscored: true,

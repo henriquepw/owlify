@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize, Options } from 'sequelize';
 import dbConfig from '../config/postgres';
 
 import User from '../app/models/User';
@@ -13,7 +13,7 @@ class Database {
   }
 
   public init() {
-    this.connection = new Sequelize(dbConfig);
+    this.connection = new Sequelize(dbConfig as Options);
 
     MODELS.map(model => model.start(this.connection));
   }
