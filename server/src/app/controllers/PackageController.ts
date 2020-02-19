@@ -54,7 +54,7 @@ class PackageController {
 
       return res.json(measurement);
     } catch (err) {
-      return res.status(500).send(err.stack);
+      return res.status(500).json({ error: err.stack });
     }
   }
 }

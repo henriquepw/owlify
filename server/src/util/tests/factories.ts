@@ -1,4 +1,7 @@
 import faker from 'faker';
+import factory from 'factory-girl';
+
+import User from '../../app/models/User';
 
 export const packageFactory = () => ({
   snr: faker.random.number(10),
@@ -12,3 +15,11 @@ export const sensorFactory = () => ({
   humidity: faker.random.number(100),
   temperature: faker.random.number(20),
 });
+
+factory.define('User', User, {
+  name: faker.name.findName(),
+  email: faker.internet.email(),
+  password: faker.internet.password(),
+});
+
+export default factory;

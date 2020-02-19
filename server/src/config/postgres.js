@@ -12,6 +12,7 @@ module.exports = {
   password: process.env.PG_PASS,
   database: process.env.PG_NAME,
   storage: './__tests__/database.sqlite',
+  logging: false,
   define: {
     timestamps: true,
     underscored: true,
