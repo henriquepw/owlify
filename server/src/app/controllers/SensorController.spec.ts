@@ -2,12 +2,12 @@ import request from 'supertest';
 
 import app from '../../app';
 
-import cleanDB from '../../util/tests/cleanDB';
+import { cleanInflux } from '../../util/tests/cleanDB';
 import { sensorFactory } from '../../util/tests/factories';
 
 describe('Sensor', () => {
   beforeAll(async () => {
-    await cleanDB();
+    await cleanInflux();
   });
 
   it('should be able to register a sensor and package measurement', async () => {
@@ -18,23 +18,14 @@ describe('Sensor', () => {
       .send(measurement);
 
     const getSensors = await request(app).get('/sensors/test');
-    const getPackages = await request(app).get('/packages/test');
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(measurement);
 
     expect(getSensors.body[0]).toMatchObject({
-      host: 'test',
+      nodeID: 'test',
       temperature: measurement.temperature,
       humidity: measurement.humidity,
-    });
-
-    expect(getPackages.body[0]).toMatchObject({
-      host: 'test',
-      id: measurement.id,
-      snr: measurement.snr,
-      rssi: measurement.rssi,
-      success: true,
     });
   });
 
@@ -44,7 +35,7 @@ describe('Sensor', () => {
     expect(response.status).toBe(500);
   });
 
-  it("should return an empty array if a host doesn't have registered measurement", async () => {
+  it("should return an empty array if a node id doesn't have registered measurement", async () => {
     const response = await request(app).get('/sensors/test1');
 
     expect(response.body).toEqual([]);

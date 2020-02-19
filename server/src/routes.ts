@@ -11,12 +11,12 @@ routes.get('/', (_, res) => res.json({ message: 'Welcome to Owlify' }));
 routes.route('/users').post(UserController.store);
 
 routes
-  .route('/sensors/:host')
+  .route('/sensors/:nodeID')
   .get(SensorController.index)
   .post(SensorController.store);
 
 routes
-  .route('/packages/:host')
+  .route('/packages/:nodeID')
   .get(PackageController.index)
   .post(PackageController.store);
 
