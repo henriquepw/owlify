@@ -1,4 +1,4 @@
-declare module 'youch' {
+declare module 'youch1' {
   class Youch<Error, Request> {
     constructor(error: Error, request: Request);
 
