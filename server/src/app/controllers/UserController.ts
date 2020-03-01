@@ -15,13 +15,17 @@ class UserController {
     }
 
     try {
-      const user = await User.create({
+      const { id } = await User.create({
         name,
         email,
         password,
       });
 
-      return res.json(user);
+      return res.json({
+        id,
+        name,
+        email,
+      });
     } catch (err) {
       return res.status(500).json({ error: err.stack });
     }

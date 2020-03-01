@@ -1,4 +1,5 @@
 import request from 'supertest';
+import { isAfter, parseISO } from 'date-fns';
 
 import app from '../../app';
 
@@ -34,9 +35,15 @@ describe('Package', () => {
       .post('/packages/test')
       .send(measurement);
 
+    await request(app)
+      .post('/packages/test')
+      .send(measurement);
+
     const response = await request(app).get('/packages/test');
 
-    expect(response.body[0]).toMatchObject({ ...measurement, nodeID: 'test' });
+    const [first, second] = response.body;
+
+    expect(isAfter(parseISO(first.time), parseISO(second.time))).toBe(true);
   });
 
   it("should return an empty array if a nodeID doesn't have registered measurement", async () => {

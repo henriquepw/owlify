@@ -11,6 +11,7 @@ routes.get('/', (_, res) => res.json({ message: 'Welcome to Owlify' }));
 routes
   .route('/users')
   .post(UserController.store)
+  // .put(UserController.update)
   .delete(UserController.delete);
 
 routes

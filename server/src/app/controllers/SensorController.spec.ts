@@ -22,11 +22,15 @@ describe('Sensor', () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual(measurement);
 
-    expect(getSensors.body[0]).toMatchObject({
-      nodeID: 'test',
-      temperature: measurement.temperature,
-      humidity: measurement.humidity,
-    });
+    expect(getSensors.body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          nodeID: 'test',
+          temperature: measurement.temperature,
+          humidity: measurement.humidity,
+        }),
+      ]),
+    );
   });
 
   it('should return status 500 if not provide a data', async () => {
