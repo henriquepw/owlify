@@ -2,7 +2,7 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
 class User extends Model {
-  public id!: number;
+  public id!: string;
 
   public name!: string;
 
@@ -19,6 +19,12 @@ class User extends Model {
   public static start(sequelize: Sequelize) {
     this.init(
       {
+        id: {
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4,
+          allowNull: false,
+          primaryKey: true,
+        },
         name: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.VIRTUAL,
