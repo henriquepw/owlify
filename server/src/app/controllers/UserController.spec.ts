@@ -12,6 +12,7 @@ describe('User', () => {
     await cleanPostgres();
   });
 
+  // Tests for create user
   it('should be able to register a user', async () => {
     const user = await factory.attrs<User>('User');
 
@@ -44,5 +45,44 @@ describe('User', () => {
       .send(user);
 
     expect(response.status).toBe(400);
+  });
+
+  // Tests for delete user
+  it('should be able to delete user from database', async () => {
+    const userFactory = await factory.attrs<User>('User');
+
+    const user = await request(app)
+      .post('/users')
+      .send(userFactory);
+
+    const response = await request(app)
+      .delete('/users')
+      .send({ id: user.body.id });
+
+    expect(response.status).toBe(200);
+
+    expect(response.body).toMatchObject({
+      deleted: 1,
+    });
+  });
+
+  it('should not be able to detele user if not pass the id', async () => {
+    const response = await request(app)
+      .delete('/users')
+      .send();
+
+    expect(response.status).toBe(400);
+
+    expect(response.body).toHaveProperty('error');
+  });
+
+  it('should not be able to detele user if user not exist', async () => {
+    const response = await request(app)
+      .delete('/users')
+      .send({ id: 4 });
+
+    expect(response.status).toBe(400);
+
+    expect(response.body).toHaveProperty('error');
   });
 });

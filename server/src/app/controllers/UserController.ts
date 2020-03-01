@@ -1,15 +1,9 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
 
-interface BodyStore {
-  name: string;
-  email: string;
-  password: string;
-}
-
 class UserController {
   async store(req: Request, res: Response) {
-    const { name, email, password } = req.body as BodyStore;
+    const { name, email, password } = req.body as User;
 
     /**
      * Check if use already exists
@@ -31,6 +25,29 @@ class UserController {
     } catch (err) {
       return res.status(500).json({ error: err.stack });
     }
+  }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.body as User;
+
+    if (!id) {
+      return res.status(400).send({ error: 'Need an user id' });
+    }
+
+    /**
+     * Check if use already exists
+     */
+    const isExists = await User.findOne({ where: { id } });
+
+    if (!isExists) {
+      return res.status(400).send({ error: 'User not exist' });
+    }
+
+    const userDeleted = await User.destroy({
+      where: { id },
+    });
+
+    return res.json({ deleted: userDeleted });
   }
 }
 

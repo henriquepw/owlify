@@ -8,7 +8,10 @@ const routes = Router();
 
 routes.get('/', (_, res) => res.json({ message: 'Welcome to Owlify' }));
 
-routes.route('/users').post(UserController.store);
+routes
+  .route('/users')
+  .post(UserController.store)
+  .delete(UserController.delete);
 
 routes
   .route('/sensors/:nodeID')
