@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
 
+interface UpdateBody extends User {
+  oldPassword?: string;
+}
+
 class UserController {
   async store(req: Request, res: Response) {
     const { name, email, password } = req.body as User;
@@ -31,21 +35,34 @@ class UserController {
     }
   }
 
+  async update(req: Request, res: Response) {
+    const { email, oldPassword } = req.body as UpdateBody;
+
+    const user = (await User.findByPk(req.userId)) as User;
+
+    if (email && email !== user.email) {
+      const isExists = await User.findOne({ where: { email } });
+
+      if (isExists) {
+        return res.status(400).json({ error: 'Duplicated email' });
+      }
+    }
+
+    if (oldPassword && !(await user.checkPassword(oldPassword))) {
+      return res.status(401).json({ error: 'Password does not math' });
+    }
+
+    const { id, name } = await user.update(req.body);
+
+    return res.json({
+      id,
+      name,
+      email,
+    });
+  }
+
   async delete(req: Request, res: Response) {
-    const { id } = req.body as User;
-
-    if (!id) {
-      return res.status(400).send({ error: 'Need an user id' });
-    }
-
-    /**
-     * Check if use already exists
-     */
-    const isExists = await User.findOne({ where: { id } });
-
-    if (!isExists) {
-      return res.status(400).send({ error: 'User not exist' });
-    }
+    const id = req.userId;
 
     const userDeleted = await User.destroy({
       where: { id },

@@ -13,7 +13,7 @@ describe('Session', () => {
     await cleanPostgres();
   });
 
-  it('should log in with correct data', async () => {
+  it('should login with correct data', async () => {
     const password = '123';
 
     const { id, email, name } = await factory.create<User>('User', {
