@@ -4,22 +4,11 @@ import faker from 'faker';
 
 import app from '../../app';
 
-import factory from '../../util/tests/factories';
-import { cleanPostgres } from '../../util/tests/cleanDB';
 import User from '../models/User';
 
-async function getToken() {
-  const { email, password } = await factory.create<User>('User');
-
-  const login = await request(app)
-    .post('/sessions')
-    .send({
-      email,
-      password,
-    });
-
-  return `Bearer ${login.body.token}`;
-}
+import getToken from '../../util/tests/getToken';
+import factory from '../../util/tests/factories';
+import { cleanPostgres } from '../../util/tests/cleanDB';
 
 describe('User', () => {
   const path = '/users';
@@ -139,7 +128,7 @@ describe('User', () => {
     });
   });
 
-  it('should not be able to detele user if not login', async () => {
+  it('should not be able to delete user if not login', async () => {
     const response = await request(app)
       .delete(path)
       .send();

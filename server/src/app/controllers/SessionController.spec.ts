@@ -18,6 +18,7 @@ describe('Session', () => {
 
     const { id, email, name } = await factory.create<User>('User', {
       password,
+      email: 'me@thehenry.dev',
     });
 
     const response = await request(app)
