@@ -5,18 +5,15 @@ import app from '../../app';
 import factory from '../../util/tests/factories';
 import { cleanPostgres } from '../../util/tests/cleanDB';
 import Gateway from '../models/Gateway';
+import User from '../models/User';
 
 import getToken from '../../util/tests/getToken';
 
 describe('Gateway', () => {
   const path = '/gateways';
-  const auth = {
-    token: '',
-  };
 
   beforeEach(async () => {
     await cleanPostgres();
-    auth.token = await getToken();
   });
 
   /**
@@ -26,23 +23,25 @@ describe('Gateway', () => {
     const gateway1 = await factory.attrs<Gateway>('Gateway');
     const gateway2 = await factory.attrs<Gateway>('Gateway');
 
+    const token = await getToken();
+
     await request(app)
       .post(path)
-      .set('Authorization', auth.token)
+      .set('Authorization', token)
       .send({
         locate: gateway1.locate,
       });
 
     await request(app)
       .post(path)
-      .set('Authorization', auth.token)
+      .set('Authorization', token)
       .send({
         locate: gateway2.locate,
       });
 
     const response = await request(app)
       .get(path)
-      .set('Authorization', auth.token)
+      .set('Authorization', token)
       .send();
 
     expect(response.body).toEqual(
@@ -57,12 +56,11 @@ describe('Gateway', () => {
    * Testes for get
    */
   it('shoud be able to registe a gateway', async () => {
-    factory.cleanUp();
     const { locate } = await factory.attrs<Gateway>('Gateway');
 
     const gateway = await request(app)
       .post(path)
-      .set('Authorization', auth.token)
+      .set('Authorization', await getToken())
       .send({
         locate,
       });
