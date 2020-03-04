@@ -19,12 +19,13 @@ export const sensorFactory = () => ({
 
 factory.define('User', User, {
   name: faker.name.findName(),
-  email: faker.internet.email(),
+  email: () => faker.internet.email(),
   password: faker.internet.password(),
 });
 
 factory.define('Gateway', Gateway, {
   locate: faker.commerce.department(),
+  // user_id: factory.assoc('User', 'id'),
 });
 
 export default factory;

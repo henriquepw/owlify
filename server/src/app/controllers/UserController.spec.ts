@@ -8,132 +8,140 @@ import User from '../models/User';
 
 import getToken from '../../util/tests/getToken';
 import factory from '../../util/tests/factories';
-import { cleanPostgres } from '../../util/tests/cleanDB';
+// import { cleanPostgres } from '../../util/tests/cleanDB';
 
 describe('User', () => {
   const path = '/users';
 
-  beforeEach(async () => {
-    await cleanPostgres();
-  });
+  // beforeEach(async () => {
+  //   await cleanPostgres();
+  // });
 
-  /**
-   * Tests for create user
-   */
-  it('should be able to register a user', async () => {
-    const user = await factory.attrs<User>('User');
+  describe('POST /users', () => {
+    it('should be able to register a user', async () => {
+      const user = await factory.attrs<User>('User');
 
-    const response = await request(app)
-      .post(path)
-      .send(user);
+      const response = await request(app)
+        .post(path)
+        .send(user);
 
-    expect(response.body).toHaveProperty('id');
-  });
-
-  it('should encrypt user password when new user created', async () => {
-    const user = await factory.create<User>('User', {
-      password: '123',
+      expect(response.body).toHaveProperty('id');
     });
 
-    const compareHash = await bcrypt.compare('123', user.password_hash);
-
-    expect(compareHash).toBe(true);
-  });
-
-  it('should not be able to register with duplicated email', async () => {
-    const user = await factory.attrs<User>('User');
-
-    await request(app)
-      .post(path)
-      .send(user);
-
-    const response = await request(app)
-      .post(path)
-      .send(user);
-
-    expect(response.status).toBe(400);
-    expect(response.body).toHaveProperty('error');
-  });
-
-  /**
-   * Test for update user data
-   */
-  it('should not be able to update user data if not login', async () => {
-    const { name } = await factory.attrs<User>('User');
-
-    const response = await request(app)
-      .put(path)
-      .send({
-        name,
+    it('should encrypt user password when new user created', async () => {
+      const user = await factory.create<User>('User', {
+        password: '123',
       });
 
-    expect(response.status).toBe(401);
+      const compareHash = await bcrypt.compare('123', user.password_hash);
+
+      expect(compareHash).toBe(true);
+    });
+
+    it('should not be able to register with duplicated email', async () => {
+      const user = await factory.attrs<User>('User');
+
+      await request(app)
+        .post(path)
+        .send(user);
+
+      const response = await request(app)
+        .post(path)
+        .send(user);
+
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty('error');
+    });
   });
 
-  it('should be able to update user data', async () => {
-    const newData = {
-      name: faker.name.findName(),
-      email: faker.internet.email(),
+  describe('PUT /users', () => {
+    const auth = {
+      user: {},
+      token: '',
+    } as {
+      user: User;
+      token: string;
     };
 
-    const response = await request(app)
-      .put(path)
-      .set('Authorization', await getToken())
-      .send(newData);
-
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(expect.objectContaining(newData));
-  });
-
-  it('should return an bad request error if the new email is already registered', async () => {
-    const { email } = await factory.create<User>('User', {
-      email: 'enrque.ns@gmail.com',
+    beforeAll(async () => {
+      auth.user = await factory.create<User>('User');
+      auth.token = `Bearer ${auth.user.generateToken()}`;
     });
 
-    const response = await request(app)
-      .put(path)
-      .set('Authorization', await getToken())
-      .send({
-        email,
-      });
+    it('should not be able to update user data if not login', async () => {
+      const { name } = await factory.attrs<User>('User');
 
-    expect(response.status).toBe(400);
-    expect(response.body).toHaveProperty('error');
-  });
+      const response = await request(app)
+        .put(path)
+        .send({
+          name,
+        });
 
-  it('should return an unauthorized error if oldPassword not match', async () => {
-    const response = await request(app)
-      .put(path)
-      .set('Authorization', await getToken())
-      .send({
-        oldPassword: '1',
-      });
+      expect(response.status).toBe(401);
+    });
 
-    expect(response.status).toBe(401);
-    expect(response.body).toHaveProperty('error');
-  });
+    it('should be able to update user data', async () => {
+      const newData = {
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+      };
 
-  /**
-   * Tests for delete user
-   */
-  it('should be able to delete user from database', async () => {
-    const response = await request(app)
-      .delete(path)
-      .set('Authorization', await getToken())
-      .send();
+      const response = await request(app)
+        .put(path)
+        .set('Authorization', auth.token)
+        .send(newData);
 
-    expect(response.status).toBe(200);
-    expect(response.body).toMatchObject({
-      deleted: 1,
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expect.objectContaining(newData));
+    });
+
+    it('should return an bad request error if the new email is already registered', async () => {
+      const { email } = await factory.create<User>('User');
+
+      const response = await request(app)
+        .put(path)
+        .set('Authorization', auth.token)
+        .send({
+          email,
+        });
+
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty('error');
+    });
+
+    it('should return an unauthorized error if oldPassword not match', async () => {
+      const response = await request(app)
+        .put(path)
+        .set('Authorization', auth.token)
+        .send({
+          oldPassword: '1',
+        });
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty('error');
     });
   });
 
-  it('should not be able to delete user if not login', async () => {
-    const response = await request(app)
-      .delete(path)
-      .send();
+  describe('DELETE /users', () => {
+    it('should be able to delete user from database', async () => {
+      const response = await request(app)
+        .delete(path)
+        .set('Authorization', await getToken())
+        .send();
 
-    expect(response.status).toBe(401);
-    expect(response.body).toHaveProperty('error');
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject({
+        deleted: 1,
+      });
+    });
+
+    it('should not be able to delete user if not login', async () => {
+      const response = await request(app)
+        .delete(path)
+        .send();
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty('error');
+    });
   });
 });

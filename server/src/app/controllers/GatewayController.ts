@@ -27,6 +27,36 @@ class GatewayController {
       user_id,
     });
   }
+
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const gateway = (await Gateway.findByPk(id)) as Gateway;
+
+    if (gateway.user_id !== req.userId) {
+      return res.status(401).json({ error: 'This gateway is not yours' });
+    }
+
+    const { locate } = await gateway.update(req.body);
+
+    return res.json({ locate });
+  }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const gateway = (await Gateway.findByPk(id)) as Gateway;
+
+    if (gateway.user_id !== req.userId) {
+      return res.status(401).json({ error: 'This gateway is not yours' });
+    }
+
+    const gatewayDeleted = await Gateway.destroy({
+      where: { id },
+    });
+
+    return res.json({ deleted: gatewayDeleted });
+  }
 }
 
 export default new GatewayController();

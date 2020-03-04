@@ -2,79 +2,153 @@ import request from 'supertest';
 
 import app from '../../app';
 
-import factory from '../../util/tests/factories';
-import { cleanPostgres } from '../../util/tests/cleanDB';
 import Gateway from '../models/Gateway';
 import User from '../models/User';
 
-import getToken from '../../util/tests/getToken';
+import factory from '../../util/tests/factories';
+// import { cleanPostgres } from '../../util/tests/cleanDB';
 
 describe('Gateway', () => {
   const path = '/gateways';
 
-  beforeEach(async () => {
-    await cleanPostgres();
+  const auth = {
+    user: {},
+    token: '',
+  } as {
+    user: User;
+    token: string;
+  };
+
+  beforeAll(async () => {
+    // await cleanPostgres();
+
+    auth.user = await factory.create<User>('User');
+    auth.token = `Bearer ${auth.user.generateToken()}`;
   });
 
-  /**
-   * Testes for get
-   */
-  it('it should get a list of all user gateway', async () => {
-    const gateway1 = await factory.attrs<Gateway>('Gateway');
-    const gateway2 = await factory.attrs<Gateway>('Gateway');
+  describe('GET /gateways', () => {
+    it('should get a list of all user gateway', async () => {
+      const gateway1 = await factory.attrs<Gateway>('Gateway');
+      const gateway2 = await factory.attrs<Gateway>('Gateway');
 
-    const token = await getToken();
+      await request(app)
+        .post(path)
+        .set('Authorization', auth.token)
+        .send({
+          locate: gateway1.locate,
+        });
 
-    await request(app)
-      .post(path)
-      .set('Authorization', token)
-      .send({
-        locate: gateway1.locate,
-      });
+      await request(app)
+        .post(path)
+        .set('Authorization', auth.token)
+        .send({
+          locate: gateway2.locate,
+        });
 
-    await request(app)
-      .post(path)
-      .set('Authorization', token)
-      .send({
-        locate: gateway2.locate,
-      });
+      const response = await request(app)
+        .get(path)
+        .set('Authorization', auth.token)
+        .send();
 
-    const response = await request(app)
-      .get(path)
-      .set('Authorization', token)
-      .send();
-
-    expect(response.body).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining(gateway1),
-        expect.objectContaining(gateway2),
-      ]),
-    );
+      expect(response.body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining(gateway1),
+          expect.objectContaining(gateway2),
+        ]),
+      );
+    });
   });
 
-  /**
-   * Testes for get
-   */
-  it('shoud be able to registe a gateway', async () => {
-    const { locate } = await factory.attrs<Gateway>('Gateway');
+  describe('POST /gateways', () => {
+    it('shoud be able to registe a gateway', async () => {
+      const { locate } = await factory.attrs<Gateway>('Gateway');
 
-    const gateway = await request(app)
-      .post(path)
-      .set('Authorization', await getToken())
-      .send({
-        locate,
-      });
+      const response = await request(app)
+        .post(path)
+        .set('Authorization', auth.token)
+        .send({
+          locate,
+        });
 
-    expect(gateway.body).toHaveProperty('id');
+      expect(response.body).toHaveProperty('id');
+    });
   });
 
-  /**
-   * Testes for update
-   */
-  it.todo('should be able to update the gateway data');
+  describe('PUT /gateways/:id', () => {
+    it('should be able to update the gateway data', async () => {
+      const gateway = await factory.create<Gateway>('Gateway', {
+        user_id: auth.user.id,
+      });
 
-  /**
-   * Testes for delete
-   */
-  it.todo('should be able to delete a gateway');
+      const { locate } = await factory.attrs<Gateway>('Gateway');
+
+      const response = await request(app)
+        .put(`${path}/${gateway.id}`)
+        .set('Authorization', auth.token)
+        .send({
+          locate,
+        });
+
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          locate,
+        }),
+      );
+    });
+
+    it('should not be able to update a gateway that is not yours', async () => {
+      const { id } = await factory.create<User>('User');
+
+      const gateway = await factory.create<Gateway>('Gateway', {
+        user_id: id,
+      });
+
+      const { locate } = await factory.attrs<Gateway>('Gateway');
+
+      const response = await request(app)
+        .put(`${path}/${gateway.id}`)
+        .set('Authorization', auth.token)
+        .send({
+          locate,
+        });
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty('error');
+    });
+  });
+
+  describe('DELETE /gateways/:id', () => {
+    it('should be able to delete a gateway', async () => {
+      const gateway = await factory.create<Gateway>('Gateway', {
+        user_id: auth.user.id,
+      });
+
+      const response = await request(app)
+        .delete(`${path}/${gateway.id}`)
+        .set('Authorization', auth.token)
+        .send();
+
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          deleted: 1,
+        }),
+      );
+    });
+
+    it('should not be able to delete a gateway if not yours', async () => {
+      const { id } = await factory.create<User>('User');
+
+      const gateway = await factory.create<Gateway>('Gateway', {
+        user_id: id,
+      });
+
+      const response = await request(app)
+        .delete(`${path}/${gateway.id}`)
+        .set('Authorization', auth.token)
+        .send();
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty('error');
+    });
+  });
 });

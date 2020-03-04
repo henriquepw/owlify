@@ -34,6 +34,11 @@ routes
   .delete(UserController.delete);
 
 routes
+  .route('/gateways/:id')
+  .put(GatewayController.update)
+  .delete(GatewayController.delete);
+
+routes
   .route('/gateways')
   .get(GatewayController.index)
   .post(GatewayController.store);

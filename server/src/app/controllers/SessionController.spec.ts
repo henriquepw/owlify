@@ -1,24 +1,23 @@
 import request from 'supertest';
 import app from '../../app';
 
-import factory from '../../util/tests/factories';
 import User from '../models/User';
 
-import { cleanPostgres } from '../../util/tests/cleanDB';
+import factory from '../../util/tests/factories';
+// import { cleanPostgres } from '../../util/tests/cleanDB';
 
 describe('Session', () => {
   const path = '/sessions';
 
-  beforeEach(async () => {
-    await cleanPostgres();
-  });
+  // beforeEach(async () => {
+  //   await cleanPostgres();
+  // });
 
   it('should login with correct data', async () => {
     const password = '123';
 
     const { id, email, name } = await factory.create<User>('User', {
       password,
-      email: 'me@thehenry.dev',
     });
 
     const response = await request(app)
