@@ -75,7 +75,7 @@ describe('Gateway', () => {
   });
 
   describe('PUT /gateways/:id', () => {
-    it('should be able to update the gateway data', async () => {
+    it('should be able to update a gateway data by id', async () => {
       const gateway = await factory.create<Gateway>('Gateway', {
         user_id: auth.user.id,
       });
