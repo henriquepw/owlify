@@ -35,7 +35,7 @@ class Gateway extends Model {
   }
 
   public static associate(models: Models) {
-    this.belongsTo(models.User, { foreignKey: 'user_id' });
+    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
   }
 }
 

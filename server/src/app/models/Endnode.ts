@@ -38,7 +38,7 @@ class Endnode extends Model {
   }
 
   public static associate(models: Models) {
-    this.belongsTo(models.Gateway, { foreignKey: 'gateway_id' });
+    this.belongsTo(models.Gateway, { foreignKey: 'gateway_id', as: 'gateway' });
   }
 }
 

@@ -1,6 +1,15 @@
 import { Request, Response } from 'express';
 import Endnode from '../models/Endnode';
 import Gateway from '../models/Gateway';
+import User from '../models/User';
+
+interface GatewayWithUser extends Gateway {
+  user: User;
+}
+
+interface EndnodeWithGateway extends Endnode {
+  gateway: GatewayWithUser;
+}
 
 class EndnodeController {
   async store(req: Request, res: Response) {
@@ -13,7 +22,7 @@ class EndnodeController {
     const isGatewayExists = await Gateway.findByPk(gatewayId);
 
     if (!isGatewayExists) {
-      return res.status(401).json({ error: 'Gateway id is invalid' });
+      return res.status(400).json({ error: 'Gateway id is invalid' });
     }
 
     const { id } = await Endnode.create({
@@ -32,7 +41,29 @@ class EndnodeController {
   async update(req: Request, res: Response) {
     const { id } = req.params;
 
-    const endnode = (await Endnode.findByPk(id)) as Endnode;
+    const endnode = (await Endnode.findByPk(id, {
+      include: [
+        {
+          model: Gateway,
+          as: 'gateway',
+          attributes: ['id'],
+          include: [
+            {
+              model: User,
+              as: 'user',
+              attributes: ['id'],
+            },
+          ],
+        },
+      ],
+    })) as EndnodeWithGateway;
+
+    /**
+     * Check if user id not matches with logged user
+     */
+    if (req.userId !== endnode.gateway.user.id) {
+      return res.status(401).json({ error: 'the end-node is not yours' });
+    }
 
     const { room, name } = await endnode?.update(req.body);
 
