@@ -5,6 +5,8 @@ import { Models } from './Associate';
 class Endnode extends Model {
   public id!: string;
 
+  public gateway_id!: string;
+
   public name!: string;
 
   public room!: string;

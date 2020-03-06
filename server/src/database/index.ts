@@ -3,9 +3,9 @@ import dbConfig from '../config/postgres';
 
 import User from '../app/models/User';
 import Gateway from '../app/models/Gateway';
-// import Endnode from '../app/models/Endnode';
+import Endnode from '../app/models/Endnode';
 
-const MODELS = [User, Gateway /* , Endnode */];
+const MODELS = [User, Gateway, Endnode];
 
 class Database {
   public connection: Sequelize;

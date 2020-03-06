@@ -2,9 +2,11 @@ import { Router } from 'express';
 
 import SensorController from './app/controllers/SensorController';
 import PackageController from './app/controllers/PackageController';
+
 import UserController from './app/controllers/UserController';
 import GatewayController from './app/controllers/GatewayController';
 import SessionController from './app/controllers/SessionController';
+import EndnodeController from './app/controllers/EndnodeController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -42,5 +44,9 @@ routes
   .route('/gateways')
   .get(GatewayController.index)
   .post(GatewayController.store);
+
+routes.route('/endnodes/:gatewayId').post(EndnodeController.store);
+
+routes.route('/endnodes/:id').put(EndnodeController.update);
 
 export default routes;

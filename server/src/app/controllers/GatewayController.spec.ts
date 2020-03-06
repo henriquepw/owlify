@@ -8,16 +8,18 @@ import User from '../models/User';
 import factory from '../../util/tests/factories';
 // import { cleanPostgres } from '../../util/tests/cleanDB';
 
+interface Auth {
+  user: User;
+  token: string;
+}
+
 describe('Gateway', () => {
   const path = '/gateways';
 
   const auth = {
     user: {},
     token: '',
-  } as {
-    user: User;
-    token: string;
-  };
+  } as Auth;
 
   beforeAll(async () => {
     // await cleanPostgres();

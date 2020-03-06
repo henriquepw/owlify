@@ -3,6 +3,7 @@ import factory from 'factory-girl';
 
 import User from '../../app/models/User';
 import Gateway from '../../app/models/Gateway';
+import Endnode from '../../app/models/Endnode';
 
 export const packageFactory = () => ({
   snr: faker.random.number(10),
@@ -25,7 +26,11 @@ factory.define('User', User, {
 
 factory.define('Gateway', Gateway, {
   locate: faker.commerce.department(),
-  // user_id: factory.assoc('User', 'id'),
+});
+
+factory.define('Endnode', Endnode, {
+  room: faker.commerce.department(),
+  name: faker.name.jobType(),
 });
 
 export default factory;
