@@ -121,7 +121,21 @@ describe('End-node', () => {
       expect(response.body).toHaveProperty('error');
     });
 
-    it.todo('shoud return an bad request error if end-node not exist');
+    it('shoud return an bad request error if end-node not exist', async () => {
+      const { id: gateway_id } = await factory.create<Gateway>('Gateway', {
+        user_id: auth.user.id,
+      });
+
+      const { id } = await factory.attrs<Endnode>('Endnode', { gateway_id });
+
+      const response = await request(app)
+        .put(`${path}/${id}`)
+        .set('Authorization', auth.token)
+        .send();
+
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty('error');
+    });
   });
 
   describe('DELETE /endnodes/:id', () => {

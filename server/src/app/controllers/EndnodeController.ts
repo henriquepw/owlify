@@ -59,6 +59,13 @@ class EndnodeController {
     })) as EndnodeWithGateway;
 
     /**
+     * Check if end-node not exists
+     */
+    if (!endnode) {
+      return res.status(400).json({ error: 'the end-node not exists' });
+    }
+
+    /**
      * Check if user id not matches with logged user
      */
     if (req.userId !== endnode.gateway.user.id) {
