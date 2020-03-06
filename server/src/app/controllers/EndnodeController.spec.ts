@@ -60,7 +60,29 @@ describe('End-node', () => {
   });
 
   describe('GET /endnodes/:gatewayId', () => {
-    it.todo("should get a list of all end-nodes of a user's gateway");
+    it("should get a list limited by 2 of end-nodes user's gateway", async () => {
+      await factory.createMany<Endnode>('Endnode', 3, {
+        gateway_id: gateway.id,
+      });
+
+      /**
+       * Create another two nodes with gateway id different
+       */
+      const { id: gateway_id } = await factory.create<Gateway>('Gateway', {
+        user_id: auth.user.id,
+      });
+
+      await factory.createMany<Endnode>('Endnode', 2, {
+        gateway_id,
+      });
+
+      const response = await request(app)
+        .get(`${path}/${gateway.id}/?limit=2`)
+        .set('Authorization', auth.token)
+        .send();
+
+      expect(response.body.length).toBe(2);
+    });
   });
 
   describe('POST /endnodes/:gatewayId', () => {

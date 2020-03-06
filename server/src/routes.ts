@@ -47,7 +47,10 @@ routes
 
 routes.route('/endnodes').get(EndnodeController.index);
 
-routes.route('/endnodes/:gatewayId').post(EndnodeController.store);
+routes
+  .route('/endnodes/:gatewayId')
+  .get(EndnodeController.show)
+  .post(EndnodeController.store);
 
 routes
   .route('/endnodes/:id')

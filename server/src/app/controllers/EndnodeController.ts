@@ -12,6 +12,23 @@ interface EndnodeWithGateway extends Endnode {
 }
 
 class EndnodeController {
+  async show(req: Request, res: Response) {
+    const { page = 1, limit = 20 } = req.query;
+
+    const offset = (page - 1) * limit;
+
+    const endnodes = await Endnode.findAll({
+      where: {
+        gateway_id: req.params.gatewayId,
+      },
+      limit,
+      offset,
+      attributes: ['gateway_id', 'id', 'room', 'name'],
+    });
+
+    return res.json(endnodes);
+  }
+
   async index(req: Request, res: Response) {
     const { page = 1, limit = 20 } = req.query;
 
