@@ -9,16 +9,18 @@ import factory from '../../util/tests/factories';
 describe('Session', () => {
   const path = '/sessions';
 
-  // beforeEach(async () => {
-  //   await cleanPostgres();
-  // });
+  let user: User;
 
-  it('should login with correct data', async () => {
+  beforeAll(async () => {
     const password = '123';
 
-    const { id, email, name } = await factory.create<User>('User', {
+    user = await factory.create<User>('User', {
       password,
     });
+  });
+
+  it('should login with correct data', async () => {
+    const { id, email, name, password } = user;
 
     const response = await request(app)
       .post(path)
@@ -42,7 +44,7 @@ describe('Session', () => {
     );
   });
 
-  it("should return an error if provide a user doesn't exist", async () => {
+  it("should return an unauthorized error if provide a user doesn't exist", async () => {
     const { email, password } = await factory.attrs<User>('User');
 
     const response = await request(app)
@@ -53,24 +55,18 @@ describe('Session', () => {
       });
 
     expect(response.status).toBe(401);
-
     expect(response.body).toHaveProperty('error');
   });
 
-  it('should return an error if provided an invalid password', async () => {
-    const password = '123';
-
-    const { email } = await factory.create<User>('User', { password });
-
+  it('should return an unauthorized error if provided an invalid password', async () => {
     const response = await request(app)
       .post(path)
       .send({
-        email,
+        email: user.email,
         password: '1',
       });
 
     expect(response.status).toBe(401);
-
     expect(response.body).toHaveProperty('error');
   });
 });

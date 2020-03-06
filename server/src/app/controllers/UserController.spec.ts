@@ -8,14 +8,9 @@ import User from '../models/User';
 
 import getToken from '../../util/tests/getToken';
 import factory from '../../util/tests/factories';
-// import { cleanPostgres } from '../../util/tests/cleanDB';
 
 describe('User', () => {
   const path = '/users';
-
-  // beforeEach(async () => {
-  //   await cleanPostgres();
-  // });
 
   describe('POST /users', () => {
     it('should be able to register a user', async () => {

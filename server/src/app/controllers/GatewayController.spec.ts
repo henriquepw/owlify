@@ -22,8 +22,6 @@ describe('Gateway', () => {
   } as Auth;
 
   beforeAll(async () => {
-    // await cleanPostgres();
-
     auth.user = await factory.create<User>('User');
     auth.token = `Bearer ${auth.user.generateToken()}`;
   });
