@@ -72,11 +72,47 @@ class EndnodeController {
       return res.status(401).json({ error: 'the end-node is not yours' });
     }
 
-    const { room, name } = await endnode?.update(req.body);
+    const { room, name } = await endnode.update(req.body);
 
     return res.json({
       room,
       name,
+    });
+  }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const endnode = (await Endnode.findByPk(id, {
+      include: [
+        {
+          model: Gateway,
+          as: 'gateway',
+          attributes: ['id'],
+          include: [
+            {
+              model: User,
+              as: 'user',
+              attributes: ['id'],
+            },
+          ],
+        },
+      ],
+    })) as EndnodeWithGateway;
+
+    /**
+     * Check if user id not matches with logged user
+     */
+    if (req.userId !== endnode.gateway.user.id) {
+      return res.status(401).json({ error: 'the end-node is not yours' });
+    }
+
+    const deleted = await Endnode.destroy({
+      where: { id },
+    });
+
+    return res.json({
+      deleted,
     });
   }
 }

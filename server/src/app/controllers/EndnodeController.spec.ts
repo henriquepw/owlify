@@ -21,9 +21,15 @@ describe('End-node', () => {
     token: '',
   } as Auth;
 
+  let gateway: Gateway;
+
   beforeAll(async () => {
     auth.user = await factory.create<User>('User');
     auth.token = `Bearer ${auth.user.generateToken()}`;
+
+    gateway = await factory.create<Gateway>('Gateway', {
+      user_id: auth.user.id,
+    });
   });
 
   describe('GET /endnodes', () => {
@@ -38,12 +44,8 @@ describe('End-node', () => {
     it('shoud be able to registe a end-node', async () => {
       const endnode = await factory.attrs<Endnode>('Endnode');
 
-      const { id: gatewayId } = await factory.create<Gateway>('Gateway', {
-        user_id: auth.user.id,
-      });
-
       const response = await request(app)
-        .post(`${path}/${gatewayId}`)
+        .post(`${path}/${gateway.id}`)
         .set('Authorization', auth.token)
         .send(endnode);
 
@@ -71,12 +73,8 @@ describe('End-node', () => {
 
   describe('PUT /endnodes/:id', () => {
     it('should be able to update a end-node data by id', async () => {
-      const { id: gateway_id } = await factory.create<Gateway>('Gateway', {
-        user_id: auth.user.id,
-      });
-
       const { id } = await factory.create<Endnode>('Endnode', {
-        gateway_id,
+        gateway_id: gateway.id,
       });
 
       const { room, name } = await factory.attrs<Endnode>('Endnode');
@@ -122,11 +120,9 @@ describe('End-node', () => {
     });
 
     it('shoud return an bad request error if end-node not exist', async () => {
-      const { id: gateway_id } = await factory.create<Gateway>('Gateway', {
-        user_id: auth.user.id,
+      const { id } = await factory.attrs<Endnode>('Endnode', {
+        gateway_id: gateway.id,
       });
-
-      const { id } = await factory.attrs<Endnode>('Endnode', { gateway_id });
 
       const response = await request(app)
         .put(`${path}/${id}`)
@@ -139,8 +135,41 @@ describe('End-node', () => {
   });
 
   describe('DELETE /endnodes/:id', () => {
-    it.todo('should be able to delete a end-node');
+    it('should be able to delete a end-node', async () => {
+      const { id } = await factory.create<Endnode>('Endnode', {
+        gateway_id: gateway.id,
+      });
 
-    it.todo('should not be able to delete a end-node if not yours');
+      const response = await request(app)
+        .delete(`${path}/${id}`)
+        .set('Authorization', auth.token)
+        .send();
+
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          deleted: 1,
+        }),
+      );
+    });
+
+    it('should return an unauthorized error if the end-node is not yours', async () => {
+      const { id: user_id } = await factory.create<User>('User');
+
+      const { id: gateway_id } = await factory.create<Gateway>('Gateway', {
+        user_id,
+      });
+
+      const { id } = await factory.create<Endnode>('Endnode', {
+        gateway_id,
+      });
+
+      const response = await request(app)
+        .delete(`${path}/${id}`)
+        .set('Authorization', auth.token)
+        .send();
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty('error');
+    });
   });
 });

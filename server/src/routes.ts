@@ -47,6 +47,9 @@ routes
 
 routes.route('/endnodes/:gatewayId').post(EndnodeController.store);
 
-routes.route('/endnodes/:id').put(EndnodeController.update);
+routes
+  .route('/endnodes/:id')
+  .put(EndnodeController.update)
+  .delete(EndnodeController.delete);
 
 export default routes;
