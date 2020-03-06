@@ -45,6 +45,8 @@ routes
   .get(GatewayController.index)
   .post(GatewayController.store);
 
+routes.route('/endnodes').get(EndnodeController.index);
+
 routes.route('/endnodes/:gatewayId').post(EndnodeController.store);
 
 routes

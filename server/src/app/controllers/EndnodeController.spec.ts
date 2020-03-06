@@ -33,7 +33,30 @@ describe('End-node', () => {
   });
 
   describe('GET /endnodes', () => {
-    it.todo('should get a list of all user end-nodes');
+    it('should get a list limited by 2 of user end-nodes', async () => {
+      const endnodes = await factory.createMany<Endnode>('Endnode', 2, {
+        gateway_id: gateway.id,
+      });
+
+      await factory.create<Endnode>('Endnode', {
+        gateway_id: gateway.id,
+      });
+
+      const response = await request(app)
+        .get(`${path}/?limit=2`)
+        .set('Authorization', auth.token)
+        .send();
+
+      expect(response.body.length).toBe(2);
+
+      expect(response.body).toEqual(
+        expect.arrayContaining(
+          endnodes.map(({ room, name }) =>
+            expect.objectContaining({ room, name }),
+          ),
+        ),
+      );
+    });
   });
 
   describe('GET /endnodes/:gatewayId', () => {
@@ -41,7 +64,7 @@ describe('End-node', () => {
   });
 
   describe('POST /endnodes/:gatewayId', () => {
-    it('shoud be able to registe a end-node', async () => {
+    it('should be able to registe a end-node', async () => {
       const endnode = await factory.attrs<Endnode>('Endnode');
 
       const response = await request(app)
@@ -52,7 +75,7 @@ describe('End-node', () => {
       expect(response.body).toHaveProperty('id');
     });
 
-    it('shoud return an bad request error if gateway not exist', async () => {
+    it('should return an bad request error if gateway not exist', async () => {
       const { id: user_id } = await factory.attrs<User>('User');
 
       const endnode = await factory.attrs<Endnode>('Endnode');
@@ -119,7 +142,7 @@ describe('End-node', () => {
       expect(response.body).toHaveProperty('error');
     });
 
-    it('shoud return an bad request error if end-node not exist', async () => {
+    it('should return an bad request error if end-node not exist', async () => {
       const { id } = await factory.attrs<Endnode>('Endnode', {
         gateway_id: gateway.id,
       });
