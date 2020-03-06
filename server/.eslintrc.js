@@ -28,6 +28,7 @@ module.exports = {
     'no-undef': 'off',
     'no-await-in-loop': 'off',
     'import/prefer-default-export': 'off',
+    '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
@@ -38,12 +39,13 @@ module.exports = {
       'ignorePackages',
       {
         ts: 'never',
+        js: 'never',
       },
     ],
     'import/no-extraneous-dependencies': [
       'error',
       {
-        devDependencies: ['src/**/*.spec.ts', 'src/utils/tests/*.ts'],
+        devDependencies: ['src/**/*.spec.ts', 'src/util/tests/*.ts'],
       },
     ],
   },

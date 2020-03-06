@@ -1,11 +1,14 @@
-
 declare module 'youch' {
-  import { Errback, Request } from 'express';
+  class Youch<Error, Request> {
+    constructor(error: Error, request: Request);
 
-  class Youch {
-    constructor(err: Errback, req: Request);
-
-    toJSON(): Promise<any>;
+    /**
+     * Returns error stack as JSON.
+     *
+     * @return {Promise}
+     */
+    toJSON(): Promise<object>;
   }
+
   export default Youch;
 }

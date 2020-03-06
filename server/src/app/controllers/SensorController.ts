@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { escape } from 'influx/lib/src/grammar/escape';
 
-import influx from '../../database';
+import influx from '../../database/influx';
 
 type indexQuery = {
   page: number;
@@ -17,13 +17,13 @@ type storeBody = {
 
 class SensorController {
   async index(req: Request, res: Response) {
-    const { host } = req.params;
+    const { nodeID } = req.params;
     const { page = 1 } = req.query as indexQuery;
 
     try {
       const result = await influx.query(`
         select * from sensor
-        where host = ${escape.stringLit(host)}
+        where nodeID = ${escape.stringLit(nodeID)}
         order by time desc
         limit ${page * 50}
       `);
@@ -35,21 +35,20 @@ class SensorController {
   }
 
   async store(req: Request, res: Response) {
-    const { host } = req.params;
-    const { id, snr, rssi, temperature, humidity } = req.body as storeBody;
+    const { nodeID } = req.params;
+    const { snr, rssi, temperature, humidity } = req.body as storeBody;
 
     try {
       await influx.writePoints([
         {
           measurement: 'sensor',
-          tags: { host },
+          tags: { nodeID },
           fields: { temperature, humidity },
         },
         {
           measurement: 'package',
-          tags: { host },
+          tags: { nodeID },
           fields: {
-            id,
             snr,
             rssi,
             success: true,
@@ -58,14 +57,13 @@ class SensorController {
       ]);
 
       return res.json({
-        id,
         snr,
         rssi,
         temperature,
         humidity,
       });
     } catch (err) {
-      return res.status(500).send(err.stack);
+      return res.status(500).json({ error: err.stack });
     }
   }
 }

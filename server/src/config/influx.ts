@@ -11,17 +11,16 @@ export default {
         humidity: FieldType.FLOAT,
         temperature: FieldType.FLOAT,
       },
-      tags: ['host'],
+      tags: ['nodeID'],
     },
     {
       measurement: 'package',
       fields: {
         snr: FieldType.FLOAT,
-        id: FieldType.INTEGER,
         rssi: FieldType.INTEGER,
         success: FieldType.BOOLEAN,
       },
-      tags: ['host'],
+      tags: ['nodeID'],
     },
   ],
 } as ISingleHostConfig;

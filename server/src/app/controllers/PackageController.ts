@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { escape } from 'influx/lib/src/grammar/escape';
 
-import influx from '../../database';
+import influx from '../../database/influx';
 
 type indexQuery = {
   page: number;
@@ -16,13 +16,13 @@ type storeBody = {
 
 class PackageController {
   public async index(req: Request, res: Response) {
-    const { host } = req.params;
+    const { nodeID } = req.params;
     const { page = 1 } = req.query as indexQuery;
 
     try {
       const result = await influx.query(`
         select * from package
-        where host = ${escape.stringLit(host)}
+        where nodeID = ${escape.stringLit(nodeID)}
         order by time desc
         limit ${page * 50}
       `);
@@ -34,12 +34,11 @@ class PackageController {
   }
 
   public async store(req: Request, res: Response) {
-    const { host } = req.params;
-    const { id, snr, rssi, success } = req.body as storeBody;
+    const { nodeID } = req.params;
+    const { snr, rssi, success } = req.body as storeBody;
 
     try {
       const measurement = {
-        id,
         snr,
         rssi,
         success,
@@ -48,14 +47,14 @@ class PackageController {
       await influx.writePoints([
         {
           measurement: 'package',
-          tags: { host },
+          tags: { nodeID },
           fields: measurement,
         },
       ]);
 
       return res.json(measurement);
     } catch (err) {
-      return res.status(500).send(err.stack);
+      return res.status(500).json({ error: err.stack });
     }
   }
 }

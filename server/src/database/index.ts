@@ -1,26 +1,24 @@
-import { InfluxDB } from 'influx';
-import influxConfig from './config';
+import { Sequelize, Options } from 'sequelize';
+import dbConfig from '../config/postgres';
+
+import User from '../app/models/User';
+import Gateway from '../app/models/Gateway';
+import Endnode from '../app/models/Endnode';
+
+const MODELS = [User, Gateway, Endnode];
 
 class Database {
-  public influx: InfluxDB;
+  public connection: Sequelize;
 
   constructor() {
     this.init();
   }
 
-  private async init() {
-    this.influx = new InfluxDB(influxConfig);
+  public init() {
+    this.connection = new Sequelize(dbConfig as Options);
 
-    await this.createDB();
-  }
-
-  public async createDB() {
-    const databases = await this.influx.getDatabaseNames();
-
-    if (!databases.includes(process.env.DB_NAME as string)) {
-      await this.influx.createDatabase(process.env.DB_NAME as string);
-    }
+    MODELS.map(model => model.start(this.connection));
   }
 }
 
-export default new Database().influx;
+export default new Database();

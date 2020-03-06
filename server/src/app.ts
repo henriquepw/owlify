@@ -9,6 +9,8 @@ import http from 'http';
 
 import routes from './routes';
 
+import './database';
+
 class App {
   private app: express.Application;
 
@@ -35,12 +37,14 @@ class App {
   private exceptionHandler() {
     this.app.use(
       async (err: Errback, req: Request, res: Response, next: NextFunction) => {
-        const erros =
-          process.env.NODE_ENV === 'development'
+        const { NODE_ENV } = process.env;
+
+        const error =
+          NODE_ENV !== 'production'
             ? await new Youch(err, req).toJSON()
             : { error: 'Internal server error' };
 
-        return res.status(500).json(erros);
+        return res.status(500).send(error);
       },
     );
   }

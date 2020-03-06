@@ -1,13 +1,14 @@
 import request from 'supertest';
+import { isAfter, parseISO } from 'date-fns';
 
 import app from '../../app';
 
-import cleanDB from '../../util/tests/cleanDB';
+import { cleanInflux } from '../../util/tests/cleanDB';
 import { packageFactory } from '../../util/tests/factories';
 
 describe('Package', () => {
   beforeAll(async () => {
-    await cleanDB();
+    await cleanInflux();
   });
 
   it('should be able to register a package', async () => {
@@ -27,8 +28,12 @@ describe('Package', () => {
     expect(response.status).toBe(500);
   });
 
-  it('should return a list of all host packages order by decrescent time', async () => {
+  it('should return a list of all nodeID packages order by decrescent time', async () => {
     const measurement = packageFactory();
+
+    await request(app)
+      .post('/packages/test')
+      .send(measurement);
 
     await request(app)
       .post('/packages/test')
@@ -36,10 +41,12 @@ describe('Package', () => {
 
     const response = await request(app).get('/packages/test');
 
-    expect(response.body[0]).toMatchObject({ ...measurement, host: 'test' });
+    const [first, second] = response.body;
+
+    expect(isAfter(parseISO(first.time), parseISO(second.time))).toBe(true);
   });
 
-  it("should return an empty array if a host doesn't have registered measurement", async () => {
+  it("should return an empty array if a nodeID doesn't have registered measurement", async () => {
     const response = await request(app).get('/packages/test1');
 
     expect(response.body).toEqual([]);
