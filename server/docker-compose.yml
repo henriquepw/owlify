@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   owlify_api:
@@ -6,16 +6,18 @@ services:
     container_name: owlify_api
     ports:
       - '3333:3333'
+    environment:
+      - NODE_ENV=development
     volumes:
-      - .:/usr/server
+      - .:/home/api/
+      - /home/api/node_modules
     depends_on:
-      - owlify_postgres
-      - owlify_influxdb
-    command: sh -c "dockerize -wait tcp://owlify_postgres:5432 -wait tcp://owlify_influxdb:8086 -timeout 10s && yarn dev"
+      - owlify_pg
+      - owlify_influx
 
-  owlify_postgres:
+  owlify_pg:
     image: bitnami/postgresql:latest
-    container_name: owlify_postgres
+    container_name: owlify_pg
     ports:
       - '5432:5432'
     environment:
@@ -23,20 +25,16 @@ services:
       - POSTGRES_PASSWORD=${PG_PASS}
       - POSTGRES_DB=${PG_NAME}
     volumes:
-      - postgres-data:/var/lib/postgressql/data
+      - postgres-data:/postgres/data
 
-  owlify_influxdb:
+  owlify_influx:
     image: influxdb:latest
-    container_name: owlify_influxdb
+    container_name: owlify_influx
     ports:
       - '8086:8086'
     volumes:
-      - influxdb-data:/var/lib/influxdb/data
+      - influxdb-data:/influxdb/data
 
 volumes:
   postgres-data: {}
   influxdb-data: {}
-
-networks:
-  default:
-    driver: bridge

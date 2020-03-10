@@ -4,6 +4,7 @@ FROM node:lts-alpine
 WORKDIR /home/api
 
 RUN apk add --no-cache openssl
+RUN apk add --no-cache --upgrade bash
 
 ENV DOCKERIZE_VERSION v0.6.1
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
@@ -20,4 +21,6 @@ COPY --chown=node:node . .
 
 EXPOSE 3333
 
-CMD ["yarn", "start"]
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
