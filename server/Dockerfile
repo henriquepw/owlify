@@ -1,6 +1,5 @@
 FROM node:lts-alpine
 
-
 WORKDIR /home/api
 
 RUN apk add --no-cache openssl

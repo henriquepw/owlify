@@ -1,15 +1,14 @@
 {
-  "name": "pandora",
+  "name": "owlify-api",
   "version": "1.0.0",
   "main": "src/server.ts",
   "license": "MIT",
+  "author": "@henry-ns",
   "scripts": {
     "build": "sucrase ./src -d ./dist --transforms typescript,imports",
     "migrate": "sequelize db:migrate",
-    "predev": "yarn migrate",
     "dev": "nodemon",
-    "prestart": "yarn migrate",
-    "start": "pm2 start dist/server.js",
+    "start": "NODE_ENV=production pm2 start dist/server.js",
     "startup": "pm2 startup systemd",
     "stop": "pm2 stop server",
     "show": "pm2 show server",
