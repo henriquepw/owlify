@@ -8,7 +8,7 @@
     "build": "sucrase ./src -d ./dist --transforms typescript,imports",
     "migrate": "sequelize db:migrate",
     "dev": "nodemon",
-    "start": "NODE_ENV=production pm2 start dist/server.js",
+    "start": "NODE_ENV=production pm2 start ./dist/server.js",
     "startup": "pm2 startup systemd",
     "stop": "pm2 stop server",
     "show": "pm2 show server",

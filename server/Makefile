@@ -8,6 +8,10 @@ dev:
 up:
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
+.PHONY: db
+db:
+	docker-compose -f docker-compose.db.yml up -d
+
 .PHONY: down
 down:
 	docker-compose down

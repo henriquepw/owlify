@@ -6,6 +6,8 @@ yarn migrate
 
 if [ "$1" == "production" ];
 then
+  cp ./src/config/postgres.js ./dist/config/postgres.js
+
   yarn build
   yarn start
   yarn pm2 monit
