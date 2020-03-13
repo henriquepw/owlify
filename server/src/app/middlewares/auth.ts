@@ -3,6 +3,7 @@ import { promisify } from 'util';
 
 import jwt from 'jsonwebtoken';
 import authConfig from '../../config/auth';
+import User from '../models/User';
 
 interface Payload {
   id: string;
@@ -24,6 +25,15 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       token,
       authConfig.secret,
     )) as Payload;
+
+    /**
+     * Check if user not exists
+     */
+    const isExists = await User.findByPk(decoded.id);
+
+    if (!isExists) {
+      throw new Error();
+    }
 
     req.userId = decoded.id;
 
