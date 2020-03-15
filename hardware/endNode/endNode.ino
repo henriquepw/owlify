@@ -1,12 +1,15 @@
 #include <LoRa.h>
 #include <DHT.h>
 
+#include "env.h"
+
 #define DHTPIN A2
 #define DHTTYPE DHT22
 
 typedef struct {
   float temperature;
   float humidity;
+  unsigned int count;
   unsigned int id;
 } Data;
 
@@ -22,6 +25,8 @@ String packageParser(Data data) {
   package += String(data.humidity);
   package += ":";
   package += String(data.id);
+  package += ":";
+  package += String(data.count);
 
   Serial.println(package);
 
@@ -31,7 +36,7 @@ String packageParser(Data data) {
 void getData() {
   data.temperature = dht.readTemperature();
   data.humidity = dht.readHumidity();
-  data.id++;
+  data.count++;
 }
 
 void setup() {
@@ -42,8 +47,8 @@ void setup() {
   Serial.println("Sending something");
   data.temperature = 0;
   data.humidity = 0;
-  data.id = 0;
-
+  data.count = 0;
+  data.id = ID;
 
   if (!LoRa.begin(915E6)) {
     Serial.println("Error");
@@ -59,5 +64,5 @@ void loop() {
   LoRa.endPacket();
   LoRa.idle();
 
-  delay(300000); // 5 minutos
+  delay(1000); // 300000 = 5 minutos
 }
