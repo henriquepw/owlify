@@ -64,5 +64,5 @@ void loop() {
   LoRa.endPacket();
   LoRa.idle();
 
-  delay(1000); // 300000 = 5 minutos
+  delay(5000); // 300000 = 5 minutos
 }
