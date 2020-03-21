@@ -63,6 +63,7 @@ class SensorController {
       return res.json({
         snr,
         rssi,
+        count,
         temperature,
         humidity,
       });
