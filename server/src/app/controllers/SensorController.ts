@@ -8,9 +8,9 @@ type indexQuery = {
 };
 
 type storeBody = {
-  id: number;
   snr: number;
   rssi: number;
+  count: number;
   temperature: number;
   humidity: number;
 };
@@ -36,7 +36,7 @@ class SensorController {
 
   async store(req: Request, res: Response) {
     const { nodeID } = req.params;
-    const { snr, rssi, temperature, humidity } = req.body as storeBody;
+    const { snr, rssi, temperature, humidity, count } = req.body as storeBody;
 
     try {
       await influx.writePoints([
@@ -51,6 +51,7 @@ class SensorController {
           fields: {
             snr,
             rssi,
+            count,
             success: true,
           },
         },

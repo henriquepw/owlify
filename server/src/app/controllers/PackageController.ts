@@ -8,9 +8,9 @@ type indexQuery = {
 };
 
 type storeBody = {
-  id: number;
   snr: number;
   rssi: number;
+  count: number;
   success: boolean;
 };
 
@@ -35,12 +35,13 @@ class PackageController {
 
   public async store(req: Request, res: Response) {
     const { nodeID } = req.params;
-    const { snr, rssi, success } = req.body as storeBody;
+    const { snr, rssi, success, count } = req.body as storeBody;
 
     try {
       const measurement = {
         snr,
         rssi,
+        count,
         success,
       };
 
