@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  owlify_pg:
+    image: bitnami/postgresql:latest
+    container_name: owlify_pg
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASS}
+      - POSTGRES_DB=${PG_NAME}
+    volumes:
+      - postgres-data:/postgres/data
+
+  owlify_influx:
+    image: influxdb:latest
+    container_name: owlify_influx
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb-data:/influxdb/data
+
+volumes:
+  postgres-data: {}
+  influxdb-data: {}

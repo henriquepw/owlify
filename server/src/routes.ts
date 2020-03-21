@@ -12,7 +12,11 @@ import authMiddleware from './app/middlewares/auth';
 
 const routes = Router();
 
-routes.get('/', (_, res) => res.json({ message: 'Welcome to Owlify' }));
+routes.get('/', (_, res) =>
+  res.json({
+    message: `Welcome to Owlify API on ${process.env.NODE_ENV} mode`,
+  }),
+);
 
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
