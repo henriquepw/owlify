@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  owlify_api:
+    ports:
+      - '80:3333'
+    environment:
+      - NODE_ENV=production
+    entrypoint: ["/docker-entrypoint.sh", "production"]

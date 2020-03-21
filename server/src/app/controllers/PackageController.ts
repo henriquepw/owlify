@@ -4,7 +4,7 @@ import { escape } from 'influx/lib/src/grammar/escape';
 import influx from '../../database/influx';
 
 type indexQuery = {
-  page: number;
+  [key: string]: number;
 };
 
 type storeBody = {
@@ -17,14 +17,17 @@ type storeBody = {
 class PackageController {
   public async index(req: Request, res: Response) {
     const { nodeID } = req.params;
-    const { page = 1 } = req.query as indexQuery;
+    const { page = 1, limit = 20 } = req.query as indexQuery;
+
+    const offset = (page - 1) * limit;
 
     try {
       const result = await influx.query(`
         select * from package
         where nodeID = ${escape.stringLit(nodeID)}
         order by time desc
-        limit ${page * 50}
+        limit ${limit}
+        offset ${offset}
       `);
 
       return res.json(result);
