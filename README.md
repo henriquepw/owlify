@@ -11,7 +11,7 @@
 Development of a platform for temperature and humidity monitoring for quality control of vaccines
 
 ## Run API on Insomnia
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Owlify%20API&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fhenry-ns%2Fowlify%2Fserver%2Fadd-docker-compose%2Fserver%2Finsomnia.json%3Ftoken%3DAD43NFADAIZV66V5SO3J3VS6OYK62)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Owlify%20API&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fhenry-ns%2Fowlify%2Fmaster%2Fserver%2Finsomnia.json%3Ftoken%3DAD43NFF7DB5PM3TQKY4QKES6QM4GI)
 
 ## To contribute
 ---
