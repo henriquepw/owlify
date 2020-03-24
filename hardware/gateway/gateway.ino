@@ -11,13 +11,10 @@
 #include "pages.h"
 #include "env.h"
 
-/**
-  * For testing
-  * TODO: Remove 
-  */
 typedef struct {
   int rssi;
   unsigned int id;
+  unsigned int count;
   float temperature;
   float humidity;
   float snr;
@@ -42,7 +39,7 @@ IPAddress LOCAL_IP(192, 168, 4, 22);
 IPAddress LOCAL_GATEWAY(192, 168, 4, 9);
 IPAddress LOCAL_SUBNET(255, 255, 255, 0);
 
-const char* LOCAL_SSID = "Panaceia";
+const char* LOCAL_SSID = "Owlify";
 const char* LOCAL_PASSWORD = "12345678";
 
 int id = -1;
@@ -130,18 +127,32 @@ void loop () {
     Serial.print(";");
     Serial.print(data.humidity);
     Serial.print(";");
-    Serial.println(data.id);
+    Serial.print(data.id);
+    Serial.print(";");
+    Serial.println(data.count);
+    
     Serial.print("Packets receive: ");
     Serial.print(packetsReceive);
+    
     Serial.print(", Packets error: ");
     Serial.print(packetsError);
+    
     Serial.print(", RSSI: ");
     Serial.print(data.rssi);
+    
     Serial.print(", SNR: ");
     Serial.println(data.snr);
 
     delay(3000);
   }
+}
+
+String getHost(Data data) {
+  for(int i = 0; i < sizeof(hosts); i++) {
+    if(hosts[i].ip == data.id) return hosts[i].nodeId;
+  }
+
+  return "null";
 }
 
 /**
@@ -163,7 +174,7 @@ String getLoRaResponse() {
 Data dataParser(String response) {
   Data data;
 
-  String tmp[] = {"", "", ""};
+  String tmp[] = {"", "", "", ""};
   int j = 0;
 
   for (int i = 0; i < response.length(); i++) {
@@ -178,6 +189,7 @@ Data dataParser(String response) {
   data.temperature = tmp[0].toFloat();
   data.humidity = tmp[1].toFloat();
   data.id = tmp[2].toInt();
+  data.count = tmp[3].toInt();
 
   return data;
 }
@@ -188,6 +200,8 @@ bool isPacketCorrect(String response, Data data) {
   packet += String(data.humidity);
   packet += ":";
   packet += String(data.id);
+  packet += ":";
+  packet += String(data.count);
 
   return !packet.compareTo(response) ? true : false;
 }
@@ -297,12 +311,14 @@ void connectWiFi() {
 /**
  * *Send data to server
  */
-void sendData(String data, String url) {
+void sendData(String data, String url, String nodeId) {
+  Serial.println("EndNode: " + nodeId);
+
   if (client.connect(SERVER, HTTP_PORT)) {
     Serial.print("Connected - ");
     Serial.println(data); 
 
-    client.println("POST /" + url + "/" + HOST + " HTTP/1.1");
+    client.println("POST /" + url + "/" + nodeId + " HTTP/1.1");
     client.print("Host: ");
     client.println(SERVER);
     client.println("User-Agent: Gateway");
@@ -328,12 +344,12 @@ void sendDataFailure(Data data) {
   json += String(data.rssi);
   json += ", \"snr\": ";
   json += String(data.snr);
-  json += ", \"id\": ";
-  json += String(data.id);
+  json += ", \"count\": ";
+  json += String(data.count);
   json += ", \"success\": false";
   json += "}";
 
-  sendData(json, "packages");
+  sendData(json, "packages", getHost(data));
 }
 
 void sendDataSuccess(Data data) {
@@ -342,13 +358,13 @@ void sendDataSuccess(Data data) {
   json += String(data.rssi);
   json += ", \"snr\": ";
   json += String(data.snr);
-  json += ", \"id\": ";
-  json += String(data.id);
+  json += ", \"count\": ";
+  json += String(data.count);
   json += ", \"temperature\": ";
   json += String(data.temperature);
   json += ", \"humidity\": ";
   json += String(data.humidity);
   json += "}";
 
-  sendData(json, "sensors");
+  sendData(json, "sensors", getHost(data));
 }

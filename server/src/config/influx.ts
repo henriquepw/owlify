@@ -18,6 +18,7 @@ export default {
       fields: {
         snr: FieldType.FLOAT,
         rssi: FieldType.INTEGER,
+        count: FieldType.INTEGER,
         success: FieldType.BOOLEAN,
       },
       tags: ['nodeID'],
