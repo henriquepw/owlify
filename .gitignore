@@ -8,6 +8,14 @@ env.h
 ./server/dist
 node_modules
 
+# Analytics
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+*/.ipynb_checkpoints/*ipynb
+
+profile_default/
+ipython_config.py
+
 # Allowed
 !.gitkeep
 !.keep
