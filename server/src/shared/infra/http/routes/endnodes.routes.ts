@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import EndnodeController from '../app/controllers/EndnodeController';
+import EndnodeController from '../../../../app/controllers/EndnodeController';
 
 const routes = Router();
 

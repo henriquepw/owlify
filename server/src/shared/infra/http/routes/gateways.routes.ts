@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-import GatewayController from '../app/controllers/GatewayController';
+import GatewayController from '../../../../app/controllers/GatewayController';
 
-import authMiddleware from '../app/middlewares/auth';
+import authMiddleware from '../../../../app/middlewares/auth';
 
 const routes = Router();
 

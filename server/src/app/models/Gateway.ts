@@ -29,7 +29,7 @@ class Gateway extends Model {
       },
     );
 
-    this.associate(sequelize.I);
+    this.associate(sequelize.models);
 
     return this;
   }

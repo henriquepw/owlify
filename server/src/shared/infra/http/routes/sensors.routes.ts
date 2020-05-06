@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import SensorController from '../app/controllers/SensorController';
+import SensorController from '../../../../app/controllers/SensorController';
 
 const routes = Router();
 

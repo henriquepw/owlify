@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import PackageController from '../app/controllers/PackageController';
+import PackageController from '../../../../app/controllers/PackageController';
 
 const routes = Router();
 

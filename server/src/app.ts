@@ -1,4 +1,4 @@
-import './bootstrap';
+import './config/bootstrap';
 
 import express, { Errback, Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
@@ -7,7 +7,7 @@ import cors from 'cors';
 import Youch from 'youch';
 import http from 'http';
 
-import routes from './routes';
+import routes from './shared/infra/http/routes';
 
 import './database';
 
