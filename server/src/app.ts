@@ -25,18 +25,18 @@ class App {
     this.exceptionHandler();
   }
 
-  private middlewares() {
+  private middlewares(): void {
     this.app.use(cors());
     this.app.use(express.json());
   }
 
-  private routes() {
+  private routes(): void {
     this.app.use(routes);
   }
 
-  private exceptionHandler() {
+  private exceptionHandler(): void {
     this.app.use(
-      async (err: Errback, req: Request, res: Response, next: NextFunction) => {
+      async (err: Errback, req: Request, res: Response, _: NextFunction) => {
         const { NODE_ENV } = process.env;
 
         const error =

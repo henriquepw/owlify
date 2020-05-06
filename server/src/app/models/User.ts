@@ -19,7 +19,7 @@ class User extends Model {
 
   public readonly updatedAt!: Date;
 
-  public static start(sequelize: Sequelize) {
+  public static start(sequelize: Sequelize): typeof User {
     this.init(
       {
         id: {
@@ -48,11 +48,11 @@ class User extends Model {
     return this;
   }
 
-  checkPassword(password: string) {
+  checkPassword(password: string): Promise<boolean> {
     return bcrypt.compare(password, this.password_hash);
   }
 
-  generateToken() {
+  generateToken(): string {
     const { secret, expiresIn } = authConfig;
 
     return jwt.sign({ id: this.id }, secret, {

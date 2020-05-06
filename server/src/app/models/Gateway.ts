@@ -1,6 +1,6 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 
-import { Models } from './Associate';
+import { IModels } from './Associate';
 
 class Gateway extends Model {
   public id!: string;
@@ -13,7 +13,7 @@ class Gateway extends Model {
 
   public readonly updatedAt!: Date;
 
-  public static start(sequelize: Sequelize) {
+  public static start(sequelize: Sequelize): typeof Gateway {
     this.init(
       {
         id: {
@@ -29,12 +29,12 @@ class Gateway extends Model {
       },
     );
 
-    this.associate(sequelize.models);
+    this.associate(sequelize.I);
 
     return this;
   }
 
-  public static associate(models: Models) {
+  public static associate(models: IModels): void {
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
   }
 }

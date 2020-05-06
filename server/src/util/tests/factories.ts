@@ -5,14 +5,14 @@ import User from '../../app/models/User';
 import Gateway from '../../app/models/Gateway';
 import Endnode from '../../app/models/Endnode';
 
-export const packageFactory = () => ({
+export const packageFactory = (): object => ({
   snr: faker.random.number(10),
   rssi: faker.random.number(100),
   count: faker.random.number(100),
   success: faker.random.boolean(),
 });
 
-export const sensorFactory = () => ({
+export const sensorFactory = (): object => ({
   snr: faker.random.number(10),
   rssi: faker.random.number(100),
   count: faker.random.number(100),

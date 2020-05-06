@@ -5,13 +5,17 @@ import jwt from 'jsonwebtoken';
 import authConfig from '../../config/auth';
 import User from '../models/User';
 
-interface Payload {
+interface IPayload {
   id: string;
   iat: number;
   exp: number;
 }
 
-export default async (req: Request, res: Response, next: NextFunction) => {
+export default async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<Response | void> => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -24,7 +28,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     const decoded = (await promisify(jwt.verify)(
       token,
       authConfig.secret,
-    )) as Payload;
+    )) as IPayload;
 
     /**
      * Check if user not exists
