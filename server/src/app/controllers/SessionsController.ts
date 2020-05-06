@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import User from '../models/User';
 
-class SessionController {
+class SessionsController {
   async store(req: Request, res: Response) {
     const { email, password } = req.body as User;
 
@@ -32,4 +32,4 @@ class SessionController {
   }
 }
 
-export default new SessionController();
+export default new SessionsController();
