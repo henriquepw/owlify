@@ -1,55 +1,38 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import authConfig from '../../config/auth';
 
-class User extends Model {
-  public id!: string;
+@Entity('users')
+class User {
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
-  public name!: string;
+  @Column()
+  name!: string;
 
-  public email!: string;
+  @Column()
+  email!: string;
 
-  public password_hash!: string;
+  @Column()
+  password!: string;
 
-  public readonly password!: string;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt!: Date;
 
-  public readonly createdAt!: Date;
-
-  public readonly updatedAt!: Date;
-
-  public static start(sequelize: Sequelize): typeof User {
-    this.init(
-      {
-        id: {
-          type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
-          allowNull: false,
-          primaryKey: true,
-        },
-        name: DataTypes.STRING,
-        email: DataTypes.STRING,
-        password: DataTypes.VIRTUAL,
-        password_hash: DataTypes.STRING,
-      },
-      {
-        sequelize,
-      },
-    );
-
-    this.addHook('beforeSave', async (user: User) => {
-      if (user.password) {
-        // eslint-disable-next-line no-param-reassign
-        user.password_hash = await bcrypt.hash(user.password, 8);
-      }
-    });
-
-    return this;
-  }
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt!: Date;
 
   checkPassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password_hash);
+    return bcrypt.compare(password, this.password);
   }
 
   generateToken(): string {

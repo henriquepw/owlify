@@ -1,42 +1,27 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-import { IModels } from './Associate';
+@Entity('gateways')
+class Gateway {
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
-class Gateway extends Model {
-  public id!: string;
+  @Column({ name: 'user_id' })
+  userId!: string;
 
-  public user_id!: string;
+  @Column()
+  location!: string;
 
-  public locate!: string;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt!: Date;
 
-  public readonly createdAt!: Date;
-
-  public readonly updatedAt!: Date;
-
-  public static start(sequelize: Sequelize): typeof Gateway {
-    this.init(
-      {
-        id: {
-          type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
-          allowNull: false,
-          primaryKey: true,
-        },
-        locate: DataTypes.STRING,
-      },
-      {
-        sequelize,
-      },
-    );
-
-    this.associate(sequelize.models);
-
-    return this;
-  }
-
-  public static associate(models: IModels): void {
-    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
-  }
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt!: Date;
 }
 
 export default Gateway;

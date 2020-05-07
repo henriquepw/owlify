@@ -1,45 +1,30 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-import { IModels } from './Associate';
+@Entity('endnodes')
+class Endnode {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-class Endnode extends Model {
-  public id!: string;
+  @Column({ name: 'gateway_id' })
+  gatewayId: string;
 
-  public gateway_id!: string;
+  @Column()
+  name: string;
 
-  public name!: string;
+  @Column()
+  room: string;
 
-  public room!: string;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  public readonly createdAt!: Date;
-
-  public readonly updatedAt!: Date;
-
-  public static start(sequelize: Sequelize): typeof Endnode {
-    this.init(
-      {
-        id: {
-          type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
-          allowNull: false,
-          primaryKey: true,
-        },
-        name: DataTypes.STRING,
-        room: DataTypes.STRING,
-      },
-      {
-        sequelize,
-      },
-    );
-
-    this.associate(sequelize.models);
-
-    return this;
-  }
-
-  public static associate(models: IModels): void {
-    this.belongsTo(models.Gateway, { foreignKey: 'gateway_id', as: 'gateway' });
-  }
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }
 
 export default Endnode;
