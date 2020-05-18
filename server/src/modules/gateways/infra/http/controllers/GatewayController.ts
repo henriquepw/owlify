@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 
+import { container } from 'tsyringe';
+import CreateGatewayService from '@modules/gateways/services/CreateGatewayService';
 import Gateway from '../../typeorm/entities/Gateway';
 
 class GatewayController {
@@ -13,19 +15,16 @@ class GatewayController {
   }
 
   public async store(req: Request, res: Response): Promise<Response> {
-    const { locate } = req.body as Gateway;
-    const { userId: user_id } = req;
+    const { location } = req.body;
 
-    const { id } = await Gateway.create({
-      locate,
-      user_id,
+    const createGateway = container.resolve(CreateGatewayService);
+
+    const gateway = await createGateway.execute({
+      userId: req.user.id,
+      location,
     });
 
-    return res.json({
-      id,
-      locate,
-      user_id,
-    });
+    return res.json(gateway);
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
