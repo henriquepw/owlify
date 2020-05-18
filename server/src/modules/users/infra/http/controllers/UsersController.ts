@@ -1,38 +1,23 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
+import CreateUserService from '@modules/users/services/CreateUserService';
 
 class UsersController {
   public async store(req: Request, res: Response): Promise<Response> {
-    const usersRepository = new UsersRepository();
+    const createUser = container.resolve(CreateUserService);
 
     const { name, email, password } = req.body;
 
-    /**
-     * Check if use already exists
-     */
-    const isExists = await usersRepository.findByEmail(email);
+    const user = await createUser.execute({
+      password,
+      email,
+      name,
+    });
 
-    if (isExists) {
-      return res.status(400).json({ error: 'Duplicated email' });
-    }
-
-    try {
-      const user = await usersRepository.create({
-        name,
-        email,
-        password,
-      });
-
-      return res.json({
-        id: user.id,
-        name,
-        email,
-      });
-    } catch (err) {
-      return res.status(500).json({ error: err.stack });
-    }
+    return res.json(user);
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
