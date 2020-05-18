@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import User from '@modules/users/infra/typeorm/entities/User';
 
+import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
+
 import Endnode from '../models/Endnode';
-import Gateway from '../models/Gateway';
 
 interface GatewayWithUser extends Gateway {
   user: User;

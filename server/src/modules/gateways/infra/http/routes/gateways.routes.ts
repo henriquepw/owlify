@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import authMiddleware from '@modules/users/infra/http/middlewares/ensureAuthenticated';
-import GatewayController from '../../../../app/controllers/GatewayController';
+import GatewayController from '../controllers/GatewayController';
 
 const routes = Router();
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import Gateway from '../models/Gateway';
+import Gateway from '../../typeorm/entities/Gateway';
 
 class GatewayController {
   public async index(req: Request, res: Response): Promise<Response> {

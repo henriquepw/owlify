@@ -3,8 +3,9 @@ import { Router } from 'express';
 import usersRoutes from '@modules/users/infra/http/routes/users.routes';
 import sessionsRoutes from '@modules/users/infra/http/routes/sessions.routes';
 
+import gatewaysRoutes from '@modules/gateways/infra/http/routes/gateways.routes';
+
 import endnodesRoutes from './endnodes.routes';
-import gatewaysRoutes from './gateways.routes';
 
 import packagesRoutes from './packages.routes';
 import sensorsRoutes from './sensors.routes';
