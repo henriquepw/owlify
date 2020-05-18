@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { promisify } from 'util';
-
 import jwt from 'jsonwebtoken';
-import authConfig from '../../config/auth';
-import User from '../models/User';
+
+import authConfig from '@config/auth';
+
+import User from '@modules/users/infra/typeorm/entities/User';
 
 interface IPayload {
   id: string;

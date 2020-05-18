@@ -4,13 +4,16 @@ import { sign } from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
 
-import User from '../models/User';
+import User from '@modules/users/infra/typeorm/entities/User';
 
 class SessionsController {
   public async store(req: Request, res: Response): Promise<Response> {
     const usersRepository = getRepository(User);
 
-    const { email, password } = req.body as User;
+    const {
+      email,
+      /* password */
+    } = req.body as User;
 
     /**
      * Check if user exists

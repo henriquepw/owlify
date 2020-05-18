@@ -6,11 +6,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-
-import authConfig from '../../config/auth';
-
 @Entity('users')
 class User {
   @PrimaryGeneratedColumn('uuid')
@@ -30,18 +25,6 @@ class User {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
-
-  checkPassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password);
-  }
-
-  generateToken(): string {
-    const { secret, expiresIn } = authConfig;
-
-    return jwt.sign({ id: this.id }, secret, {
-      expiresIn,
-    });
-  }
 }
 
 export default User;

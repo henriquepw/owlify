@@ -1,31 +1,29 @@
-import { getRepository } from 'typeorm';
-
 import { Request, Response } from 'express';
-import User from '../models/User';
+
+import User from '@modules/users/infra/typeorm/entities/User';
+import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
 class UserController {
   public async store(req: Request, res: Response): Promise<Response> {
-    const usersRepository = getRepository(User);
+    const usersRepository = new UsersRepository();
 
     const { name, email, password } = req.body;
 
     /**
      * Check if use already exists
      */
-    const isExists = await usersRepository.findOne({ where: { email } });
+    const isExists = await usersRepository.findByEmail(email);
 
     if (isExists) {
       return res.status(400).json({ error: 'Duplicated email' });
     }
 
     try {
-      const user = usersRepository.create({
+      const user = await usersRepository.create({
         name,
         email,
         password,
       });
-
-      await usersRepository.save(user);
 
       return res.json({
         id: user.id,
@@ -38,15 +36,15 @@ class UserController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const usersRepository = getRepository(User);
+    const usersRepository = new UsersRepository();
 
     const { email, oldPassword } = req.body;
     const { id } = req.user;
 
-    const user = (await usersRepository.findOne(id)) as User;
+    const user = (await usersRepository.findById(id)) as User;
 
     if (email && email !== user.email) {
-      const isExists = await usersRepository.findOne({ where: { email } });
+      const isExists = await usersRepository.findByEmail(email);
 
       if (isExists) {
         return res.status(400).json({ error: 'Duplicated email' });
@@ -67,9 +65,9 @@ class UserController {
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
-    const usersRepository = getRepository(User);
+    const usersRepository = new UsersRepository();
 
-    const user = (await usersRepository.findOne(req.user.id)) as User;
+    const user = (await usersRepository.findById(req.user.id)) as User;
 
     await usersRepository.remove(user);
 
