@@ -9,6 +9,8 @@ import Youch from 'youch';
 import http from 'http';
 
 import routes from './routes';
+
+import '@shared/container';
 import '../typeorm';
 
 class App {
