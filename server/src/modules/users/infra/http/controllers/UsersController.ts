@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import User from '@modules/users/infra/typeorm/entities/User';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
-class UserController {
+class UsersController {
   public async store(req: Request, res: Response): Promise<Response> {
     const usersRepository = new UsersRepository();
 
@@ -51,11 +51,11 @@ class UserController {
       }
     }
 
-    if (oldPassword && !(await user.checkPassword(oldPassword))) {
-      return res.status(401).json({ error: 'Password does not math' });
-    }
+    // if (oldPassword && !(await user.checkPassword(oldPassword))) {
+    //   return res.status(401).json({ error: 'Password does not math' });
+    // }
 
-    await usersRepository.update(id, user);
+    // await usersRepository.update(id, user);
 
     return res.json({
       id,
@@ -67,12 +67,14 @@ class UserController {
   public async delete(req: Request, res: Response): Promise<Response> {
     const usersRepository = new UsersRepository();
 
-    const user = (await usersRepository.findById(req.user.id)) as User;
+    const user = await usersRepository.findById(req.user.id);
 
-    await usersRepository.remove(user);
+    if (user) {
+      await usersRepository.remove(user);
+    }
 
     return res.status(204).send();
   }
 }
 
-export default new UserController();
+export default new UsersController();

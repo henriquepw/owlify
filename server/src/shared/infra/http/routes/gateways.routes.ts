@@ -1,17 +1,13 @@
 import { Router } from 'express';
 
+import authMiddleware from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import GatewayController from '../../../../app/controllers/GatewayController';
-
-import authMiddleware from '../../../../app/middlewares/auth';
 
 const routes = Router();
 
 routes.use('/', authMiddleware);
 
-routes
-  .route('/')
-  .get(GatewayController.index)
-  .post(GatewayController.store);
+routes.route('/').get(GatewayController.index).post(GatewayController.store);
 
 routes
   .route('/:id')
