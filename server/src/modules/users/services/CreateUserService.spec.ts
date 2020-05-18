@@ -1,19 +1,19 @@
-import AppError from '@shared/Errors/AppError';
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+import faker from 'faker';
 
-import CreateUserService from './CreateUserService';
+import AppError from '@shared/Errors/AppError';
+
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+
+import ICreateUserDTO from '../dtos/ICreateUserDTO';
+import CreateUserService from './CreateUserService';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
 
 let createUser: CreateUserService;
 
-const userData = {
-  name: 'John Doe',
-  email: 'john@example.com',
-  password: '123123',
-};
+let userData: ICreateUserDTO;
 
 describe('Create User', () => {
   beforeEach(() => {
@@ -21,6 +21,12 @@ describe('Create User', () => {
     fakeHashProvider = new FakeHashProvider();
 
     createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
+
+    userData = {
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+    };
   });
 
   it('should be able to create a user', async () => {
