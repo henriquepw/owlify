@@ -9,19 +9,19 @@ import {
 @Entity('gateways')
 class Gateway {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @Column({ name: 'user_id' })
-  userId!: string;
+  userId: string;
 
   @Column()
-  location!: string;
+  location: string;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt!: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt!: Date;
+  updatedAt: Date;
 }
 
 export default Gateway;

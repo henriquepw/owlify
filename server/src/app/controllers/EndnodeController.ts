@@ -12,7 +12,7 @@ interface EndnodeWithGateway extends Endnode {
 }
 
 class EndnodeController {
-  async show(req: Request, res: Response) {
+  public async show(req: Request, res: Response): Promise<Response> {
     const { page = 1, limit = 20 } = req.query;
 
     const offset = (page - 1) * limit;
@@ -29,7 +29,7 @@ class EndnodeController {
     return res.json(endnodes);
   }
 
-  async index(req: Request, res: Response) {
+  public async index(req: Request, res: Response): Promise<Response> {
     const { page = 1, limit = 20 } = req.query;
 
     const offset = (page - 1) * limit;
@@ -54,7 +54,7 @@ class EndnodeController {
     return res.json(endnodes);
   }
 
-  async store(req: Request, res: Response) {
+  public async store(req: Request, res: Response): Promise<Response> {
     const { room, name } = req.body as Endnode;
     const { gatewayId } = req.params;
 
@@ -80,7 +80,7 @@ class EndnodeController {
     });
   }
 
-  async update(req: Request, res: Response) {
+  public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
     const endnode = (await Endnode.findByPk(id, {
@@ -122,7 +122,7 @@ class EndnodeController {
     });
   }
 
-  async delete(req: Request, res: Response) {
+  public async delete(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
     const endnode = (await Endnode.findByPk(id, {

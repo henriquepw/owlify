@@ -9,7 +9,7 @@ import http from 'http';
 
 import routes from './shared/infra/http/routes';
 
-import './database';
+import './shared/infra/typeorm';
 
 class App {
   private app: express.Application;

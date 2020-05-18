@@ -1,15 +1,18 @@
 import { Request, Response } from 'express';
+import { getRepository } from 'typeorm';
 
 import User from '../models/User';
 
+const usersRepository = getRepository(User);
+
 class SessionsController {
-  async store(req: Request, res: Response) {
+  public async store(req: Request, res: Response): Promise<Response> {
     const { email, password } = req.body as User;
 
     /**
      * Check if user exists
      */
-    const user = await User.findOne({ where: { email } });
+    const user = await usersRepository.findOne({ where: { email } });
 
     if (!user) {
       return res.status(401).json({ error: 'User not found' });

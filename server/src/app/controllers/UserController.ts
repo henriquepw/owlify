@@ -1,32 +1,34 @@
+import { getRepository } from 'typeorm';
+
 import { Request, Response } from 'express';
 import User from '../models/User';
 
-interface UpdateBody extends User {
-  oldPassword?: string;
-}
+const usersRepository = getRepository(User);
 
 class UserController {
-  async store(req: Request, res: Response) {
-    const { name, email, password } = req.body as User;
+  public async store(req: Request, res: Response): Promise<Response> {
+    const { name, email, password } = req.body;
 
     /**
      * Check if use already exists
      */
-    const isExists = await User.findOne({ where: { email } });
+    const isExists = await usersRepository.findOne({ where: { email } });
 
     if (isExists) {
       return res.status(400).json({ error: 'Duplicated email' });
     }
 
     try {
-      const { id } = await User.create({
+      const user = usersRepository.create({
         name,
         email,
         password,
       });
 
+      await usersRepository.save(user);
+
       return res.json({
-        id,
+        id: user.id,
         name,
         email,
       });
@@ -35,13 +37,14 @@ class UserController {
     }
   }
 
-  async update(req: Request, res: Response) {
-    const { email, oldPassword } = req.body as UpdateBody;
+  public async update(req: Request, res: Response): Promise<Response> {
+    const { email, oldPassword } = req.body;
+    const { id } = req.user;
 
-    const user = (await User.findByPk(req.userId)) as User;
+    const user = (await usersRepository.findOne(id)) as User;
 
     if (email && email !== user.email) {
-      const isExists = await User.findOne({ where: { email } });
+      const isExists = await usersRepository.findOne({ where: { email } });
 
       if (isExists) {
         return res.status(400).json({ error: 'Duplicated email' });
@@ -52,23 +55,21 @@ class UserController {
       return res.status(401).json({ error: 'Password does not math' });
     }
 
-    const { id, name } = await user.update(req.body);
+    await usersRepository.update(id, user);
 
     return res.json({
       id,
-      name,
+      name: user.name,
       email,
     });
   }
 
-  async delete(req: Request, res: Response) {
-    const id = req.userId;
+  public async delete(req: Request, res: Response): Promise<Response> {
+    const user = (await usersRepository.findOne(req.user.id)) as User;
 
-    const userDeleted = await User.destroy({
-      where: { id },
-    });
+    await usersRepository.remove(user);
 
-    return res.json({ deleted: userDeleted });
+    return res.status(204).send();
   }
 }
 

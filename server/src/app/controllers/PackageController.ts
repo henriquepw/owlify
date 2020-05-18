@@ -15,7 +15,7 @@ type storeBody = {
 };
 
 class PackageController {
-  public async index(req: Request, res: Response) {
+  public async index(req: Request, res: Response): Promise<Response> {
     const { nodeID } = req.params;
     const { page = 1, limit = 20 } = req.query as indexQuery;
 
@@ -36,7 +36,7 @@ class PackageController {
     }
   }
 
-  public async store(req: Request, res: Response) {
+  public async store(req: Request, res: Response): Promise<Response> {
     const { nodeID } = req.params;
     const { snr, rssi, success, count } = req.body as storeBody;
 

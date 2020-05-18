@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import Gateway from '../models/Gateway';
 
 class GatewayController {
-  async index(req: Request, res: Response) {
+  public async index(req: Request, res: Response): Promise<Response> {
     const gateways = await Gateway.findAll({
       where: { user_id: req.userId },
       attributes: ['id', 'locate'],
@@ -12,7 +12,7 @@ class GatewayController {
     return res.json(gateways);
   }
 
-  async store(req: Request, res: Response) {
+  public async store(req: Request, res: Response): Promise<Response> {
     const { locate } = req.body as Gateway;
     const { userId: user_id } = req;
 
@@ -28,7 +28,7 @@ class GatewayController {
     });
   }
 
-  async update(req: Request, res: Response) {
+  public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
     const gateway = (await Gateway.findByPk(id)) as Gateway;
@@ -42,7 +42,7 @@ class GatewayController {
     return res.json({ locate });
   }
 
-  async delete(req: Request, res: Response) {
+  public async delete(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
     const gateway = (await Gateway.findByPk(id)) as Gateway;
