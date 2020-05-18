@@ -1,13 +1,20 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import User from '@modules/users/infra/typeorm/entities/User';
-import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
-
 import CreateUserService from '@modules/users/services/CreateUserService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
+import UpdateUserService from '@modules/users/services/UpdateUserService';
+import ShowUserProfileService from '@modules/users/services/ShowUserProfileService';
 
 class UsersController {
+  public async show(req: Request, res: Response): Promise<Response> {
+    const showUserProfile = container.resolve(ShowUserProfileService);
+
+    const profile = await showUserProfile.execute(req.user.id);
+
+    return res.json(profile);
+  }
+
   public async store(req: Request, res: Response): Promise<Response> {
     const createUser = container.resolve(CreateUserService);
 
@@ -23,32 +30,19 @@ class UsersController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const usersRepository = new UsersRepository();
+    const { name, email, oldPassword, password } = req.body;
 
-    const { email, oldPassword } = req.body;
-    const { id } = req.user;
+    const updateUser = container.resolve(UpdateUserService);
 
-    const user = (await usersRepository.findById(id)) as User;
-
-    if (email && email !== user.email) {
-      const isExists = await usersRepository.findByEmail(email);
-
-      if (isExists) {
-        return res.status(400).json({ error: 'Duplicated email' });
-      }
-    }
-
-    // if (oldPassword && !(await user.checkPassword(oldPassword))) {
-    //   return res.status(401).json({ error: 'Password does not math' });
-    // }
-
-    // await usersRepository.update(id, user);
-
-    return res.json({
-      id,
-      name: user.name,
+    const user = updateUser.execute({
+      userId: req.user.id,
+      name,
       email,
+      oldPassword,
+      password,
     });
+
+    return res.json(user);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

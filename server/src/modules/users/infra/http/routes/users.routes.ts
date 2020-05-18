@@ -9,6 +9,8 @@ routes.post('/', UsersController.store);
 
 routes.use('/', authMiddleware);
 
+routes.get('/profile', UsersController.show);
+
 routes.post('/', UsersController.store);
 
 routes.put('/', UsersController.update);
