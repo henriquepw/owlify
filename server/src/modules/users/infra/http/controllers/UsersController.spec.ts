@@ -12,43 +12,6 @@ import factory from '../../util/tests/factories';
 describe('User', () => {
   const path = '/users';
 
-  describe('POST /users', () => {
-    it('should be able to register a user', async () => {
-      const user = await factory.attrs<User>('User');
-
-      const response = await request(app)
-        .post(path)
-        .send(user);
-
-      expect(response.body).toHaveProperty('id');
-    });
-
-    it('should encrypt user password when new user created', async () => {
-      const user = await factory.create<User>('User', {
-        password: '123',
-      });
-
-      const compareHash = await bcrypt.compare('123', user.password_hash);
-
-      expect(compareHash).toBe(true);
-    });
-
-    it('should not be able to register with duplicated email', async () => {
-      const user = await factory.attrs<User>('User');
-
-      await request(app)
-        .post(path)
-        .send(user);
-
-      const response = await request(app)
-        .post(path)
-        .send(user);
-
-      expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty('error');
-    });
-  });
-
   describe('PUT /users', () => {
     const auth = {
       user: {},
@@ -66,11 +29,9 @@ describe('User', () => {
     it('should not be able to update user data if not login', async () => {
       const { name } = await factory.attrs<User>('User');
 
-      const response = await request(app)
-        .put(path)
-        .send({
-          name,
-        });
+      const response = await request(app).put(path).send({
+        name,
+      });
 
       expect(response.status).toBe(401);
     });
@@ -111,29 +72,6 @@ describe('User', () => {
         .send({
           oldPassword: '1',
         });
-
-      expect(response.status).toBe(401);
-      expect(response.body).toHaveProperty('error');
-    });
-  });
-
-  describe('DELETE /users', () => {
-    it('should be able to delete user from database', async () => {
-      const response = await request(app)
-        .delete(path)
-        .set('Authorization', await getToken())
-        .send();
-
-      expect(response.status).toBe(200);
-      expect(response.body).toMatchObject({
-        deleted: 1,
-      });
-    });
-
-    it('should not be able to delete user if not login', async () => {
-      const response = await request(app)
-        .delete(path)
-        .send();
 
       expect(response.status).toBe(401);
       expect(response.body).toHaveProperty('error');

@@ -15,7 +15,7 @@ interface IPayload {
 
 async function ensureAuthenticated(
   req: Request,
-  res: Response,
+  _: Response,
   next: NextFunction,
 ): Promise<void> {
   const authHeader = req.headers.authorization;

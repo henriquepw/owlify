@@ -3,7 +3,9 @@ import { container } from 'tsyringe';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
+
 import CreateUserService from '@modules/users/services/CreateUserService';
+import DeleteUserService from '@modules/users/services/DeleteUserService';
 
 class UsersController {
   public async store(req: Request, res: Response): Promise<Response> {
@@ -50,13 +52,9 @@ class UsersController {
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
-    const usersRepository = new UsersRepository();
+    const deleteUser = container.resolve(DeleteUserService);
 
-    const user = await usersRepository.findById(req.user.id);
-
-    if (user) {
-      await usersRepository.remove(user);
-    }
+    await deleteUser.execute(req.user.id);
 
     return res.status(204).send();
   }
