@@ -1,4 +1,5 @@
-import './config/bootstrap';
+import 'reflect-metadata';
+import '@config/bootstrap';
 
 import express, { Errback, Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
@@ -7,9 +8,8 @@ import cors from 'cors';
 import Youch from 'youch';
 import http from 'http';
 
-import routes from './shared/infra/http/routes';
-
-import './shared/infra/typeorm';
+import routes from './routes';
+import '../typeorm';
 
 class App {
   private app: express.Application;

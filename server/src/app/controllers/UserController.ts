@@ -3,10 +3,10 @@ import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import User from '../models/User';
 
-const usersRepository = getRepository(User);
-
 class UserController {
   public async store(req: Request, res: Response): Promise<Response> {
+    const usersRepository = getRepository(User);
+
     const { name, email, password } = req.body;
 
     /**
@@ -38,6 +38,8 @@ class UserController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
+    const usersRepository = getRepository(User);
+
     const { email, oldPassword } = req.body;
     const { id } = req.user;
 
@@ -65,6 +67,8 @@ class UserController {
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
+    const usersRepository = getRepository(User);
+
     const user = (await usersRepository.findOne(req.user.id)) as User;
 
     await usersRepository.remove(user);

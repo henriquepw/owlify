@@ -1,5 +1,5 @@
-import '../../../config/bootstrap';
+import '@config/bootstrap';
 
-import app from '../../../app';
+import app from './app';
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT, () => console.log('Server on 🚀'));
