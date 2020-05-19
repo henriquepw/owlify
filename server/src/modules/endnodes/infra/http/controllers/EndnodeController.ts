@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
-import User from '@modules/users/infra/typeorm/entities/User';
+import { container } from 'tsyringe';
 
+import User from '@modules/users/infra/typeorm/entities/User';
 import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
+
+import CreateEndnodeService from '@modules/endnodes/services/CreateEndnodeService';
 
 import Endnode from '../../typeorm/entities/Endnode';
 
@@ -60,26 +63,15 @@ class EndnodeController {
     const { room, name } = req.body as Endnode;
     const { gatewayId } = req.params;
 
-    /**
-     * Check if gateway not exists
-     */
-    const isGatewayExists = await Gateway.findByPk(gatewayId);
+    const createEndnode = container.resolve(CreateEndnodeService);
 
-    if (!isGatewayExists) {
-      return res.status(400).json({ error: 'Gateway id is invalid' });
-    }
-
-    const { id } = await Endnode.create({
+    const endnode = await createEndnode.execute({
+      gatewayId,
       name,
       room,
-      gateway_id: gatewayId,
     });
 
-    return res.json({
-      id,
-      room,
-      name,
-    });
+    return res.json(endnode);
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
