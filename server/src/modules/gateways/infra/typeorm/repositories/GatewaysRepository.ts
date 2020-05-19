@@ -30,7 +30,7 @@ class GatewaysRepository implements IGatewaysRepository {
 
   public async findById(gatewayId: string): Promise<Gateway | undefined> {
     const findGateway = this.ormRepository.findOne(gatewayId, {
-      relations: ['user'],
+      relations: ['owner'],
     });
 
     return findGateway;

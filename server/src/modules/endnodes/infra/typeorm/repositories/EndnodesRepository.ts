@@ -40,6 +40,17 @@ class FakeEndnodesRepository implements IEndnodesRepository {
 
     return endnodes;
   }
+
+  public async findAllFromUser(ownerId: string): Promise<Endnode[]> {
+    const endnodes = this.ormRepository.find({
+      relations: ['gateway'],
+      where: {
+        'gateway.ownerId': ownerId,
+      },
+    });
+
+    return endnodes;
+  }
 }
 
 export default FakeEndnodesRepository;

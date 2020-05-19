@@ -7,6 +7,7 @@ import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
 import CreateEndnodeService from '@modules/endnodes/services/CreateEndnodeService';
 import DeleteEndnodeService from '@modules/endnodes/services/DeleteEndnodeService';
 
+import ListUserEndnodesService from '@modules/endnodes/services/ListUserEndnodesService';
 import Endnode from '../../typeorm/entities/Endnode';
 
 interface IGatewayWithUser extends Gateway {
@@ -35,34 +36,20 @@ class EndnodeController {
   //   return res.json(endnodes);
   // }
 
-  // public async index(req: Request, res: Response): Promise<Response> {
-  //   const { page = 1, limit = 20 } = req.query;
+  public async index(req: Request, res: Response): Promise<Response> {
+    // const { page = 1, limit = 20 } = req.query;
 
-  //   const offset = (page - 1) * limit;
+    // const offset = (page - 1) * limit;
 
-  //   const gateways = await Gateway.findAll({
-  //     where: {
-  //       user_id: req.userId,
-  //     },
-  //   });
+    const listUserEndnodes = container.resolve(ListUserEndnodesService);
 
-  //   const gatewaysIds = gateways.map(({ id }) => id);
+    const endnodes = await listUserEndnodes.execute(req.user.id);
 
-  //   const endnodes = await Endnode.findAll({
-  //     where: {
-  //       gateway_id: gatewaysIds,
-  //     },
-  //     limit,
-  //     offset,
-  //     attributes: ['gateway_id', 'id', 'room', 'name'],
-  //   });
-
-  //   return res.json(endnodes);
-  // }
+    return res.json(endnodes);
+  }
 
   public async store(req: Request, res: Response): Promise<Response> {
-    const { room, name } = req.body as Endnode;
-    const { gatewayId } = req.params;
+    const { room, name, gatewayId } = req.body;
 
     const createEndnode = container.resolve(CreateEndnodeService);
 

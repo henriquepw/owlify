@@ -61,6 +61,18 @@ class FakeEndnodesRepository implements IEndnodesRepository {
 
     return endnodes;
   }
+
+  public async findAllFromUser(ownerId: string): Promise<Endnode[]> {
+    const gatewayIds = this.gateways
+      .filter(current => current.ownerId === ownerId)
+      .map(current => current.id);
+
+    const endnodes = this.endnodes.filter(current =>
+      gatewayIds.includes(current.gatewayId),
+    );
+
+    return endnodes;
+  }
 }
 
 export default FakeEndnodesRepository;

@@ -1,18 +1,21 @@
 import { Router } from 'express';
 
+import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+
 import EndnodeController from '../controllers/EndnodeController';
 
 const endnodesRoutes = Router();
 
-// endnodesRoutes.route('/').get(EndnodeController.index);
+endnodesRoutes.use(ensureAuthenticated);
 
 endnodesRoutes
-  .route('/:gatewayId')
-  // .get(EndnodeController.show)
+  .route('/')
+  .get(EndnodeController.index)
   .post(EndnodeController.store);
 
 endnodesRoutes
   .route('/:endnodeId')
+  // .get(EndnodeController.show)
   // .put(EndnodeController.update)
   .delete(EndnodeController.delete);
 
