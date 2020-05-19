@@ -20,17 +20,17 @@ describe('Delete Gateway', () => {
   it('should be able delete a gateway', async () => {
     const ownerId = 'user-id';
 
-    const { id: gatewayId } = await fakeGatewaysRepository.create({
+    const { id } = await fakeGatewaysRepository.create({
       location: faker.random.word(),
       ownerId,
     });
 
     await deleteGateway.execute({
-      gatewayId,
+      gatewayId: id,
       ownerId,
     });
 
-    const gateway = await fakeGatewaysRepository.findById(gatewayId);
+    const gateway = await fakeGatewaysRepository.findById(id);
 
     expect(gateway).toBe(undefined);
   });

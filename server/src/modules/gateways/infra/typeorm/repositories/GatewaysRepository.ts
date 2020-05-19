@@ -29,13 +29,17 @@ class GatewaysRepository implements IGatewaysRepository {
   }
 
   public async findById(gatewayId: string): Promise<Gateway | undefined> {
-    const findGateway = this.ormRepository.findOne(gatewayId);
+    const findGateway = this.ormRepository.findOne(gatewayId, {
+      relations: ['user'],
+    });
 
     return findGateway;
   }
 
   public async findAllFromUser(ownerId: string): Promise<Gateway[]> {
-    const gateways = this.ormRepository.find({ where: { ownerId } });
+    const gateways = this.ormRepository.find({
+      where: { ownerId },
+    });
 
     return gateways;
   }
