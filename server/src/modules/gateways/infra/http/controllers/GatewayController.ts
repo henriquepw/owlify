@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
-
 import { container } from 'tsyringe';
+
 import CreateGatewayService from '@modules/gateways/services/CreateGatewayService';
+import ListUserGatewaysService from '@modules/gateways/services/ListUserGatewaysService';
+
 import Gateway from '../../typeorm/entities/Gateway';
 
 class GatewayController {
   public async index(req: Request, res: Response): Promise<Response> {
-    const gateways = await Gateway.findAll({
-      where: { user_id: req.userId },
-      attributes: ['id', 'locate'],
-    });
+    const listUserGateways = container.resolve(ListUserGatewaysService);
+
+    const gateways = await listUserGateways.execute(req.user.id);
 
     return res.json(gateways);
   }

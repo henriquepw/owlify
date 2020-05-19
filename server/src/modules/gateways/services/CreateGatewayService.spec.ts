@@ -15,7 +15,7 @@ let createGateway: CreateGatewayService;
 
 let gatewayData: ICreateGatewayDTO;
 
-describe('Create User', () => {
+describe('Create Gateway', () => {
   beforeEach(async () => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeGatewaysRepository = new FakeGatewaysRepository();
