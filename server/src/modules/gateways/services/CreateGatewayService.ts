@@ -19,13 +19,13 @@ class CreateGatewayService {
   ) {}
 
   public async execute({
-    userId,
+    ownerId,
     location,
   }: ICreateGatewayDTO): Promise<Gateway> {
     /**
      * Check if user id is invalid
      */
-    const isUserExists = await this.usersRepository.findById(userId);
+    const isUserExists = await this.usersRepository.findById(ownerId);
 
     if (!isUserExists) {
       throw new AppError('User id is invalid.');
@@ -35,7 +35,7 @@ class CreateGatewayService {
      * Create gateway and save on database
      */
     const gateway = await this.gatewaysRepository.create({
-      userId,
+      ownerId,
       location,
     });
 

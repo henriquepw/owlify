@@ -18,16 +18,16 @@ describe('Delete Gateway', () => {
   });
 
   it('should be able delete a gateway', async () => {
-    const userId = 'user-id';
+    const ownerId = 'user-id';
 
     const { id: gatewayId } = await fakeGatewaysRepository.create({
       location: faker.random.word(),
-      userId,
+      ownerId,
     });
 
     await deleteGateway.execute({
       gatewayId,
-      userId,
+      ownerId,
     });
 
     const gateway = await fakeGatewaysRepository.findById(gatewayId);
@@ -38,13 +38,13 @@ describe('Delete Gateway', () => {
   it('shoud not be able to delete a gateway if not yours', async () => {
     const { id: gatewayId } = await fakeGatewaysRepository.create({
       location: faker.random.word(),
-      userId: 'another-user-id',
+      ownerId: 'another-user-id',
     });
 
     await expect(
       deleteGateway.execute({
         gatewayId,
-        userId: 'user-id',
+        ownerId: 'user-id',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -54,7 +54,7 @@ describe('Delete Gateway', () => {
 
     await deleteGateway.execute({
       gatewayId: 'non-existing-gateway',
-      userId: 'user-id',
+      ownerId: 'user-id',
     });
 
     expect(removeGateway).not.toHaveBeenCalled();

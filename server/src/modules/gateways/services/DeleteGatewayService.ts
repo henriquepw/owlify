@@ -4,7 +4,7 @@ import AppError from '@shared/Errors/AppError';
 import IGatewaysRepository from '../repositories/IGatewaysRepository';
 
 interface IRequest {
-  userId: string;
+  ownerId: string;
   gatewayId: string;
 }
 
@@ -15,7 +15,7 @@ class DeleteGatewayService {
     private gatewaysRepository: IGatewaysRepository,
   ) {}
 
-  public async execute({ gatewayId, userId }: IRequest): Promise<void> {
+  public async execute({ gatewayId, ownerId }: IRequest): Promise<void> {
     /**
      * Get gateway and check if is valid
      */
@@ -23,7 +23,7 @@ class DeleteGatewayService {
 
     if (!gateway) return;
 
-    if (gateway.userId !== userId) {
+    if (gateway.ownerId !== ownerId) {
       throw new AppError('You only can delete your gateways.');
     }
 

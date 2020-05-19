@@ -5,12 +5,12 @@ import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
 
 import Endnode from '../../typeorm/entities/Endnode';
 
-interface GatewayWithUser extends Gateway {
+interface IGatewayWithUser extends Gateway {
   user: User;
 }
 
-interface EndnodeWithGateway extends Endnode {
-  gateway: GatewayWithUser;
+interface IEndnodeWithGateway extends Endnode {
+  gateway: IGatewayWithUser;
 }
 
 class EndnodeController {
@@ -100,7 +100,7 @@ class EndnodeController {
           ],
         },
       ],
-    })) as EndnodeWithGateway;
+    })) as IEndnodeWithGateway;
 
     /**
      * Check if end-node not exists
@@ -142,7 +142,7 @@ class EndnodeController {
           ],
         },
       ],
-    })) as EndnodeWithGateway;
+    })) as IEndnodeWithGateway;
 
     /**
      * Check if user id not matches with logged user

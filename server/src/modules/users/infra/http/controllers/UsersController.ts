@@ -34,7 +34,7 @@ class UsersController {
 
     const updateUser = container.resolve(UpdateUserService);
 
-    const user = updateUser.execute({
+    const user = await updateUser.execute({
       userId: req.user.id,
       name,
       email,

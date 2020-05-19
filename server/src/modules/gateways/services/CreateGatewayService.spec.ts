@@ -32,7 +32,7 @@ describe('Create Gateway', () => {
     });
 
     gatewayData = {
-      userId: id,
+      ownerId: id,
       location: faker.random.word(),
     };
   });
@@ -47,7 +47,7 @@ describe('Create Gateway', () => {
   it('should not be able to create a gateway with invalid user id', async () => {
     await expect(
       createGateway.execute({
-        userId: 'invalid-id',
+        ownerId: 'invalid-id',
         location: gatewayData.location,
       }),
     ).rejects.toBeInstanceOf(AppError);

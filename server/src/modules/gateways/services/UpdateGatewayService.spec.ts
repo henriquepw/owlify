@@ -22,17 +22,17 @@ describe('Update Gateway', () => {
   });
 
   it('should be able update a gateway', async () => {
-    const userId = 'user-id';
+    const ownerId = 'user-id';
 
     const { id } = await fakeGatewaysRepository.create({
       location: faker.random.word(),
-      userId,
+      ownerId,
     });
 
     await updateGateway.execute({
       gatewayId: id,
       location,
-      userId,
+      ownerId,
     });
 
     const updatedGateway = await fakeGatewaysRepository.findById(id);
@@ -43,12 +43,12 @@ describe('Update Gateway', () => {
   it('shoud not be able to update a gateway if not yours', async () => {
     const { id: gatewayId } = await fakeGatewaysRepository.create({
       location,
-      userId: 'another-user-id',
+      ownerId: 'another-user-id',
     });
 
     await expect(
       updateGateway.execute({
-        userId: 'user-id',
+        ownerId: 'user-id',
         gatewayId,
         location,
       }),
@@ -59,7 +59,7 @@ describe('Update Gateway', () => {
     await expect(
       updateGateway.execute({
         gatewayId: 'non-existing-gateway',
-        userId: 'user-id',
+        ownerId: 'user-id',
         location,
       }),
     ).rejects.toBeInstanceOf(AppError);

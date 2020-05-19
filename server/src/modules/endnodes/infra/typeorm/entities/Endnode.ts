@@ -4,7 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+
+import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
 
 @Entity('endnodes')
 class Endnode {
@@ -13,6 +17,10 @@ class Endnode {
 
   @Column({ name: 'gateway_id' })
   gatewayId: string;
+
+  @ManyToOne(() => Gateway)
+  @JoinColumn({ name: 'gateway_id' })
+  gateway: Gateway;
 
   @Column()
   name: string;

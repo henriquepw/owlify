@@ -40,8 +40,10 @@ class FakeGatewaysRepository implements IGatewaysRepository {
     return findGateway;
   }
 
-  public async findAllFromUser(userId: string): Promise<Gateway[]> {
-    const gateways = this.gateways.filter(current => current.userId === userId);
+  public async findAllFromUser(ownerId: string): Promise<Gateway[]> {
+    const gateways = this.gateways.filter(
+      current => current.ownerId === ownerId,
+    );
 
     return gateways;
   }

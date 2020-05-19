@@ -1,9 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export default class CreateEndnodes1588807608054 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -40,26 +35,22 @@ export default class CreateEndnodes1588807608054 implements MigrationInterface {
           default: 'now()',
         },
       ],
+      foreignKeys: [
+        {
+          name: 'EndnodeGateway',
+          columnNames: ['gateway_id'],
+          referencedColumnNames: ['id'],
+          referencedTableName: 'gateways',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
+        },
+      ],
     });
 
     await queryRunner.createTable(endnodes);
-
-    await queryRunner.createForeignKey(
-      endnodes,
-      new TableForeignKey({
-        name: 'EndnodeGateway',
-        columnNames: ['gateway_id'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'gateways',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      }),
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('endnodes', 'EndnodeUser');
-
     await queryRunner.dropTable('endnodes');
   }
 }

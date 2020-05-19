@@ -1,4 +1,4 @@
 export default interface ICreateGatewayDTO {
-  userId: string;
+  ownerId: string;
   location: string;
 }

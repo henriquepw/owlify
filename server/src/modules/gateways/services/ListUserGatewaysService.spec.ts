@@ -20,7 +20,7 @@ describe('List User Gateways', () => {
   });
 
   it('should be able to list all user gateways', async () => {
-    const { id: userId } = await fakeUsersRepository.create({
+    const { id: ownerId } = await fakeUsersRepository.create({
       name: faker.name.findName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
@@ -29,20 +29,20 @@ describe('List User Gateways', () => {
     const promises = Array.from({ length: 3 }, () =>
       fakeGatewaysRepository.create({
         location: faker.random.word(),
-        userId,
+        ownerId,
       }),
     );
 
     promises.push(
       fakeGatewaysRepository.create({
         location: faker.random.word(),
-        userId: 'another-user-id',
+        ownerId: 'another-user-id',
       }),
     );
 
     const expectGateways = await Promise.all(promises);
 
-    const gateways = await listUserGateways.execute(userId);
+    const gateways = await listUserGateways.execute(ownerId);
 
     expect(gateways).toEqual(expectGateways.slice(0, 3));
   });

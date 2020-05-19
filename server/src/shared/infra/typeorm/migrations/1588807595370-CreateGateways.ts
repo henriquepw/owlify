@@ -1,9 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export default class CreateGateways1588807595370 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -18,12 +13,12 @@ export default class CreateGateways1588807595370 implements MigrationInterface {
           default: 'uuid_generate_v4()',
         },
         {
-          name: 'user_id',
+          name: 'owner_id',
           type: 'uuid',
         },
         {
           name: 'location',
-          type: 'uuid',
+          type: 'varchar',
         },
         {
           name: 'created_at',
@@ -36,26 +31,22 @@ export default class CreateGateways1588807595370 implements MigrationInterface {
           default: 'now()',
         },
       ],
+      foreignKeys: [
+        {
+          name: 'GatewayUser',
+          columnNames: ['owner_id'],
+          referencedColumnNames: ['id'],
+          referencedTableName: 'users',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
+        },
+      ],
     });
 
     await queryRunner.createTable(gateway);
-
-    await queryRunner.createForeignKey(
-      gateway,
-      new TableForeignKey({
-        name: 'GatewayUser',
-        columnNames: ['user_id'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'users',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      }),
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('gateways', 'GatewayUser');
-
     await queryRunner.dropTable('gateways');
   }
 }

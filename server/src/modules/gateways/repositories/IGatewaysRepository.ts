@@ -7,5 +7,5 @@ export default interface IGatewaysRepository {
   remove(gateway: Gateway): Promise<void>;
 
   findById(id: string): Promise<Gateway | undefined>;
-  findAllFromUser(userId: string): Promise<Gateway[]>;
+  findAllFromUser(ownerId: string): Promise<Gateway[]>;
 }

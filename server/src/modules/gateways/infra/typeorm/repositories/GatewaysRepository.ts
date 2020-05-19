@@ -34,8 +34,8 @@ class GatewaysRepository implements IGatewaysRepository {
     return findGateway;
   }
 
-  public async findAllFromUser(userId: string): Promise<Gateway[]> {
-    const gateways = this.ormRepository.find({ where: { userId } });
+  public async findAllFromUser(ownerId: string): Promise<Gateway[]> {
+    const gateways = this.ormRepository.find({ where: { ownerId } });
 
     return gateways;
   }

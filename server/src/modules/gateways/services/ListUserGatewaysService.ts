@@ -11,8 +11,8 @@ class ListUserGatewaysService {
     private gatewaysRepository: IGatewaysRepository,
   ) {}
 
-  public async execute(userId: string): Promise<Gateway[]> {
-    const gateways = await this.gatewaysRepository.findAllFromUser(userId);
+  public async execute(ownerId: string): Promise<Gateway[]> {
+    const gateways = await this.gatewaysRepository.findAllFromUser(ownerId);
 
     return gateways;
   }

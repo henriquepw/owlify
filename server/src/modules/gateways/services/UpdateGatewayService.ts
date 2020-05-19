@@ -6,7 +6,7 @@ import IGatewaysRepository from '../repositories/IGatewaysRepository';
 import Gateway from '../infra/typeorm/entities/Gateway';
 
 interface IRequest {
-  userId: string;
+  ownerId: string;
   gatewayId: string;
   location: string;
 }
@@ -19,7 +19,7 @@ class UpdateGatewayService {
   ) {}
 
   public async execute({
-    userId,
+    ownerId,
     gatewayId,
     location,
   }: IRequest): Promise<Gateway> {
@@ -32,7 +32,7 @@ class UpdateGatewayService {
       throw new AppError('Gateway does not exists.');
     }
 
-    if (gateway.userId !== userId) {
+    if (gateway.ownerId !== ownerId) {
       throw new AppError('You can only update your gateways.');
     }
 
