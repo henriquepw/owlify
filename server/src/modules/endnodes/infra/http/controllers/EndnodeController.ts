@@ -3,7 +3,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 
 import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
 
-import Endnode from '../models/Endnode';
+import Endnode from '../../typeorm/entities/Endnode';
 
 interface GatewayWithUser extends Gateway {
   user: User;

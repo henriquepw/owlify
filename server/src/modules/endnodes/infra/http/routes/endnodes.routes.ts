@@ -1,19 +1,19 @@
 import { Router } from 'express';
 
-import EndnodeController from '../../../../app/controllers/EndnodeController';
+import EndnodeController from '../controllers/EndnodeController';
 
-const routes = Router();
+const endnodesRoutes = Router();
 
-routes.route('/').get(EndnodeController.index);
+endnodesRoutes.route('/').get(EndnodeController.index);
 
-routes
+endnodesRoutes
   .route('/:gatewayId')
   .get(EndnodeController.show)
   .post(EndnodeController.store);
 
-routes
+endnodesRoutes
   .route('/:id')
   .put(EndnodeController.update)
   .delete(EndnodeController.delete);
 
-export default routes;
+export default endnodesRoutes;
