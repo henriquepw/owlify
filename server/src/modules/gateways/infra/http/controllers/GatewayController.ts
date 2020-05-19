@@ -21,7 +21,7 @@ class GatewayController {
     const createGateway = container.resolve(CreateGatewayService);
 
     const gateway = await createGateway.execute({
-      userId: req.user.id,
+      ownerId: req.user.id,
       location,
     });
 
@@ -34,7 +34,7 @@ class GatewayController {
     const updateGateway = container.resolve(UpdateGatewayService);
 
     const gateway = await updateGateway.execute({
-      userId: req.user.id,
+      ownerId: req.user.id,
       gatewayId,
       location,
     });
@@ -48,7 +48,7 @@ class GatewayController {
     const { gatewayId } = req.body;
 
     await deleteGateway.execute({
-      userId: req.user.id,
+      ownerId: req.user.id,
       gatewayId,
     });
 
