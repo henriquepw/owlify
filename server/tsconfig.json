@@ -21,5 +21,6 @@
     "emitDecoratorMetadata": true,
 
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": ["__tests__/**/*", "jest.config.js", "src/**/*.spec.ts"]
 }
