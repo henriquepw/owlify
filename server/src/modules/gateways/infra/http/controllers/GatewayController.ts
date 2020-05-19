@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import CreateGatewayService from '@modules/gateways/services/CreateGatewayService';
 import ListUserGatewaysService from '@modules/gateways/services/ListUserGatewaysService';
 
+import DeleteGatewayService from '@modules/gateways/services/DeleteGatewayService';
 import Gateway from '../../typeorm/entities/Gateway';
 
 class GatewayController {
@@ -43,19 +44,16 @@ class GatewayController {
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
+    const deleteGateway = container.resolve(DeleteGatewayService);
 
-    const gateway = (await Gateway.findByPk(id)) as Gateway;
+    const { gatewayId } = req.body;
 
-    if (gateway.user_id !== req.userId) {
-      return res.status(401).json({ error: 'This gateway is not yours' });
-    }
-
-    const gatewayDeleted = await Gateway.destroy({
-      where: { id },
+    await deleteGateway.execute({
+      userId: req.user.id,
+      gatewayId,
     });
 
-    return res.json({ deleted: gatewayDeleted });
+    return res.status(204).send();
   }
 }
 

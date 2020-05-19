@@ -1,0 +1,62 @@
+import faker from 'faker';
+
+import AppError from '@shared/Errors/AppError';
+
+import FakeGatewaysRepository from '../repositories/fakes/FakeGatewaysRepository';
+
+import DeleteGatewayService from './DeleteGatewayService';
+
+let fakeGatewaysRepository: FakeGatewaysRepository;
+
+let deleteGateway: DeleteGatewayService;
+
+describe('Delete Gateway', () => {
+  beforeEach(async () => {
+    fakeGatewaysRepository = new FakeGatewaysRepository();
+
+    deleteGateway = new DeleteGatewayService(fakeGatewaysRepository);
+  });
+
+  it('should be able delete a gateway', async () => {
+    const userId = 'user-id';
+
+    const { id: gatewayId } = await fakeGatewaysRepository.create({
+      location: faker.random.word(),
+      userId,
+    });
+
+    await deleteGateway.execute({
+      gatewayId,
+      userId,
+    });
+
+    const gateway = await fakeGatewaysRepository.findById(gatewayId);
+
+    expect(gateway).toBe(undefined);
+  });
+
+  it('shoud not be able to delete a gateway if not yours', async () => {
+    const { id: gatewayId } = await fakeGatewaysRepository.create({
+      location: faker.random.word(),
+      userId: 'another-user-id',
+    });
+
+    await expect(
+      deleteGateway.execute({
+        gatewayId,
+        userId: 'user-id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('shoud not be able to delete a non-existing gateway', async () => {
+    const removeGateway = jest.spyOn(fakeGatewaysRepository, 'remove');
+
+    await deleteGateway.execute({
+      gatewayId: 'non-existing-gateway',
+      userId: 'user-id',
+    });
+
+    expect(removeGateway).not.toHaveBeenCalled();
+  });
+});
