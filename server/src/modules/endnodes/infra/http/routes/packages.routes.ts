@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
-import PackageController from '../controllers/PackageController';
+import PackagesController from '../controllers/PackagesController';
 
 const packagesRoutes = Router();
 
 packagesRoutes
   .route('/:nodeID')
-  .get(PackageController.index)
-  .post(PackageController.store);
+  .get(PackagesController.index)
+  .post(PackagesController.store);
 
 export default packagesRoutes;

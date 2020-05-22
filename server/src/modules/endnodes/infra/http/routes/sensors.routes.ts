@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
-import SensorController from '../controllers/SensorController';
+import SensorsController from '../controllers/SensorsController';
 
 const sensorsRoutes = Router();
 
 sensorsRoutes
   .route('/:nodeID')
-  .get(SensorController.index)
-  .post(SensorController.store);
+  .get(SensorsController.index)
+  .post(SensorsController.store);
 
 export default sensorsRoutes;

@@ -11,10 +11,11 @@ type storeBody = {
   snr: number;
   rssi: number;
   count: number;
-  success: boolean;
+  temperature: number;
+  humidity: number;
 };
 
-class PackageController {
+class SensorsController {
   public async index(req: Request, res: Response): Promise<Response> {
     const { nodeID } = req.params;
     const { page = 1, limit = 20 } = req.query as indexQuery;
@@ -23,7 +24,7 @@ class PackageController {
 
     try {
       const result = await influx.query(`
-        select * from package
+        select * from sensor
         where nodeID = ${escape.stringLit(nodeID)}
         order by time desc
         limit ${limit}
@@ -38,29 +39,38 @@ class PackageController {
 
   public async store(req: Request, res: Response): Promise<Response> {
     const { nodeID } = req.params;
-    const { snr, rssi, success, count } = req.body as storeBody;
+    const { snr, rssi, temperature, humidity, count } = req.body as storeBody;
 
     try {
-      const measurement = {
-        snr,
-        rssi,
-        count,
-        success,
-      };
-
       await influx.writePoints([
+        {
+          measurement: 'sensor',
+          tags: { nodeID },
+          fields: { temperature, humidity },
+        },
         {
           measurement: 'package',
           tags: { nodeID },
-          fields: measurement,
+          fields: {
+            snr,
+            rssi,
+            count,
+            success: true,
+          },
         },
       ]);
 
-      return res.json(measurement);
+      return res.json({
+        snr,
+        rssi,
+        count,
+        temperature,
+        humidity,
+      });
     } catch (err) {
       return res.status(500).json({ error: err.stack });
     }
   }
 }
 
-export default new PackageController();
+export default new SensorsController();
