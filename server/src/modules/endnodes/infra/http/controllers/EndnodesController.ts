@@ -5,6 +5,7 @@ import CreateEndnodeService from '@modules/endnodes/services/CreateEndnodeServic
 import DeleteEndnodeService from '@modules/endnodes/services/DeleteEndnodeService';
 
 import ListUserEndnodesService from '@modules/endnodes/services/ListUserEndnodesService';
+import UpdateEndnodeService from '@modules/endnodes/services/UpdateEndnodeService';
 
 class EndnodesController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -33,47 +34,21 @@ class EndnodesController {
     return res.json(endnode);
   }
 
-  // public async update(req: Request, res: Response): Promise<Response> {
-  //   const { id } = req.params;
+  public async update(req: Request, res: Response): Promise<Response> {
+    const { endnodeId } = req.params;
+    const { name, room } = req.body;
 
-  //   const endnode = (await Endnode.findByPk(id, {
-  //     include: [
-  //       {
-  //         model: Gateway,
-  //         as: 'gateway',
-  //         attributes: ['id'],
-  //         include: [
-  //           {
-  //             model: User,
-  //             as: 'user',
-  //             attributes: ['id'],
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   })) as IEndnodeWithGateway;
+    const updateEndnode = container.resolve(UpdateEndnodeService);
 
-  //   /**
-  //    * Check if end-node not exists
-  //    */
-  //   if (!endnode) {
-  //     return res.status(400).json({ error: 'the end-node not exists' });
-  //   }
+    const endnode = await updateEndnode.execute({
+      ownerId: req.user.id,
+      endnodeId,
+      name,
+      room,
+    });
 
-  //   /**
-  //    * Check if user id not matches with logged user
-  //    */
-  //   if (req.userId !== endnode.gateway.user.id) {
-  //     return res.status(401).json({ error: 'the end-node is not yours' });
-  //   }
-
-  //   const { room, name } = await endnode.update(req.body);
-
-  //   return res.json({
-  //     room,
-  //     name,
-  //   });
-  // }
+    return res.json(endnode);
+  }
 
   public async delete(req: Request, res: Response): Promise<Response> {
     const { endnodeId } = req.params;

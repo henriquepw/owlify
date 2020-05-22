@@ -19,7 +19,7 @@ endnodesRoutes
 endnodesRoutes
   .route('/:endnodeId')
   // .get(EndnodesController.show)
-  // .put(EndnodesController.update)
+  .put(EndnodesController.update)
   .delete(EndnodesController.delete);
 
 export default endnodesRoutes;
