@@ -1,9 +1,9 @@
 import request from 'supertest';
 
-import app from '../../app';
+import app from '@shared/infra/http/app';
 
-import { cleanInflux } from '../../util/tests/cleanDB';
-import { sensorFactory } from '../../util/tests/factories';
+import { cleanInflux } from '@shared/util/tests/cleanDB';
+import { sensorFactory } from '@shared/util/tests/factories';
 
 describe('Sensor', () => {
   beforeAll(async () => {
@@ -13,9 +13,7 @@ describe('Sensor', () => {
   it('should be able to register a sensor and package measurement', async () => {
     const measurement = sensorFactory();
 
-    const response = await request(app)
-      .post('/sensors/test')
-      .send(measurement);
+    const response = await request(app).post('/sensors/test').send(measurement);
 
     const getSensors = await request(app).get('/sensors/test');
 

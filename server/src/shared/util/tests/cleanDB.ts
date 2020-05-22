@@ -1,5 +1,4 @@
-import influx from '../../database/influx';
-import postgres from '../../database';
+import influx from '@shared/infra/database/influx';
 
 interface IEnv extends NodeJS.ProcessEnv {
   DB_NAME: string;
@@ -17,13 +16,4 @@ export async function cleanInflux(): Promise<void> {
   return influx.createDatabase(DB_NAME);
 }
 
-export function cleanPostgres(): Promise<number[]> {
-  return Promise.all(
-    Object.keys(postgres.connection.models).map(key =>
-      postgres.connection.models[key].destroy({
-        truncate: true,
-        force: true,
-      }),
-    ),
-  );
-}
+export default cleanInflux;

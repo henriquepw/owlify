@@ -1,10 +1,10 @@
 import request from 'supertest';
 import { isAfter, parseISO } from 'date-fns';
 
-import app from '../../app';
+import app from '@shared/infra/http/app';
 
-import { cleanInflux } from '../../util/tests/cleanDB';
-import { packageFactory } from '../../util/tests/factories';
+import { cleanInflux } from '@shared/util/tests/cleanDB';
+import { packageFactory } from '@shared/util/tests/factories';
 
 describe('Package', () => {
   beforeAll(async () => {
@@ -31,13 +31,9 @@ describe('Package', () => {
   it('should return a list of all nodeID packages order by decrescent time', async () => {
     const measurement = packageFactory();
 
-    await request(app)
-      .post('/packages/test')
-      .send(measurement);
+    await request(app).post('/packages/test').send(measurement);
 
-    await request(app)
-      .post('/packages/test')
-      .send(measurement);
+    await request(app).post('/packages/test').send(measurement);
 
     const response = await request(app).get('/packages/test');
 
