@@ -1,17 +1,17 @@
 import { Router } from 'express';
 
 import authMiddleware from '@modules/users/infra/http/middlewares/ensureAuthenticated';
-import GatewayController from '../controllers/GatewayController';
+import GatewaysController from '../controllers/GatewaysController';
 
 const routes = Router();
 
 routes.use('/', authMiddleware);
 
-routes.route('/').get(GatewayController.index).post(GatewayController.store);
+routes.route('/').get(GatewaysController.index).post(GatewaysController.store);
 
 routes
   .route('/:id')
-  .put(GatewayController.update)
-  .delete(GatewayController.delete);
+  .put(GatewaysController.update)
+  .delete(GatewaysController.delete);
 
 export default routes;

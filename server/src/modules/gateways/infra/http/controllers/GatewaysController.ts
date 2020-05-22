@@ -6,7 +6,7 @@ import ListUserGatewaysService from '@modules/gateways/services/ListUserGateways
 import DeleteGatewayService from '@modules/gateways/services/DeleteGatewayService';
 import UpdateGatewayService from '@modules/gateways/services/UpdateGatewayService';
 
-class GatewayController {
+class GatewaysController {
   public async index(req: Request, res: Response): Promise<Response> {
     const listUserGateways = container.resolve(ListUserGatewaysService);
 
@@ -56,4 +56,4 @@ class GatewayController {
   }
 }
 
-export default new GatewayController();
+export default new GatewaysController();
