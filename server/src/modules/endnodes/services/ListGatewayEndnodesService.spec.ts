@@ -4,23 +4,24 @@ import FakeGatewaysRepository from '@modules/gateways/repositories/fakes/FakeGat
 
 import FakeEndnodesRepository from '../repositories/fakes/FakeEndnodesRepository';
 
-import ListUserEndnodesService from './ListUserEndnodesService';
+import ListGatewayEndnodesService from './ListGatewayEndnodesService';
 
 let fakeEndnodesRepository: FakeEndnodesRepository;
 let fakeGatewaysRepository: FakeGatewaysRepository;
 
-let listUserEndnodes: ListUserEndnodesService;
+let listGatewayEndnodes: ListGatewayEndnodesService;
 
-// TODO: To refactor later
-describe('List User Endnodes', () => {
+describe('List Gateway Endnode', () => {
   beforeEach(async () => {
     fakeGatewaysRepository = new FakeGatewaysRepository();
     fakeEndnodesRepository = new FakeEndnodesRepository();
 
-    listUserEndnodes = new ListUserEndnodesService(fakeEndnodesRepository);
+    listGatewayEndnodes = new ListGatewayEndnodesService(
+      fakeEndnodesRepository,
+    );
   });
 
-  it('should be able to list all user endnodes', async () => {
+  it('should be able to list all gateway endnodes', async () => {
     const gateway = await fakeGatewaysRepository.create({
       ownerId: faker.random.uuid(),
       location: faker.random.locale(),
@@ -28,7 +29,9 @@ describe('List User Endnodes', () => {
 
     fakeEndnodesRepository.gateways.push(gateway);
 
-    const promises = Array.from({ length: 3 }, () =>
+    const length = 2;
+
+    const promises = Array.from({ length }, () =>
       fakeEndnodesRepository.create({
         room: faker.random.locale(),
         name: faker.random.word(),
@@ -37,17 +40,19 @@ describe('List User Endnodes', () => {
     );
 
     promises.push(
-      fakeEndnodesRepository.create({
-        room: faker.random.locale(),
-        name: faker.random.word(),
-        gatewayId: 'another-gateway-id',
-      }),
+      ...Array.from({ length }, () =>
+        fakeEndnodesRepository.create({
+          room: faker.random.locale(),
+          name: faker.random.word(),
+          gatewayId: 'another-gatway-id',
+        }),
+      ),
     );
 
     const expectEndnodes = await Promise.all(promises);
 
-    const endnodes = await listUserEndnodes.execute(gateway.ownerId);
+    const endnodes = await listGatewayEndnodes.execute(gateway.id);
 
-    expect(endnodes).toEqual(expectEndnodes.slice(0, 3));
+    expect(endnodes).toEqual(expectEndnodes.slice(0, length));
   });
 });
