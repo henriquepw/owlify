@@ -1,5 +1,6 @@
 import Endnode from '../infra/typeorm/entities/Endnode';
 import ICreateEndnodeDTO from '../dtos/ICreateEndnodeDTO';
+import IListUserEndnodesDTO from '../dtos/IListUserEndnodesDTO';
 
 export default interface IEndnodesRepository {
   create(data: ICreateEndnodeDTO): Promise<Endnode>;
@@ -8,5 +9,5 @@ export default interface IEndnodesRepository {
 
   findById(id: string): Promise<Endnode | undefined>;
   findAllFromGateway(gatewayId: string): Promise<Endnode[]>;
-  findAllFromUser(ownerId: string): Promise<Endnode[]>;
+  findAllFromUser(findUserData: IListUserEndnodesDTO): Promise<Endnode[]>;
 }

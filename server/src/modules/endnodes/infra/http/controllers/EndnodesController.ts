@@ -9,13 +9,18 @@ import UpdateEndnodeService from '@modules/endnodes/services/UpdateEndnodeServic
 
 class EndnodesController {
   public async index(req: Request, res: Response): Promise<Response> {
-    // TODO: pagination and item limit per query
-    // const { page = 1, limit = 20 } = req.query;
-    // const offset = (page - 1) * limit;
+    const { page = 1, limit = 20, all = false } = req.query;
 
     const listUserEndnodes = container.resolve(ListUserEndnodesService);
 
-    const endnodes = await listUserEndnodes.execute(req.user.id);
+    const endnodes = await listUserEndnodes.execute({
+      ownerId: req.user.id,
+      options: {
+        page: Number(page),
+        limit: Number(limit),
+        all: all === 'true',
+      },
+    });
 
     return res.json(endnodes);
   }

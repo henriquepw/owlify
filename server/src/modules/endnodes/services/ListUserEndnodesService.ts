@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import IEndnodesRepository from '../repositories/IEndnodesRepository';
 
 import Endnode from '../infra/typeorm/entities/Endnode';
+import IListUserEndnodesDTO from '../dtos/IListUserEndnodesDTO';
 
 @injectable()
 class ListUserEndnodesService {
@@ -11,8 +12,14 @@ class ListUserEndnodesService {
     private endnodesRepository: IEndnodesRepository,
   ) {}
 
-  public async execute(ownerId: string): Promise<Endnode[]> {
-    const endnodes = await this.endnodesRepository.findAllFromUser(ownerId);
+  public async execute({
+    ownerId,
+    options,
+  }: IListUserEndnodesDTO): Promise<Endnode[]> {
+    const endnodes = await this.endnodesRepository.findAllFromUser({
+      ownerId,
+      options,
+    });
 
     return endnodes;
   }

@@ -5,6 +5,7 @@ import Endnode from '@modules/endnodes/infra/typeorm/entities/Endnode';
 
 import ICreateEndnodeDTO from '@modules/endnodes/dtos/ICreateEndnodeDTO';
 
+import IListUserEndnodesDTO from '@modules/endnodes/dtos/IListUserEndnodesDTO';
 import IEndnodesRepository from '../IEndnodesRepository';
 
 class FakeEndnodesRepository implements IEndnodesRepository {
@@ -62,7 +63,10 @@ class FakeEndnodesRepository implements IEndnodesRepository {
     return endnodes;
   }
 
-  public async findAllFromUser(ownerId: string): Promise<Endnode[]> {
+  public async findAllFromUser({
+    ownerId,
+    options = { all: true },
+  }: IListUserEndnodesDTO): Promise<Endnode[]> {
     const gatewayIds = this.gateways
       .filter(current => current.ownerId === ownerId)
       .map(current => current.id);
@@ -70,6 +74,12 @@ class FakeEndnodesRepository implements IEndnodesRepository {
     const endnodes = this.endnodes.filter(current =>
       gatewayIds.includes(current.gatewayId),
     );
+
+    const { all = false, page = 1, limit = 20 } = options;
+
+    if (!all) {
+      return endnodes.slice((page - 1) * limit, limit * page);
+    }
 
     return endnodes;
   }
