@@ -14,7 +14,7 @@ export default {
       tags: ['endnodeId'],
     },
     {
-      measurement: 'package',
+      measurement: 'packet',
       fields: {
         snr: FieldType.FLOAT,
         rssi: FieldType.INTEGER,

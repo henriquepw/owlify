@@ -1,4 +1,4 @@
-export default interface IPackage {
+export default interface IPacket {
   endnodeId: string;
   snr: number;
   rssi: number;

@@ -5,9 +5,9 @@ import { container } from 'tsyringe';
 
 import influx from '@shared/infra/influx';
 
-import WritePackageService from '@modules/endnodes/services/WritePackageService';
+import WritePacketService from '@modules/endnodes/services/WritePacketService';
 
-class PackagesController {
+class PacketController {
   public async index(req: Request, res: Response): Promise<Response> {
     const { endnodeId } = req.params;
     const { page = 1, limit = 20 } = req.query;
@@ -29,9 +29,9 @@ class PackagesController {
     const { endnodeId } = req.params;
     const { snr, rssi, success, count } = req.body;
 
-    const writePackage = container.resolve(WritePackageService);
+    const writePacket = container.resolve(WritePacketService);
 
-    const measurement = await writePackage.execute({
+    const measurement = await writePacket.execute({
       endnodeId,
       fields: {
         snr,
@@ -45,4 +45,4 @@ class PackagesController {
   }
 }
 
-export default new PackagesController();
+export default new PacketController();

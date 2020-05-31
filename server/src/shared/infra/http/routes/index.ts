@@ -6,7 +6,7 @@ import usersRoutes from '@modules/users/infra/http/routes/users.routes';
 import gatewaysRoutes from '@modules/gateways/infra/http/routes/gateways.routes';
 
 import endnodesRoutes from '@modules/endnodes/infra/http/routes/endnodes.routes';
-import packagesRoutes from '@modules/endnodes/infra/http/routes/packages.routes';
+import packetsRoutes from '@modules/endnodes/infra/http/routes/packets.routes';
 import sensorsRoutes from '@modules/endnodes/infra/http/routes/sensors.routes';
 
 const routes = Router();
@@ -25,6 +25,6 @@ routes.use('/gateways', gatewaysRoutes);
 routes.use('/endnodes', endnodesRoutes);
 
 routes.use('/sensors', sensorsRoutes);
-routes.use('/packages', packagesRoutes);
+routes.use('/packets', packetsRoutes);
 
 export default routes;

@@ -1,4 +1,4 @@
-export default interface ICreatePackageDTO {
+export default interface ICreatePacketDTO {
   endnodeId: string;
   fields: {
     snr: number;

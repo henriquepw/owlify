@@ -2,16 +2,16 @@ import { escape } from 'influx/lib/src/grammar/escape';
 
 import influx from '@shared/infra/influx';
 
-import ICreatePackageDTO from '@modules/endnodes/dtos/ICreatePackageDTO';
-import IPackagesRepository from '@modules/endnodes/repositories/IPackagesRepository';
+import ICreatePacketDTO from '@modules/endnodes/dtos/ICreatePacketDTO';
+import IPacketsRepository from '@modules/endnodes/repositories/IPacketsRepository';
 
-import IPackage from '../entities/Package';
+import IPacket from '../entities/Packet';
 
-class PackagesRepository implements IPackagesRepository {
+class PacketsRepository implements IPacketsRepository {
   async create({
     endnodeId,
     fields,
-  }: ICreatePackageDTO): Promise<Omit<IPackage, 'time'>> {
+  }: ICreatePacketDTO): Promise<Omit<IPacket, 'time'>> {
     await influx.writeMeasurement('package', [
       {
         tags: { endnodeId },
@@ -27,8 +27,8 @@ class PackagesRepository implements IPackagesRepository {
     return measurement;
   }
 
-  async findByEndnode(endnodeId: string): Promise<IPackage[]> {
-    const packages = await influx.query<IPackage>(`
+  async findByEndnode(endnodeId: string): Promise<IPacket[]> {
+    const packages = await influx.query<IPacket>(`
         select * from package
         where endnodeId = ${escape.stringLit(endnodeId)}
         order by time desc
@@ -39,4 +39,4 @@ class PackagesRepository implements IPackagesRepository {
   }
 }
 
-export default PackagesRepository;
+export default PacketsRepository;

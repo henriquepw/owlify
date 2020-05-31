@@ -8,10 +8,10 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import GatewaysRepository from '@modules/gateways/infra/typeorm/repositories/GatewaysRepository';
 import IGatewaysRepository from '@modules/gateways/repositories/IGatewaysRepository';
 
-import PackagesRepository from '@modules/endnodes/infra/influx/repositories/PackagesRepository';
+import PacketsRepository from '@modules/endnodes/infra/influx/repositories/PacketsRepository';
 import EndnodesRepository from '@modules/endnodes/infra/typeorm/repositories/EndnodesRepository';
 import IEndnodesRepository from '@modules/endnodes/repositories/IEndnodesRepository';
-import IPackagesRepository from '@modules/endnodes/repositories/IPackagesRepository';
+import IPacketsRepository from '@modules/endnodes/repositories/IPacketsRepository';
 
 container.registerSingleton<IGatewaysRepository>(
   'GatewaysRepository',
@@ -28,7 +28,7 @@ container.registerSingleton<IEndnodesRepository>(
   EndnodesRepository,
 );
 
-container.registerSingleton<IPackagesRepository>(
-  'PackagesRepository',
-  PackagesRepository,
+container.registerSingleton<IPacketsRepository>(
+  'PacketsRepository',
+  PacketsRepository,
 );
