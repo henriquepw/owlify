@@ -12,13 +12,13 @@ class PacketController {
 
     const listEndnodePackets = container.resolve(ListEndnodePacketsService);
 
-    const result = await listEndnodePackets.execute(endnodeId, {
+    const packetsData = await listEndnodePackets.execute(endnodeId, {
       page: Number(page),
       limit: Number(limit),
       all: all === 'true',
     });
 
-    return res.json(result);
+    return res.json(packetsData);
   }
 
   public async store(req: Request, res: Response): Promise<Response> {

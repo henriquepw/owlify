@@ -5,7 +5,7 @@ import SensorsController from '../controllers/SensorsController';
 const sensorsRoutes = Router();
 
 sensorsRoutes
-  .route('/:nodeID')
+  .route('/:endnodeId')
   .get(SensorsController.index)
   .post(SensorsController.store);
 
