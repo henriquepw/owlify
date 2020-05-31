@@ -5,7 +5,7 @@ import IPacket from '../infra/influx/entities/Packet';
 import IPacketsRepository from '../repositories/IPacketsRepository';
 
 @injectable()
-class WritePackageService {
+class WritePacketService {
   constructor(
     @inject('PacketsRepository')
     private packetsRepository: IPacketsRepository,
@@ -24,4 +24,4 @@ class WritePackageService {
   }
 }
 
-export default WritePackageService;
+export default WritePacketService;

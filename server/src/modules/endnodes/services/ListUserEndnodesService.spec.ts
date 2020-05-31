@@ -81,7 +81,6 @@ describe('List User Endnodes', () => {
     const endnodes = await listUserEndnodes.execute({
       ownerId: gateway.ownerId,
       options: {
-        page: 1,
         limit: 2,
       },
     });

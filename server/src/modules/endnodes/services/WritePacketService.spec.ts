@@ -1,15 +1,15 @@
 import 'reflect-metadata';
 
-import FakePacketRepository from '../repositories/fakes/FakePacketRepository';
+import FakePacketsRepository from '../repositories/fakes/FakePacketsRepository';
 import WritePacketService from './WritePacketService';
 
 let writePackage: WritePacketService;
-let fakePacketRepository: FakePacketRepository;
+let fakePacketsRepository: FakePacketsRepository;
 
 describe('Write Packet', () => {
   beforeEach(() => {
-    fakePacketRepository = new FakePacketRepository();
-    writePackage = new WritePacketService(fakePacketRepository);
+    fakePacketsRepository = new FakePacketsRepository();
+    writePackage = new WritePacketService(fakePacketsRepository);
   });
 
   it('shoud be able to write a packet on database', async () => {
