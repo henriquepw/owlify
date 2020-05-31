@@ -13,7 +13,7 @@ class PacketsRepository implements IPacketsRepository {
     endnodeId,
     fields,
   }: ICreatePacketDTO): Promise<Omit<IPacket, 'time'>> {
-    await influx.writeMeasurement('package', [
+    await influx.writeMeasurement('packet', [
       {
         tags: { endnodeId },
         fields,
@@ -43,14 +43,14 @@ class PacketsRepository implements IPacketsRepository {
         offset ${offset}
       `;
 
-    const packages = await influx.query<IPacket>(`
-        select * from package
+    const packets = await influx.query<IPacket>(`
+        select * from packet
         where endnodeId = ${escape.stringLit(endnodeId)}
         order by time desc
         ${findOptions}
       `);
 
-    return packages;
+    return packets;
   }
 }
 

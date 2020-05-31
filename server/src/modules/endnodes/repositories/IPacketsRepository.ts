@@ -1,11 +1,12 @@
 import ICreatePacketDTO from '../dtos/ICreatePacketDTO';
 import IListOptionsDTO from '../dtos/IListOptionsDTO';
-import Packet from '../infra/influx/entities/Packet';
+import IPacket from '../infra/influx/entities/Packet';
 
 export default interface IPacketsRepository {
-  create(packageData: ICreatePacketDTO): Promise<Omit<Packet, 'time'>>;
+  create(packageData: ICreatePacketDTO): Promise<Omit<IPacket, 'time'>>;
+
   findByEndnode(
     endnodeId: string,
     options?: IListOptionsDTO,
-  ): Promise<Packet[]>;
+  ): Promise<IPacket[]>;
 }
