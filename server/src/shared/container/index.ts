@@ -9,9 +9,11 @@ import GatewaysRepository from '@modules/gateways/infra/typeorm/repositories/Gat
 import IGatewaysRepository from '@modules/gateways/repositories/IGatewaysRepository';
 
 import PacketsRepository from '@modules/endnodes/infra/influx/repositories/PacketsRepository';
+import SensorsRepository from '@modules/endnodes/infra/influx/repositories/SensorsRepository';
 import EndnodesRepository from '@modules/endnodes/infra/typeorm/repositories/EndnodesRepository';
 import IEndnodesRepository from '@modules/endnodes/repositories/IEndnodesRepository';
 import IPacketsRepository from '@modules/endnodes/repositories/IPacketsRepository';
+import ISensorsRepository from '@modules/endnodes/repositories/ISensorsRepository';
 
 container.registerSingleton<IGatewaysRepository>(
   'GatewaysRepository',
@@ -31,4 +33,9 @@ container.registerSingleton<IEndnodesRepository>(
 container.registerSingleton<IPacketsRepository>(
   'PacketsRepository',
   PacketsRepository,
+);
+
+container.registerSingleton<ISensorsRepository>(
+  'SensorsRepository',
+  SensorsRepository,
 );
