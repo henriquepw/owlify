@@ -30,7 +30,7 @@ services:
       - postgres-data:/postgres/data
 
   owlify_influx:
-    image: influxdb:latest
+    image: influxdb:1.8
     container_name: owlify_influx
     ports:
       - '8086:8086'

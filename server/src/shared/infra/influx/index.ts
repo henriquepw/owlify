@@ -15,11 +15,17 @@ class Database {
     await this.createDB();
   }
 
-  public async createDB(): Promise<void> {
+  private async createDB(): Promise<void> {
+    const { DB_NAME } = process.env;
+
     const databases = await this.influx.getDatabaseNames();
 
-    if (!databases.includes(process.env.DB_NAME as string)) {
-      await this.influx.createDatabase(process.env.DB_NAME as string);
+    if (!DB_NAME) {
+      throw new Error('DB_NAME variable is not defined on .env file');
+    }
+
+    if (!databases.includes(DB_NAME)) {
+      await this.influx.createDatabase(DB_NAME);
     }
   }
 }

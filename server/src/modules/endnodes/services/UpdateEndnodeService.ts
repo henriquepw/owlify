@@ -19,7 +19,7 @@ class UpdateEndnodeService {
     private endnodesRepository: IEndnodesRepository,
   ) {}
 
-  public async execute({
+  async execute({
     ownerId,
     endnodeId,
     name,

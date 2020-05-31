@@ -10,7 +10,10 @@
     }
   },
   "lint-staged": {
-    "src/**/*": ["eslint --fix", "yarn test --findReletedTests"]
+    "src/**/*": [
+      "eslint --fix",
+      "yarn test --findReletedTests"
+    ]
   },
   "scripts": {
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
@@ -23,6 +26,7 @@
     "test": "cross-env NODE_ENV=test jest"
   },
   "dependencies": {
+    "@influxdata/influxdb-client": "^1.3.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.3",
     "cors": "^2.8.5",

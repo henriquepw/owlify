@@ -1,9 +1,9 @@
 import { Repository, getRepository } from 'typeorm';
 
 import ICreateEndnodeDTO from '@modules/endnodes/dtos/ICreateEndnodeDTO';
+import IListUserEndnodesDTO from '@modules/endnodes/dtos/IListUserEndnodesDTO';
 import Endnode from '@modules/endnodes/infra/typeorm/entities/Endnode';
 import IEndnodesRepository from '@modules/endnodes/repositories/IEndnodesRepository';
-import IListUserEndnodesDTO from '@modules/endnodes/dtos/IListUserEndnodesDTO';
 
 class FakeEndnodesRepository implements IEndnodesRepository {
   private ormRepository: Repository<Endnode>;

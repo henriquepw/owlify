@@ -11,7 +11,7 @@ class ListUserEndnodesService {
     private endnodesRepository: IEndnodesRepository,
   ) {}
 
-  public async execute({
+  async execute({
     ownerId,
     options,
   }: IListUserEndnodesDTO): Promise<Endnode[]> {

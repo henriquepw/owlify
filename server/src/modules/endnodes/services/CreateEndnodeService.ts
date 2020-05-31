@@ -18,7 +18,7 @@ class CreateEndnodeService {
     private endnodesRepository: IEndnodesRepository,
   ) {}
 
-  public async execute({
+  async execute({
     gatewayId,
     name,
     room,

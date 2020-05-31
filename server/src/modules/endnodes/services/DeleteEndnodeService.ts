@@ -16,7 +16,7 @@ class DeleteEndnodeService {
     private endnodesRepository: IEndnodesRepository,
   ) {}
 
-  public async execute({ ownerId, endnodeId }: IRequest): Promise<void> {
+  async execute({ ownerId, endnodeId }: IRequest): Promise<void> {
     /**
      * Check if the endnode is yours.
      */

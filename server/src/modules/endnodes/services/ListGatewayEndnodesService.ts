@@ -10,7 +10,7 @@ class ListGatewayEndnodesService {
     private endnodesRepository: IEndnodesRepository,
   ) {}
 
-  public async execute(gatewayId: string): Promise<Endnode[]> {
+  async execute(gatewayId: string): Promise<Endnode[]> {
     const endnodes = await this.endnodesRepository.findAllFromGateway(
       gatewayId,
     );
