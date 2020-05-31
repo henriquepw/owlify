@@ -5,7 +5,6 @@ import AppError from '@shared/Errors/AppError';
 import FakeGatewaysRepository from '@modules/gateways/repositories/fakes/FakeGatewaysRepository';
 
 import FakeEndnodesRepository from '../repositories/fakes/FakeEndnodesRepository';
-
 import DeleteEndnodeService from './DeleteEndnodeService';
 
 let fakeEndnodesRepository: FakeEndnodesRepository;

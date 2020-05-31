@@ -4,8 +4,8 @@ import AppError from '@shared/Errors/AppError';
 
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
 
-import FakeGatewaysRepository from '../repositories/fakes/FakeGatewaysRepository';
 import ICreateGatewayDTO from '../dtos/ICreateGatewayDTO';
+import FakeGatewaysRepository from '../repositories/fakes/FakeGatewaysRepository';
 import CreateGatewayService from './CreateGatewayService';
 
 let fakeUsersRepository: FakeUsersRepository;

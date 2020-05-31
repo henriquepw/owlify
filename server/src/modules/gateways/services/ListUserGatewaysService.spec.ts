@@ -3,7 +3,6 @@ import faker from 'faker';
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
 
 import FakeGatewaysRepository from '../repositories/fakes/FakeGatewaysRepository';
-
 import ListUserGatewaysService from './ListUserGatewaysService';
 
 let fakeUsersRepository: FakeUsersRepository;

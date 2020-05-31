@@ -3,10 +3,10 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/Errors/AppError';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IGatewaysRepository from '../repositories/IGatewaysRepository';
-import ICreateGatewayDTO from '../dtos/ICreateGatewayDTO';
 
+import ICreateGatewayDTO from '../dtos/ICreateGatewayDTO';
 import Gateway from '../infra/typeorm/entities/Gateway';
+import IGatewaysRepository from '../repositories/IGatewaysRepository';
 
 @injectable()
 class CreateGatewayService {

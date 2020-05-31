@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
-import { container } from 'tsyringe';
+
 import { classToClass } from 'class-transformer';
+import { container } from 'tsyringe';
 
 import CreateUserService from '@modules/users/services/CreateUserService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
-import UpdateUserService from '@modules/users/services/UpdateUserService';
 import ShowUserProfileService from '@modules/users/services/ShowUserProfileService';
+import UpdateUserService from '@modules/users/services/UpdateUserService';
 
 class UsersController {
   public async show(req: Request, res: Response): Promise<Response> {

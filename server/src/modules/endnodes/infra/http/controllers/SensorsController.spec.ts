@@ -1,7 +1,6 @@
 import request from 'supertest';
 
 import app from '@shared/infra/http/app';
-
 import { cleanInflux } from '@shared/util/tests/cleanDB';
 import { sensorFactory } from '@shared/util/tests/factories';
 

@@ -1,5 +1,5 @@
-import { FieldType } from 'influx/lib/src/grammar/ds';
 import { ISingleHostConfig } from 'influx';
+import { FieldType } from 'influx/lib/src/grammar/ds';
 
 export default {
   host: process.env.DB_HOST,

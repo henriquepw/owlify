@@ -3,7 +3,6 @@ import faker from 'faker';
 import FakeGatewaysRepository from '@modules/gateways/repositories/fakes/FakeGatewaysRepository';
 
 import FakeEndnodesRepository from '../repositories/fakes/FakeEndnodesRepository';
-
 import ListUserEndnodesService from './ListUserEndnodesService';
 
 let fakeEndnodesRepository: FakeEndnodesRepository;

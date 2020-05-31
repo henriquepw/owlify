@@ -1,8 +1,7 @@
 import { Repository, getRepository } from 'typeorm';
 
-import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
 import ICreateGatewayDTO from '@modules/gateways/dtos/ICreateGatewayDTO';
-
+import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
 import IGatewaysRepository from '@modules/gateways/repositories/IGatewaysRepository';
 
 class GatewaysRepository implements IGatewaysRepository {

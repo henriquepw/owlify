@@ -1,9 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/Errors/AppError';
-import IGatewaysRepository from '../repositories/IGatewaysRepository';
 
 import Gateway from '../infra/typeorm/entities/Gateway';
+import IGatewaysRepository from '../repositories/IGatewaysRepository';
 
 interface IRequest {
   ownerId: string;

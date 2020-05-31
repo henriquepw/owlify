@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { container } from 'tsyringe';
 
 import ListGatewayEndnodesService from '@modules/endnodes/services/ListGatewayEndnodesService';

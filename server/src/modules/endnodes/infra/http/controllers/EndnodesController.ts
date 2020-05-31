@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
+
 import { container } from 'tsyringe';
 
 import CreateEndnodeService from '@modules/endnodes/services/CreateEndnodeService';
 import DeleteEndnodeService from '@modules/endnodes/services/DeleteEndnodeService';
-
 import ListUserEndnodesService from '@modules/endnodes/services/ListUserEndnodesService';
 import UpdateEndnodeService from '@modules/endnodes/services/UpdateEndnodeService';
 

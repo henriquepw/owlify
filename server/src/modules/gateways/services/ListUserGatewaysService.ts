@@ -1,8 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
-import IGatewaysRepository from '../repositories/IGatewaysRepository';
-
 import Gateway from '../infra/typeorm/entities/Gateway';
+import IGatewaysRepository from '../repositories/IGatewaysRepository';
 
 @injectable()
 class ListUserGatewaysService {

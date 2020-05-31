@@ -1,9 +1,8 @@
 import { injectable, inject } from 'tsyringe';
 
-import IEndnodesRepository from '../repositories/IEndnodesRepository';
-
-import Endnode from '../infra/typeorm/entities/Endnode';
 import IListUserEndnodesDTO from '../dtos/IListUserEndnodesDTO';
+import Endnode from '../infra/typeorm/entities/Endnode';
+import IEndnodesRepository from '../repositories/IEndnodesRepository';
 
 @injectable()
 class ListUserEndnodesService {

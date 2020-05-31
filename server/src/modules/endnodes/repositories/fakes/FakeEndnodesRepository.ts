@@ -1,11 +1,11 @@
 import { uuid } from 'uuidv4';
 
 import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
-import Endnode from '@modules/endnodes/infra/typeorm/entities/Endnode';
 
 import ICreateEndnodeDTO from '@modules/endnodes/dtos/ICreateEndnodeDTO';
-
 import IListUserEndnodesDTO from '@modules/endnodes/dtos/IListUserEndnodesDTO';
+import Endnode from '@modules/endnodes/infra/typeorm/entities/Endnode';
+
 import IEndnodesRepository from '../IEndnodesRepository';
 
 class FakeEndnodesRepository implements IEndnodesRepository {

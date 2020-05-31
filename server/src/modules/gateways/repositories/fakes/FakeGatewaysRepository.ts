@@ -1,6 +1,8 @@
-import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
-import ICreateGatewayDTO from '@modules/gateways/dtos/ICreateGatewayDTO';
 import { uuid } from 'uuidv4';
+
+import ICreateGatewayDTO from '@modules/gateways/dtos/ICreateGatewayDTO';
+import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
+
 import IGatewaysRepository from '../IGatewaysRepository';
 
 class FakeGatewaysRepository implements IGatewaysRepository {

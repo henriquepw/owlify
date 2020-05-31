@@ -4,9 +4,8 @@ import AppError from '@shared/Errors/AppError';
 
 import FakeGatewaysRepository from '@modules/gateways/repositories/fakes/FakeGatewaysRepository';
 
-import FakeEndnodesRepository from '../repositories/fakes/FakeEndnodesRepository';
-
 import ICreateEndnodeDTO from '../dtos/ICreateEndnodeDTO';
+import FakeEndnodesRepository from '../repositories/fakes/FakeEndnodesRepository';
 import CreateEndnodeService from './CreateEndnodeService';
 
 let fakeEndnodesRepository: FakeEndnodesRepository;

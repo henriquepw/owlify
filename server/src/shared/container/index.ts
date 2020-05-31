@@ -2,14 +2,14 @@ import { container } from 'tsyringe';
 
 import '@modules/users/providers';
 
-import IEndnodesRepository from '@modules/endnodes/repositories/IEndnodesRepository';
-import EndnodesRepository from '@modules/endnodes/infra/typeorm/repositories/EndnodesRepository';
-
-import IGatewaysRepository from '@modules/gateways/repositories/IGatewaysRepository';
-import GatewaysRepository from '@modules/gateways/infra/typeorm/repositories/GatewaysRepository';
-
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+
+import GatewaysRepository from '@modules/gateways/infra/typeorm/repositories/GatewaysRepository';
+import IGatewaysRepository from '@modules/gateways/repositories/IGatewaysRepository';
+
+import EndnodesRepository from '@modules/endnodes/infra/typeorm/repositories/EndnodesRepository';
+import IEndnodesRepository from '@modules/endnodes/repositories/IEndnodesRepository';
 
 container.registerSingleton<IGatewaysRepository>(
   'GatewaysRepository',

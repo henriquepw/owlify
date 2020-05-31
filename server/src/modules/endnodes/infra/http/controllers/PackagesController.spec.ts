@@ -1,8 +1,7 @@
-import request from 'supertest';
 import { isAfter, parseISO } from 'date-fns';
+import request from 'supertest';
 
 import app from '@shared/infra/http/app';
-
 import { cleanInflux } from '@shared/util/tests/cleanDB';
 import { packageFactory } from '@shared/util/tests/factories';
 

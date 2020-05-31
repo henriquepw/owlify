@@ -1,6 +1,6 @@
-import Endnode from '../infra/typeorm/entities/Endnode';
 import ICreateEndnodeDTO from '../dtos/ICreateEndnodeDTO';
 import IListUserEndnodesDTO from '../dtos/IListUserEndnodesDTO';
+import Endnode from '../infra/typeorm/entities/Endnode';
 
 export default interface IEndnodesRepository {
   create(data: ICreateEndnodeDTO): Promise<Endnode>;

@@ -4,10 +4,9 @@ import AppError from '@shared/Errors/AppError';
 
 import IGatewaysRepository from '@modules/gateways/repositories/IGatewaysRepository';
 
-import IEndnodesRepository from '../repositories/IEndnodesRepository';
 import ICreateEndnodeDTO from '../dtos/ICreateEndnodeDTO';
-
 import Endnode from '../infra/typeorm/entities/Endnode';
+import IEndnodesRepository from '../repositories/IEndnodesRepository';
 
 @injectable()
 class CreateEndnodeService {

@@ -1,6 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/Errors/AppError';
+
 import IEndnodesRepository from '../repositories/IEndnodesRepository';
 
 interface IRequest {

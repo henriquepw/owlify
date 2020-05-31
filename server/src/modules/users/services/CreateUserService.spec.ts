@@ -2,10 +2,9 @@ import faker from 'faker';
 
 import AppError from '@shared/Errors/AppError';
 
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-
 import ICreateUserDTO from '../dtos/ICreateUserDTO';
+import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import CreateUserService from './CreateUserService';
 
 let fakeUsersRepository: FakeUsersRepository;

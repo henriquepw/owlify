@@ -1,5 +1,5 @@
-import Gateway from '../infra/typeorm/entities/Gateway';
 import ICreateGatewayDTO from '../dtos/ICreateGatewayDTO';
+import Gateway from '../infra/typeorm/entities/Gateway';
 
 export default interface IGatewaysRepository {
   create(data: ICreateGatewayDTO): Promise<Gateway>;

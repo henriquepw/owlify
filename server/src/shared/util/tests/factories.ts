@@ -1,9 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import faker from 'faker';
 import factory from 'factory-girl';
+import faker from 'faker';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+
 import Gateway from '@modules/gateways/infra/typeorm/entities/Gateway';
+
 import Endnode from '@modules/endnodes/infra/typeorm/entities/Endnode';
 
 interface IPackage {

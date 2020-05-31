@@ -1,8 +1,7 @@
 import faker from 'faker';
 
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-
 import ICreateUserDTO from '../dtos/ICreateUserDTO';
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import DeleteUserService from './DeleteUserService';
 
 let fakeUsersRepository: FakeUsersRepository;

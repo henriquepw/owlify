@@ -1,5 +1,5 @@
-import { injectable, inject } from 'tsyringe';
 import { sign } from 'jsonwebtoken';
+import { injectable, inject } from 'tsyringe';
 
 import authConfig from '@config/auth';
 

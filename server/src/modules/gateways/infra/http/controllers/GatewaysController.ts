@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
+
 import { container } from 'tsyringe';
 
 import CreateGatewayService from '@modules/gateways/services/CreateGatewayService';
-import ListUserGatewaysService from '@modules/gateways/services/ListUserGatewaysService';
 import DeleteGatewayService from '@modules/gateways/services/DeleteGatewayService';
+import ListUserGatewaysService from '@modules/gateways/services/ListUserGatewaysService';
 import UpdateGatewayService from '@modules/gateways/services/UpdateGatewayService';
 
 class GatewaysController {

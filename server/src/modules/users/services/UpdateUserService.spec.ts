@@ -2,11 +2,10 @@ import faker from 'faker';
 
 import AppError from '@shared/Errors/AppError';
 
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-
-import UpdateUserService from './UpdateUserService';
 import User from '../infra/typeorm/entities/User';
+import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+import UpdateUserService from './UpdateUserService';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;

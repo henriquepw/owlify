@@ -3,9 +3,8 @@ import faker from 'faker';
 import AppError from '@shared/Errors/AppError';
 
 import ICreateUserDTO from '../dtos/ICreateUserDTO';
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import AuthenticateUserService from './AuthenticateUserService';
 
 let fakeUsersRepository: FakeUsersRepository;

@@ -1,9 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/Errors/AppError';
-import IEndnodesRepository from '../repositories/IEndnodesRepository';
 
 import Endnode from '../infra/typeorm/entities/Endnode';
+import IEndnodesRepository from '../repositories/IEndnodesRepository';
 
 interface IRequest {
   ownerId: string;

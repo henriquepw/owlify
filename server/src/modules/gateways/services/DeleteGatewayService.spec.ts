@@ -3,7 +3,6 @@ import faker from 'faker';
 import AppError from '@shared/Errors/AppError';
 
 import FakeGatewaysRepository from '../repositories/fakes/FakeGatewaysRepository';
-
 import DeleteGatewayService from './DeleteGatewayService';
 
 let fakeGatewaysRepository: FakeGatewaysRepository;

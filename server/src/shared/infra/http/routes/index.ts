@@ -1,12 +1,11 @@
 import { Router } from 'express';
 
-import usersRoutes from '@modules/users/infra/http/routes/users.routes';
 import sessionsRoutes from '@modules/users/infra/http/routes/sessions.routes';
+import usersRoutes from '@modules/users/infra/http/routes/users.routes';
 
 import gatewaysRoutes from '@modules/gateways/infra/http/routes/gateways.routes';
 
 import endnodesRoutes from '@modules/endnodes/infra/http/routes/endnodes.routes';
-
 import packagesRoutes from '@modules/endnodes/infra/http/routes/packages.routes';
 import sensorsRoutes from '@modules/endnodes/infra/http/routes/sensors.routes';
 

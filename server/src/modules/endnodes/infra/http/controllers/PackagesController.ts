@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { escape } from 'influx/lib/src/grammar/escape';
 
 import influx from '@shared/infra/database/influx';

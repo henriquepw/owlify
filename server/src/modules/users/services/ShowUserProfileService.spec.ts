@@ -3,7 +3,6 @@ import faker from 'faker';
 import AppError from '@shared/Errors/AppError';
 
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-
 import ShowUserProfileService from './ShowUserProfileService';
 
 let fakeUsersRepository: FakeUsersRepository;
