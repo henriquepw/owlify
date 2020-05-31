@@ -11,7 +11,7 @@ export default {
         humidity: FieldType.FLOAT,
         temperature: FieldType.FLOAT,
       },
-      tags: ['nodeID'],
+      tags: ['endnodeId'],
     },
     {
       measurement: 'package',
@@ -21,7 +21,7 @@ export default {
         count: FieldType.INTEGER,
         success: FieldType.BOOLEAN,
       },
-      tags: ['nodeID'],
+      tags: ['endnodeId'],
     },
   ],
 } as ISingleHostConfig;

@@ -4,7 +4,7 @@ import IPackage from '@modules/endnodes/infra/influx/entities/Package';
 import IPackagesRepository from '../IPackagesRepository';
 
 class FakePackagesRepository implements IPackagesRepository {
-  private packages: IPackage[];
+  private packages: IPackage[] = [];
 
   async create({
     endnodeId,
@@ -13,10 +13,12 @@ class FakePackagesRepository implements IPackagesRepository {
     const measurement = {
       endnodeId,
       ...fields,
-      time: new Date().toString(),
     };
 
-    this.packages.push(measurement);
+    this.packages.push({
+      time: new Date().toString(),
+      ...measurement,
+    });
 
     return measurement;
   }

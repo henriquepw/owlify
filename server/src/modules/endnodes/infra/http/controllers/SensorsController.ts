@@ -2,75 +2,55 @@ import { Request, Response } from 'express';
 
 import { escape } from 'influx/lib/src/grammar/escape';
 
-import influx from '@shared/infra/database/influx';
-
-type indexQuery = {
-  [key: string]: number;
-};
-
-type storeBody = {
-  snr: number;
-  rssi: number;
-  count: number;
-  temperature: number;
-  humidity: number;
-};
+import influx from '@shared/infra/influx';
 
 class SensorsController {
   public async index(req: Request, res: Response): Promise<Response> {
-    const { nodeID } = req.params;
-    const { page = 1, limit = 20 } = req.query as indexQuery;
+    const { endnodeId } = req.params;
+    const { page = 1, limit = 20 } = req.query;
 
-    const offset = (page - 1) * limit;
+    const offset = (Number(page) - 1) * Number(limit);
 
-    try {
-      const result = await influx.query(`
+    const result = await influx.query(`
         select * from sensor
-        where nodeID = ${escape.stringLit(nodeID)}
+        where endnodeId = ${escape.stringLit(endnodeId)}
         order by time desc
         limit ${limit}
         offset ${offset}
       `);
 
-      return res.json(result);
-    } catch (err) {
-      return res.status(500).send(err.stack);
-    }
+    return res.json(result);
   }
 
   public async store(req: Request, res: Response): Promise<Response> {
-    const { nodeID } = req.params;
-    const { snr, rssi, temperature, humidity, count } = req.body as storeBody;
+    const { endnodeId } = req.params;
+    const { snr, rssi, temperature, humidity, count } = req.body;
 
-    try {
-      await influx.writePoints([
-        {
-          measurement: 'sensor',
-          tags: { nodeID },
-          fields: { temperature, humidity },
+    await influx.writePoints([
+      {
+        measurement: 'sensor',
+        tags: { endnodeId },
+        fields: { temperature, humidity },
+      },
+      {
+        measurement: 'package',
+        tags: { endnodeId },
+        fields: {
+          snr,
+          rssi,
+          count,
+          success: true,
         },
-        {
-          measurement: 'package',
-          tags: { nodeID },
-          fields: {
-            snr,
-            rssi,
-            count,
-            success: true,
-          },
-        },
-      ]);
+      },
+    ]);
 
-      return res.json({
-        snr,
-        rssi,
-        count,
-        temperature,
-        humidity,
-      });
-    } catch (err) {
-      return res.status(500).json({ error: err.stack });
-    }
+    return res.json({
+      snr,
+      rssi,
+      count,
+      temperature,
+      humidity,
+    });
   }
 }
 

@@ -1,66 +1,47 @@
 import { Request, Response } from 'express';
 
 import { escape } from 'influx/lib/src/grammar/escape';
+import { container } from 'tsyringe';
 
-import influx from '@shared/infra/database/influx';
+import influx from '@shared/infra/influx';
 
-type indexQuery = {
-  [key: string]: number;
-};
-
-type storeBody = {
-  snr: number;
-  rssi: number;
-  count: number;
-  success: boolean;
-};
+import WritePackageService from '@modules/endnodes/services/WritePackageService';
 
 class PackagesController {
   public async index(req: Request, res: Response): Promise<Response> {
-    const { nodeID } = req.params;
-    const { page = 1, limit = 20 } = req.query as indexQuery;
+    const { endnodeId } = req.params;
+    const { page = 1, limit = 20 } = req.query;
 
-    const offset = (page - 1) * limit;
+    const offset = (Number(page) - 1) * Number(limit);
 
-    try {
-      const result = await influx.query(`
+    const result = await influx.query(`
         select * from package
-        where nodeID = ${escape.stringLit(nodeID)}
+        where endnodeId = ${escape.stringLit(endnodeId)}
         order by time desc
         limit ${limit}
         offset ${offset}
       `);
 
-      return res.json(result);
-    } catch (err) {
-      return res.status(500).send(err.stack);
-    }
+    return res.json(result);
   }
 
   public async store(req: Request, res: Response): Promise<Response> {
-    const { nodeID } = req.params;
-    const { snr, rssi, success, count } = req.body as storeBody;
+    const { endnodeId } = req.params;
+    const { snr, rssi, success, count } = req.body;
 
-    try {
-      const measurement = {
+    const writePackage = container.resolve(WritePackageService);
+
+    const measurement = await writePackage.execute({
+      endnodeId,
+      fields: {
         snr,
         rssi,
         count,
         success,
-      };
+      },
+    });
 
-      await influx.writePoints([
-        {
-          measurement: 'package',
-          tags: { nodeID },
-          fields: measurement,
-        },
-      ]);
-
-      return res.json(measurement);
-    } catch (err) {
-      return res.status(500).json({ error: err.stack });
-    }
+    return res.json(measurement);
   }
 }
 

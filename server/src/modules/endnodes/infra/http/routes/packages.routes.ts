@@ -5,7 +5,7 @@ import PackagesController from '../controllers/PackagesController';
 const packagesRoutes = Router();
 
 packagesRoutes
-  .route('/:nodeID')
+  .route('/:endnodeId')
   .get(PackagesController.index)
   .post(PackagesController.store);
 
