@@ -14,6 +14,9 @@ COPY package.json yarn.lock ./
 
 RUN yarn
 
+RUN npm install -g pm2
+RUN npm install -g ts-node
+
 USER node
 
 COPY --chown=node:node . .

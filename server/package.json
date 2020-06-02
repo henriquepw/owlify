@@ -18,15 +18,10 @@
   "scripts": {
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpileOnly --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "start": "ts-node src/shared/infra/http/server.ts",
-    "pm2:start": "NODE_ENV=production pm2 start ./dist/server.js",
-    "pm2:startup": "pm2 startup systemd",
-    "pm2:stop": "pm2 stop server",
-    "pm2:show": "pm2 show server",
-    "test": "cross-env NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test jest",
+    "start": "ts-node -r tsconfig-paths/register --files ./src/shared/infra/http/server.ts"
   },
   "dependencies": {
-    "@influxdata/influxdb-client": "^1.3.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.3",
     "cors": "^2.8.5",
