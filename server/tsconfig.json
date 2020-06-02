@@ -1,26 +1,26 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es5",
     "module": "commonjs",
-    "allowJs": true,
     "outDir": "./dist",
     "rootDir": "./src",
+
     "strict": true,
     "strictPropertyInitialization": false,
-    "moduleResolution": "node",
+    "allowJs": true,
+
     "baseUrl": "./src",
-    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@config/*": ["config/*"],
+      "@modules/*": ["modules/*"],
+      "@shared/*": ["shared/*"]
+    },
     "esModuleInterop": true,
+
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": true,
-    "typeRoots": ["node_modules/@types", "src/@types"],
-    "paths": {
-      "~/*": ["*"],
-      "@database/*": ["database/*"]
-    }
+
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"],
-  "exclude": ["__tests__/coverage"]
+  "exclude": ["__tests__/**/*", "jest.config.js", "./dist"]
 }

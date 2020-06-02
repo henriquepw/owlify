@@ -2,15 +2,6 @@
 
 dockerize -wait tcp://owlify_pg:5432 -wait tcp://owlify_influx:8086 -timeout 300s
 
-yarn migrate
+yarn typeorm migration:run
 
-if [ "$1" == "production" ];
-then
-  cp ./src/config/postgres.js ./dist/config/postgres.js
-
-  yarn build
-  yarn start
-  yarn pm2 monit
-else
-  yarn dev
-fi
+pm2-runtime ts-node -- -r tsconfig-paths/register --files ./src/shared/infra/http/server.ts

@@ -1,5 +1,5 @@
-import { FieldType } from 'influx/lib/src/grammar/ds';
 import { ISingleHostConfig } from 'influx';
+import { FieldType } from 'influx/lib/src/grammar/ds';
 
 export default {
   host: process.env.DB_HOST,
@@ -11,17 +11,17 @@ export default {
         humidity: FieldType.FLOAT,
         temperature: FieldType.FLOAT,
       },
-      tags: ['nodeID'],
+      tags: ['endnodeId'],
     },
     {
-      measurement: 'package',
+      measurement: 'packet',
       fields: {
         snr: FieldType.FLOAT,
         rssi: FieldType.INTEGER,
         count: FieldType.INTEGER,
         success: FieldType.BOOLEAN,
       },
-      tags: ['nodeID'],
+      tags: ['endnodeId'],
     },
   ],
 } as ISingleHostConfig;
