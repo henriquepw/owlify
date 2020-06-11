@@ -1,15 +1,16 @@
 import React from 'react';
-import {SafeAreaView, Text, StatusBar} from 'react-native';
+import { SafeAreaView, Text, StatusBar } from 'react-native';
+import AppProvider from './components/templates/AppProvider';
 
-declare const global: {HermesInternal: null | {}};
-
-const App = () => {
+const App: React.FC = () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <Text>Hello</Text>
-      </SafeAreaView>
+      <AppProvider>
+        <StatusBar barStyle="light-content" />
+        <SafeAreaView>
+          <Text>Hello</Text>
+        </SafeAreaView>
+      </AppProvider>
     </>
   );
 };
