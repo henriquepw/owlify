@@ -6,7 +6,8 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
@@ -20,7 +21,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "commit": "git-cz"
+    "commit": "./node_modules/cz-customizable/standalone.js"
   },
   "dependencies": {
     "react": "16.11.0",
@@ -30,6 +31,8 @@
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/runtime": "^7.6.2",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "@types/jest": "^24.0.24",
     "@types/react-native": "^0.62.0",
     "@types/react-test-renderer": "16.9.2",
@@ -39,6 +42,8 @@
     "babel-jest": "^24.9.0",
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "3.2.0",
+    "cz-customizable": "^6.2.0",
+    "cz-emoji": "^1.2.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.11.0",
@@ -70,7 +75,10 @@
   },
   "config": {
     "commitizen": {
-      "path": "./mobile/node_modules/cz-conventional-changelog"
+      "path": "node_modules/cz-customizable",
+      "cz-customizable": {
+        "config": "config/path/to/my/config.js"
+      }
     }
   }
 }
