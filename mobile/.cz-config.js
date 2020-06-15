@@ -2,7 +2,7 @@ module.exports = {
   types: [
     { value: ':sparkles', name: 'feat:    A new feature' },
     { value: ':beetle', name: 'fix:      A bug fix' },
-    { value: 'docs', name: 'docs:     Documentation only changes' },
+    { value: ':envelope', name: 'docs:     Documentation only changes' },
     {
       value: 'style',
       name:

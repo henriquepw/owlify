@@ -23,7 +23,7 @@ module.exports = {
         'build',
         ':bulb',
         'ci',
-        'docs',
+        ':envelope',
         ':sparkles',
         ':beetle',
         'perf',
