@@ -24,7 +24,7 @@ module.exports = {
         ':bulb',
         'ci',
         ':envelope',
-        ':sparkles',
+        ':sparkles: feat',
         ':beetle',
         'perf',
         ':hammer',
