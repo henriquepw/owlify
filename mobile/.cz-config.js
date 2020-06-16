@@ -1,30 +1,31 @@
 module.exports = {
   types: [
-    { value: ':sparkles', name: 'feat:    A new feature' },
-    { value: ':beetle', name: 'fix:      A bug fix' },
-    { value: ':envelope', name: 'docs:     Documentation only changes' },
+    { value: ':sparkles: feat', name: 'feat:    A new feature' },
+    { value: ':beetle: fix', name: 'fix:      A bug fix' },
+    { value: ':page_facing_up: docs', name: 'docs:     Documentation only changes' },
     {
-      value: 'style',
+      value: ':art: style',
       name:
         'style:    Changes that do not affect the meaning of the code\n            (white-space, formatting, missing semi-colons, etc)',
     },
     {
-      value: ':hammer',
+      value: ':hammer: refactor',
       name:
         'refactor: A code change that neither fixes a bug nor adds a feature',
     },
     {
-      value: 'perf',
+      value: ':checkered_flag: perf',
       name: 'perf:     A code change that improves performance',
     },
-    { value: 'test', name: 'test:     Adding missing tests' },
+    { value: ':white_check_mark: test', name: 'test:     Adding missing tests' },
     {
-      value: ':bulb',
+      value: ':bulb: chore',
       name:
         'chore:    Changes to the build process or auxiliary tools\n            and libraries such as documentation generation',
     },
-    { value: 'revert', name: 'revert:   Revert to a commit' },
-    { value: 'WIP', name: 'WIP:      Work in progress' },
+    { value: ':back: revert', name: 'revert:   Revert to a commit' },
+    { value: ':building_construction: build', name: 'build:      Work in progress' },
+    {value: ':heavy_plus_sign: ci', name: 'ci: ci related changes'}
   ],
 
   scopes: [
