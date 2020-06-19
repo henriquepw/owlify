@@ -54,11 +54,21 @@
 
     "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/jsx-filename-extension": ["error", {
-      "extensions": [".tsx"]
-    }],
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [".tsx"]
+      }
+    ],
 
     "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+
     "import/extensions": [
       "error",
       "ignorePackages",

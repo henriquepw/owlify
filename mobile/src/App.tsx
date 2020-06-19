@@ -3,6 +3,8 @@ import { SafeAreaView, Text, StatusBar } from 'react-native';
 
 import AppProvider from './components/templates/AppProvider';
 
+import Storebook from '../storybook';
+
 const App: React.FC = () => {
   return (
     <>
@@ -16,4 +18,5 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+const ENABLE_STORYBOOK = true;
+export default ENABLE_STORYBOOK ? Storebook : App;
