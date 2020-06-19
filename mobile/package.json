@@ -22,6 +22,7 @@
     "commit": "./node_modules/cz-customizable/standalone.js"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.11.0",
     "react": "16.13.1",
     "react-native": "0.62.2",
     "styled-components": "^5.1.1"
@@ -31,6 +32,7 @@
     "@babel/runtime": "^7.6.2",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
+    "@testing-library/jest-native": "^3.1.0",
     "@types/jest": "^26.0.0",
     "@types/react-native": "^0.62.0",
     "@types/react-test-renderer": "16.9.2",
@@ -54,11 +56,24 @@
     "lint-staged": "^8.1.7",
     "metro-react-native-babel-preset": "^0.59.0",
     "prettier": "^2.0.5",
+    "react-native-testing-library": "^2.1.0",
     "react-test-renderer": "16.13.1",
     "typescript": "^3.8.3"
   },
   "jest": {
     "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ],
+    "setupFiles": [
+      "./src/setupTests.ts"
+    ],
+    "collectCoverageFrom": [
+      "src/components/**/*.tsx",
+      "src/hooks/**/*.tsx",
+      "src/pages/**/*.tsx",
+      "!src/components/templates/AppProvider.tsx"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
