@@ -1,10 +1,11 @@
 import React, {
   forwardRef,
   useEffect,
-  useRef,
   useImperativeHandle,
+  useRef,
+  useState,
 } from 'react';
-import { TextInput, TextInputProps } from 'react-native';
+import { TextInput, TextInputProps, StyleProp, ViewStyle } from 'react-native';
 
 import { useField } from '@unform/core';
 
@@ -13,6 +14,7 @@ import * as S from './styles';
 interface InputProps extends TextInputProps {
   icon?: string;
   name: string;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 interface InputRef {
@@ -24,7 +26,7 @@ interface InputValueRef {
 }
 
 const Input: React.RefForwardingComponent<InputRef, InputProps> = (
-  { name, icon, ...rest },
+  { name, icon, containerStyle = {}, ...rest },
   ref,
 ) => {
   const { registerField, defaultValue = '', fieldName, error } = useField(name);
@@ -32,15 +34,14 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   const inputElementRef = useRef<TextInput>(null);
   const inputValueRef = useRef<InputValueRef>({ value: defaultValue });
 
+  const [isFilled, setIsFilled] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
   useImperativeHandle(ref, () => ({
     focus() {
       inputElementRef.current?.focus();
     },
   }));
-
-  function setInputValue(value: string): void {
-    inputValueRef.current.value = value;
-  }
 
   useEffect(() => {
     registerField({
@@ -58,19 +59,44 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
     });
   }, [fieldName, registerField]);
 
+  function setInputValue(value: string): void {
+    inputValueRef.current.value = value;
+  }
+
+  function handleFocus(): void {
+    !isFocused && setIsFocused(true);
+  }
+
+  function handleBlur(): void {
+    isFocused && setIsFocused(false);
+
+    if (!!inputValueRef.current.value !== isFilled) {
+      setIsFilled(!!inputValueRef.current.value);
+    }
+  }
+
   return (
-    <S.Container>
-      <S.Content>
-        {icon && <S.InputIcon name={icon} size={24} />}
+    <S.Container style={containerStyle}>
+      <S.Content isFocused={isFocused} isFilled={isFilled} isErrored={!!error}>
+        {icon && (
+          <S.InputIcon
+            name={icon}
+            size={24}
+            isErrored={!!error}
+            isFilled={isFilled}
+          />
+        )}
         <S.TextInput
           ref={inputElementRef}
           keyboardAppearance="light"
           defaultValue={defaultValue}
           onChangeText={setInputValue}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           {...rest}
         />
       </S.Content>
-      {error && <S.TextError>{error}</S.TextError>}
+      {!!error && <S.TextError>{error}</S.TextError>}
     </S.Container>
   );
 };
