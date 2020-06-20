@@ -1,11 +1,13 @@
 /* eslint-disable global-require */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { AppRegistry } from 'react-native';
 
 import { getStorybookUI, configure } from '@storybook/react-native';
 
+// import './rn-addons';
+
 import './decorators';
 
-// import stories
 configure(() => {
   require('./stories');
 }, module);
@@ -13,7 +15,6 @@ configure(() => {
 const StorybookUIRoot = getStorybookUI({
   port: 7007,
   host: 'localhost',
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   asyncStorage: require('@react-native-community/async-storage').default,
 });
 
