@@ -6,12 +6,10 @@ import { storiesOf } from '@storybook/react-native';
 interface Props {
   text: string;
 }
-const Simple: React.FC<Props> = ({ text }) => (
+const Simple: React.FC = () => (
   <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>{text}</Text>
+    <Text>Typescript works!</Text>
   </View>
 );
 
-storiesOf('Test', module).add('default', () => (
-  <Simple text="Typescript works!" />
-));
+storiesOf('Test', module).add('default', () => <Simple />);
