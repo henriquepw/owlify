@@ -8,9 +8,11 @@ declare module 'styled-components' {
     };
     colors: {
       active: string;
+      activeLight: string;
       background: string;
       secondaryText: string;
       attention: string;
+      card: string;
     };
   }
 }
