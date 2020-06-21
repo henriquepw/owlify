@@ -1,5 +1,4 @@
 import React from 'react';
-import { Text } from 'react-native';
 
 import { storiesOf } from '@storybook/react-native';
 
@@ -10,13 +9,28 @@ storiesOf('Card', module)
   .add('Default', () => (
     <Card title="Location 1" subTitle="Create at 04/04/2020" Icon={<Icon />} />
   ))
+  .add('Default selected', () => (
+    <Card
+      isSelected
+      title="Location 1"
+      subTitle="Create at 04/04/2020"
+      Icon={<Icon />}
+    />
+  ))
   .add('Vertical', () => (
     <Card
       isVertical
       title="Location 1"
       subTitle="Create at 04/04/2020"
       Icon={<Icon />}
-    >
-      <Text>Test</Text>
-    </Card>
+    />
+  ))
+  .add('Vertical selected', () => (
+    <Card
+      isVertical
+      isSelected
+      title="Location 1"
+      subTitle="Create at 04/04/2020"
+      Icon={<Icon />}
+    />
   ));

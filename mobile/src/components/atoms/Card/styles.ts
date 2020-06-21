@@ -1,4 +1,5 @@
 import { RectButton } from 'react-native-gesture-handler';
+import VectorIcon from 'react-native-vector-icons/Feather';
 import styled, { css } from 'styled-components/native';
 
 interface ContainerProps {
@@ -6,6 +7,11 @@ interface ContainerProps {
 }
 
 interface ContentProps {
+  isVertical?: boolean;
+  isSelected?: boolean;
+}
+
+interface TextWrapperProps {
   isCentered?: boolean;
 }
 
@@ -13,15 +19,12 @@ export const Container = styled(RectButton)<ContainerProps>`
   ${({ isVertical }) =>
     !isVertical &&
     css`
-      flex-direction: row;
       width: 100%;
     `}
 
-  align-items: center;
-
-  padding: 16px;
-  border-radius: 10px;
   background: ${({ theme }) => theme.colors.card};
+
+  border-radius: 10px;
 
   elevation: 3;
   shadow-color: #000;
@@ -30,6 +33,22 @@ export const Container = styled(RectButton)<ContainerProps>`
 `;
 
 export const Content = styled.View<ContentProps>`
+  ${({ isVertical }) =>
+    !isVertical &&
+    css`
+      flex-direction: row;
+    `}
+
+  align-items: center;
+  padding: 18px;
+
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.active : 'transparent'};
+`;
+
+export const TextWrapper = styled.View<TextWrapperProps>`
   align-items: ${(props) => (props.isCentered ? 'center' : 'flex-start')};
 
   margin: ${(props) => (props.isCentered ? '16px 0 0' : '0 0 0 16px')};
@@ -50,4 +69,12 @@ export const SubTitle = styled.Text`
 
   color: ${({ theme }) => theme.colors.active};
   opacity: 0.7;
+`;
+
+export const CheckIcon = styled(VectorIcon).attrs({
+  name: 'check-circle',
+})`
+  margin-left: auto;
+
+  color: ${({ theme }) => theme.colors.active};
 `;
