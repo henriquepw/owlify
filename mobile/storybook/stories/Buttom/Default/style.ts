@@ -9,6 +9,6 @@ export const container = styled.View`
 
 export const content = styled.Text`
   font-size: 14px;
-  margin: 20px 70px;
+  margin: 15px 100px;
   color: white;
 `;
