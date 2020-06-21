@@ -3,7 +3,8 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react-native';
 
-import { Default } from './Buttom/Default/index';
+import { Attention } from './Buttom/Attention';
+import { Default } from './Buttom/Default';
 import { Disabled } from './Buttom/Disabled';
 
 /* interface Props {
@@ -18,3 +19,4 @@ const Simple: React.FC = () => (
 storiesOf('Test', module).add('default', () => <Simple />); */
 storiesOf('Test', module).add('DEFAULT', () => <Default text="DEFAULT" />);
 storiesOf('Test', module).add('DISABLED', () => <Disabled text="DISABLED" />);
+storiesOf('Test', module).add('ATTENTION', () => <Attention text="ATTENTION" />);
