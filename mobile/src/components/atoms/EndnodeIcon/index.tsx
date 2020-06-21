@@ -1,5 +1,4 @@
 import React from 'react';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import endnodeImg from '../../../assets/default/endnode.png';
 import endnodeLightImg from '../../../assets/light/endnode.png';
@@ -9,16 +8,21 @@ import * as S from './styles';
 interface EndnodeIconProps {
   color?: 'light' | 'default';
   background?: boolean;
+  iconSize?: number;
 }
 
 const EndnodeIcon: React.FC<EndnodeIconProps> = ({
-  background = true,
   color,
+  iconSize = 64,
+  background = true,
 }) => {
   return (
-    <S.Container>
-      {background && <S.Background color={Colors} />}
-      <S.Icon source={color === 'light' ? endnodeLightImg : endnodeImg} />
+    <S.Container size={iconSize}>
+      <S.Icon
+        source={color === 'light' ? endnodeLightImg : endnodeImg}
+        size={iconSize}
+      />
+      {background && <S.Background color={color} size={iconSize} />}
     </S.Container>
   );
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import gatewayImg from '../../../assets/default/gateway.png';
 import gatewayLightImg from '../../../assets/light/gateway.png';
@@ -9,16 +8,21 @@ import * as S from './styles';
 interface GatewayIconProps {
   color?: 'light' | 'default';
   background?: boolean;
+  iconSize?: number;
 }
 
 const GatewayIcon: React.FC<GatewayIconProps> = ({
-  background = true,
   color,
+  iconSize = 64,
+  background = true,
 }) => {
   return (
-    <S.Container>
-      {background && <S.Background color={Colors} />}
-      <S.Icon source={color === 'light' ? gatewayLightImg : gatewayImg} />
+    <S.Container size={iconSize}>
+      <S.Icon
+        source={color === 'light' ? gatewayLightImg : gatewayImg}
+        size={iconSize}
+      />
+      {background && <S.Background color={color} size={iconSize} />}
     </S.Container>
   );
 };

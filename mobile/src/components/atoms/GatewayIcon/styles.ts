@@ -1,30 +1,40 @@
 import styled from 'styled-components/native';
 
-interface BackgroundProps {
-  color: 'light' | 'default';
+interface ContainerProps {
+  size: number;
 }
 
-export const Container = styled.View`
-  margin: 2px 6px;
+interface BackgroundProps {
+  color?: 'light' | 'default';
+  size: number;
+}
+
+interface IconProps {
+  size: number;
+}
+
+export const Container = styled.View<ContainerProps>`
+  align-items: center;
+  padding: 0 ${({ size }) => size * 0.09}px ${({ size }) => size * 0.05}px;
 `;
 
-export const Icon = styled.Image`
-  width: 64px;
-  height: 64px;
+export const Icon = styled.Image<IconProps>`
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
 `;
 
 export const Background = styled.View<BackgroundProps>`
   position: absolute;
+  top: 8%;
 
-  width: 74px;
-  height: 74px;
-  transform: scaleY(0.556) rotate(-17deg);
-
-  left: -5px;
-  bottom: -18px;
+  width: ${({ size }) => size * 1.2}px;
+  height: ${({ size }) => size * 1.2}px;
+  transform: scaleY(0.55) rotate(-17deg);
 
   opacity: 0.3;
-  border-radius: 72px;
+  border-radius: ${({ size }) => (size * 1.2) / 2}px;
   background: ${({ theme, color }) =>
     color === 'light' ? theme.colors.background : theme.colors.activeLight};
+
+  z-index: -1;
 `;
