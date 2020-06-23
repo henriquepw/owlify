@@ -14,3 +14,7 @@ export const Content = styled.Text`
   color: white;
   font-size: 16px;
 `;
+
+export const Icon = styled.View`
+  margin: 20px;
+`;
