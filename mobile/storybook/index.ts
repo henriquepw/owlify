@@ -7,7 +7,7 @@ import './decorators';
 // import stories
 configure(() => {
   // eslint-disable-next-line global-require
-  require('./stories/Buttom');
+  require('./stories');
 }, module);
 
 // Refer to https://github.com/storybookjs/storybook/tree/master/app/react-native#start-command-parameters
