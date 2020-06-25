@@ -16,6 +16,8 @@
     ]
   },
   "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpileOnly --ignore-watch node_modules src/shared/infra/http/server.ts",
     "test": "cross-env NODE_ENV=test jest",
@@ -43,6 +45,13 @@
     "yup": "^0.28.5"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/node": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/plugin-proposal-decorators": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-typescript": "^7.10.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/bluebird": "^3.5.30",
     "@types/cors": "^2.8.6",
@@ -56,6 +65,8 @@
     "@types/yup": "^0.28.0",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.31.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.0",
     "date-fns": "^2.12.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -69,6 +80,7 @@
     "jest": "25.5.4",
     "lint-staged": "^10.2.7",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
     "sqlite3": "^4.2.0",
     "supertest": "^4.0.2",
     "ts-jest": "^25.5.0",
