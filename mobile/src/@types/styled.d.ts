@@ -9,7 +9,7 @@ declare module 'styled-components' {
     colors: {
       active: string;
       background: string;
-      secondaryText: string;
+      withoutFocus: string;
       attention: string;
     };
   }
