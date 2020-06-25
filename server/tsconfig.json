@@ -22,5 +22,5 @@
 
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["__tests__/**/*", "jest.config.js", "./dist"]
+  "exclude": ["./__tests__/**/*", "./*.js", "./dist"]
 }

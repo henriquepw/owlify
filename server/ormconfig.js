@@ -1,3 +1,6 @@
+const root = process.env.NODE_ENV === 'production' ? 'dist' : 'src';
+const ext = process.env.NODE_ENV === 'production' ? '.js' : '.ts'
+
 module.exports = {
   type: process.env.PG_DIALECT,
   host: process.env.PG_HOST,
@@ -5,9 +8,9 @@ module.exports = {
   username: process.env.PG_USER,
   password: process.env.PG_PASS,
   database: process.env.PG_NAME,
-  entities: ['./src/modules/**/infra/typeorm/entities/*.ts'],
-  migrations: ['./src/shared/infra/typeorm/migrations/*.ts'],
+  entities: [`./${root}/modules/**/infra/typeorm/entities/*${ext}`],
+  migrations: [`./${root}/shared/infra/typeorm/migrations/*${ext}`],
   cli: {
-    migrationsDir: './src/shared/infra/typeorm/migrations',
+    migrationsDir: `./${root}/shared/infra/typeorm/migrations`,
   },
 };

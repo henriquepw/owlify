@@ -44,6 +44,7 @@
     "@commitlint/config-conventional": "^8.3.4",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-links": "^5.3.19",
+    "@storybook/addon-ondevice-notes": "^5.3.19",
     "@storybook/addons": "^5.3.19",
     "@storybook/react-native": "^5.3.19",
     "@storybook/react-native-server": "^5.3.19",

@@ -10,7 +10,7 @@ declare module 'styled-components' {
       active: string;
       activeLight: string;
       background: string;
-      secondaryText: string;
+      withoutFocus: string;
       attention: string;
       card: string;
     };
