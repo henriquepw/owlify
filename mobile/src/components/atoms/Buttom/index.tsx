@@ -12,7 +12,11 @@ interface Props {
 export const Buttom: React.FC<Props> = ({ type, text, hasIcon }) => {
   return (
     <S.Container optionsButtom={type} hasIcon={hasIcon}>
-      {hasIcon ? <S.Icon><Text>Icone aqui</Text></S.Icon> : null}
+      {hasIcon ? (
+        <S.Icon>
+          <Text>Icone aqui</Text>
+        </S.Icon>
+      ) : null}
       <S.Content>{text}</S.Content>
     </S.Container>
   );
