@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { addDecorator } from '@storybook/react-native';
 
-import { light } from '../src/styles/themes';
+import { light } from '@styles/themes';
 
 type StoryFn = () => React.ReactNode;
 

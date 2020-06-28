@@ -7,7 +7,7 @@ import { storiesOf } from '@storybook/react-native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
 
-import Input from '../../../src/components/atoms/Input';
+import Input from '@atoms/Input';
 
 storiesOf('Input', module)
   .add('With Icon', () => (
@@ -21,7 +21,7 @@ storiesOf('Input', module)
     </Form>
   ))
   .add('With Error', () => {
-    const formRef = useRef<FormHandles>(null);
+    const formRef = useRef<FormHandles>({} as FormHandles);
     const [isErrored, setIsErrored] = useState(true);
 
     useEffect(() => {
