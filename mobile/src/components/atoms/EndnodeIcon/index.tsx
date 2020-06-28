@@ -8,21 +8,21 @@ import * as S from './styles';
 interface EndnodeIconProps {
   color?: 'light' | 'default';
   background?: boolean;
-  iconSize?: number;
+  size?: number;
 }
 
 const EndnodeIcon: React.FC<EndnodeIconProps> = ({
   color,
-  iconSize = 64,
+  size = 64,
   background = true,
 }) => {
   return (
-    <S.Container size={iconSize}>
+    <S.Container size={size}>
       <S.Icon
         source={color === 'light' ? endnodeLightImg : endnodeImg}
-        size={iconSize}
+        size={size}
       />
-      {background && <S.Background color={color} size={iconSize} />}
+      {background && <S.Background color={color} size={size} />}
     </S.Container>
   );
 };

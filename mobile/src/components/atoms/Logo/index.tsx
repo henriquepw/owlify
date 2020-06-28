@@ -8,21 +8,14 @@ import * as S from './styles';
 interface LogoProps {
   color?: 'light' | 'default';
   background?: boolean;
-  iconSize?: number;
+  size?: number;
 }
 
-const Logo: React.FC<LogoProps> = ({
-  color,
-  iconSize = 64,
-  background = true,
-}) => {
+const Logo: React.FC<LogoProps> = ({ color, size = 64, background = true }) => {
   return (
     <S.Container>
-      <S.Icon
-        source={color === 'light' ? logoLightImg : logoImg}
-        size={iconSize}
-      />
-      {background && <S.Background color={color} size={iconSize} />}
+      <S.Icon source={color === 'light' ? logoLightImg : logoImg} size={size} />
+      {background && <S.Background color={color} size={size} />}
     </S.Container>
   );
 };
