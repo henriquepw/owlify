@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, Text, StatusBar } from 'react-native';
 
-import AppProvider from './components/templates/AppProvider';
+import AppProvider from '@templates/AppProvider';
 
 import Storebook from '../storybook';
 
