@@ -21,8 +21,7 @@
       "jsx": true
     },
     "ecmaVersion": 2020,
-    "sourceType": "module",
-    "project": "./tsconfig.json"
+    "sourceType": "module"
   },
   "plugins": [
     "react",
@@ -86,10 +85,10 @@
         "groups": [
           "/^(react|styled-components)/",
           "module",
-          "/^.*components/atoms/",
-          "/^.*components/molecules/",
-          "/^.*components/organisms/",
-          "/^.*components/templates/",
+          "/^.*atoms/",
+          "/^.*molecules/",
+          "/^.*organisms/",
+          "/^.*templates/",
           "/^.*pages/",
           "/^.*hooks/",
           "/^.*utils/",

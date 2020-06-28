@@ -16,7 +16,13 @@
     "baseUrl": "./",
     "paths": {
       "@assets/*": ["./src/assets/*"],
-      "@components/*": ["./src/components/*"],
+
+      /* Components */
+      "@atoms/*": ["./src/components/atoms/*"],
+      "@molecules/*": ["./src/components/molecules/*"],
+      "@organisms/*": ["./src/components/organisms/*"],
+      "@templates/*": ["./src/components/templates/*"],
+
       "@hooks/*": ["./src/hooks/*"],
       "@pages/*": ["./src/pages/*"],
       "@routes/*": ["./src/routes/*"],
@@ -33,7 +39,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./storybook/**/*"],
   "exclude": [
     "node_modules",
     "babel.config.js",

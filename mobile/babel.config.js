@@ -7,7 +7,13 @@ module.exports = {
         root: ['./src/'],
         alias: {
           "@assets": "./src/assets",
-          "@components": "./src/components",
+
+          /* Components */
+          "@atoms": "./src/components/atoms",
+          "@molecules": "./src/components/molecules",
+          "@organisms": "./src/components/organisms",
+          "@templates": "./src/components/templates",
+
           "@hooks": "./src/hooks",
           "@pages": "./src/pages",
           "@routes": "./src/routes",
