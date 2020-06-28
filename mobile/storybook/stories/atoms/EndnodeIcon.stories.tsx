@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react-native';
 
-import EndnodeIcon from '../../../src/components/atoms/EndnodeIcon';
+import EndnodeIcon from '@atoms/EndnodeIcon';
 
 import { backgroundDark } from '../../decorators';
 

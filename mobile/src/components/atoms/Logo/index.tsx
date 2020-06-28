@@ -1,7 +1,7 @@
 import React from 'react';
 
-import logoImg from '../../../assets/default/logo.png';
-import logoLightImg from '../../../assets/light/logo.png';
+import logoImg from '@assets/default/logo.png';
+import logoLightImg from '@assets/light/logo.png';
 
 import * as S from './styles';
 

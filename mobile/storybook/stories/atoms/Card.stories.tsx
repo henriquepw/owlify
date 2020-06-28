@@ -2,16 +2,24 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react-native';
 
-import Card from '../../../src/components/atoms/Card';
-import Icon from '../../../src/components/atoms/GatewayIcon';
+import Card from '@atoms/Card';
+import Icon from '@atoms/GatewayIcon';
+
+const empty = (): string => '';
 
 storiesOf('Card', module)
   .add('Default', () => (
-    <Card title="Location 1" subTitle="Create at 04/04/2020" Icon={<Icon />} />
+    <Card
+      onPress={empty}
+      title="Location 1"
+      subTitle="Create at 04/04/2020"
+      Icon={<Icon />}
+    />
   ))
   .add('Default selected', () => (
     <Card
       isSelected
+      onPress={empty}
       title="Location 1"
       subTitle="Create at 04/04/2020"
       Icon={<Icon />}
@@ -20,6 +28,7 @@ storiesOf('Card', module)
   .add('Vertical', () => (
     <Card
       isVertical
+      onPress={empty}
       title="Location 1"
       subTitle="Create at 04/04/2020"
       Icon={<Icon />}
@@ -29,6 +38,7 @@ storiesOf('Card', module)
     <Card
       isVertical
       isSelected
+      onPress={empty}
       title="Location 1"
       subTitle="Create at 04/04/2020"
       Icon={<Icon />}

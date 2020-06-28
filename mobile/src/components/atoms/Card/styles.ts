@@ -1,4 +1,3 @@
-import { RectButton } from 'react-native-gesture-handler';
 import VectorIcon from 'react-native-vector-icons/Feather';
 import styled, { css } from 'styled-components/native';
 
@@ -15,7 +14,9 @@ interface TextWrapperProps {
   isCentered?: boolean;
 }
 
-export const Container = styled(RectButton)<ContainerProps>`
+export const Container = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.6,
+})<ContainerProps>`
   ${({ isVertical }) =>
     !isVertical &&
     css`

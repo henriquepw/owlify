@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react-native';
 
-import Logo from '../../../src/components/atoms/Logo';
+import Logo from '@atoms/Logo';
 
 import { backgroundDark } from '../../decorators';
 

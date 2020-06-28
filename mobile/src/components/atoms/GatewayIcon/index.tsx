@@ -1,7 +1,7 @@
 import React from 'react';
 
-import gatewayImg from '../../../assets/default/gateway.png';
-import gatewayLightImg from '../../../assets/light/gateway.png';
+import gatewayImg from '@assets/default/gateway.png';
+import gatewayLightImg from '@assets/light/gateway.png';
 
 import * as S from './styles';
 

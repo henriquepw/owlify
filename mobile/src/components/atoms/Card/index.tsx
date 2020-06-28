@@ -17,10 +17,11 @@ const Card: React.FC<CardProps> = ({
   Icon,
   title,
   subTitle,
+  onPress,
   ...rest
 }) => {
   return (
-    <S.Container isVertical={isVertical} {...rest}>
+    <S.Container onPress={onPress} isVertical={isVertical} {...rest}>
       <S.Content isVertical={isVertical} isSelected={isSelected}>
         {Icon}
         <S.TextWrapper isCentered={isVertical}>

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import endnodeImg from '../../../assets/default/endnode.png';
-import endnodeLightImg from '../../../assets/light/endnode.png';
+import endnodeImg from '@assets/default/endnode.png';
+import endnodeLightImg from '@assets/light/endnode.png';
 
 import * as S from './styles';
 

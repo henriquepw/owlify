@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react-native';
 
-import GatewayIcon from '../../../src/components/atoms/GatewayIcon';
+import GatewayIcon from '@atoms/GatewayIcon';
 
 import { backgroundDark } from '../../decorators';
 
