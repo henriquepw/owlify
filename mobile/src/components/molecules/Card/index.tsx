@@ -1,33 +1,38 @@
 import React from 'react';
-import { RectButtonProperties } from 'react-native-gesture-handler';
+import { TouchableOpacityProps } from 'react-native';
+
+import Icon, { IconProps } from '@atoms/Icon';
 
 import * as S from './styles';
 
-interface CardProps extends RectButtonProperties {
+interface CardProps extends TouchableOpacityProps {
   title: string;
   subTitle: string;
   isSelected?: boolean;
   isVertical?: boolean;
-  Icon?: React.ReactNode;
+  iconName?: string;
+  iconProps?: IconProps;
 }
 
 const Card: React.FC<CardProps> = ({
   isVertical,
   isSelected,
-  Icon,
+  iconName,
+  iconProps,
   title,
   subTitle,
-  onPress,
   ...rest
 }) => {
   return (
-    <S.Container onPress={onPress} isVertical={isVertical} {...rest}>
+    <S.Container activeOpacity={0.6} isVertical={isVertical} {...rest}>
       <S.Content isVertical={isVertical} isSelected={isSelected}>
-        {Icon}
+        {iconName && <Icon name={iconName} {...iconProps} />}
+
         <S.TextWrapper isCentered={isVertical}>
           <S.Title>{title}</S.Title>
           <S.SubTitle>{subTitle}</S.SubTitle>
         </S.TextWrapper>
+
         {isSelected && !isVertical && <S.CheckIcon size={32} />}
       </S.Content>
     </S.Container>

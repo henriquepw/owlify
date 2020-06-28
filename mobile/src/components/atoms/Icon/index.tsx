@@ -3,21 +3,19 @@ import { TextProps } from 'react-native';
 import VectorIcon from 'react-native-vector-icons/Feather';
 import { useTheme } from 'styled-components';
 
-import EndnodeIcon from '@atoms/EndnodeIcon';
-import GatewayIcon from '@atoms/GatewayIcon';
-import Logo from '@atoms/Logo';
+import EndnodeIcon from './EndnodeIcon';
+import GatewayIcon from './GatewayIcon';
 
 export interface IconProps extends TextProps {
   name: string;
   color?: string;
   size?: number;
-  background?: boolean; // this props  has effect only on atom icons
+  background?: boolean; // this props  has effect only on my icons
 }
 
-const AtomIcons = {
+const MyIcons = {
   endnode: EndnodeIcon,
   gateway: GatewayIcon,
-  logo: Logo,
 };
 
 const Icon: React.FC<IconProps> = ({
@@ -27,16 +25,16 @@ const Icon: React.FC<IconProps> = ({
   size = 64,
   ...rest
 }) => {
-  const theme = useTheme();
+  const { colors } = useTheme();
 
-  const CurrentIcon = AtomIcons[name] || VectorIcon;
+  const CurrentIcon = MyIcons[name] || VectorIcon;
 
   return (
     <CurrentIcon
       name={name}
-      color={color || theme.colors.active}
-      background={background}
       size={size}
+      background={background}
+      color={color === 'light' ? colors.background : colors.activeLight}
       {...rest}
     />
   );

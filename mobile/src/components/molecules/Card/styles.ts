@@ -14,9 +14,7 @@ interface TextWrapperProps {
   isCentered?: boolean;
 }
 
-export const Container = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.6,
-})<ContainerProps>`
+export const Container = styled.TouchableOpacity<ContainerProps>`
   ${({ isVertical }) =>
     !isVertical &&
     css`
