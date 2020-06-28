@@ -1,3 +1,3 @@
 import './atoms/Input.stories';
 
-import './Buttom/buttom.stories';
+import './atoms/Button.stories';

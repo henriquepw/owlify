@@ -3,13 +3,13 @@ import { Text } from 'react-native';
 
 import * as S from './styles';
 
-interface Props {
-  type: number;
+interface propsButton {
+  type: string;
   text: string;
   hasIcon?: boolean;
 }
 
-const Button: React.FC<Props> = ({ type, text, hasIcon }) => {
+const Button: React.FC<propsButton> = ({ type, text, hasIcon }) => {
   return (
     <S.Container optionsButtom={type} hasIcon={hasIcon}>
       {hasIcon ? (
