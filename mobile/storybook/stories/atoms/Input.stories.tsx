@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
 import { Button } from 'react-native';
 
@@ -9,14 +8,16 @@ import { Form } from '@unform/mobile';
 
 import Input from '@atoms/Input';
 
+const onSubmit = (): string => '';
+
 storiesOf('Input', module)
   .add('With Icon', () => (
-    <Form onSubmit={() => {}}>
+    <Form onSubmit={onSubmit}>
       <Input icon="mail" name="withIcon" placeholder="With Icon" />
     </Form>
   ))
   .add('Without Icon', () => (
-    <Form onSubmit={() => {}}>
+    <Form onSubmit={onSubmit}>
       <Input name="withoutIcon" placeholder="Without Icon" />
     </Form>
   ))
@@ -36,7 +37,7 @@ storiesOf('Input', module)
     }
 
     return (
-      <Form onSubmit={() => {}} ref={formRef}>
+      <Form onSubmit={onSubmit} ref={formRef}>
         <Input
           icon="mail"
           name="email"

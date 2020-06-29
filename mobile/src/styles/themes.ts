@@ -5,8 +5,10 @@ export const light = {
   },
   colors: {
     active: '#6BA7AF',
+    activeLight: '#A2CEDE',
     background: '#F3F3F3',
     withoutFocus: '#878787',
     attention: '#B24444',
+    card: '#FBFBFB',
   },
 };
