@@ -14,8 +14,8 @@ export const Container = styled.View<propsStyledButton>`
     return theme.colors.withoutFocus;
   }};
   display: flex;
-  width: 80%;
-  height: ${(props) => (props.hasIcon ? '30%' : '10%')};
+  width: 283px;
+  height: ${(props) => (props.hasIcon ? '158px' : '48px')};
   justify-content: center;
   align-items: center;
   border-radius: 10px;
@@ -25,8 +25,9 @@ export const Content = styled.Text`
   color: ${({ theme }) => theme.colors.background};
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: 16px;
+  margin-bottom: 24px;
 `;
 
 export const IconContainer = styled.View`
-  margin: 20px;
+  margin: 24px;
 `;
