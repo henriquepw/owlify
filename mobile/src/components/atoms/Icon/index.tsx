@@ -34,6 +34,7 @@ const Icon: React.FC<IconProps> = ({
       name={name}
       size={size}
       background={background}
+      theme={color === 'light' ? 'light' : 'default'}
       color={color === 'light' ? colors.background : colors.activeLight}
       {...rest}
     />

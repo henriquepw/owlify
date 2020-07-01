@@ -6,23 +6,23 @@ import gatewayLightImg from '@assets/light/gateway.png';
 import * as S from './styles';
 
 interface GatewayIconProps {
-  color?: 'light' | 'default';
+  theme?: 'light' | 'default';
   background?: boolean;
   size?: number;
 }
 
 const GatewayIcon: React.FC<GatewayIconProps> = ({
-  color,
+  theme,
   size = 64,
   background = true,
 }) => {
   return (
     <S.Container size={size}>
       <S.Icon
-        source={color === 'light' ? gatewayLightImg : gatewayImg}
+        source={theme === 'light' ? gatewayLightImg : gatewayImg}
         size={size}
       />
-      {background && <S.Background color={color} size={size} />}
+      {background && <S.Background color={theme} size={size} />}
     </S.Container>
   );
 };

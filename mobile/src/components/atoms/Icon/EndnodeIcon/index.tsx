@@ -6,23 +6,23 @@ import endnodeLightImg from '@assets/light/endnode.png';
 import * as S from './styles';
 
 interface EndnodeIconProps {
-  color?: 'light' | 'default';
+  theme?: 'light' | 'default';
   background?: boolean;
   size?: number;
 }
 
 const EndnodeIcon: React.FC<EndnodeIconProps> = ({
-  color,
+  theme,
   size = 64,
   background = true,
 }) => {
   return (
     <S.Container size={size}>
       <S.Icon
-        source={color === 'light' ? endnodeLightImg : endnodeImg}
+        source={theme === 'light' ? endnodeLightImg : endnodeImg}
         size={size}
       />
-      {background && <S.Background color={color} size={size} />}
+      {background && <S.Background color={theme} size={size} />}
     </S.Container>
   );
 };

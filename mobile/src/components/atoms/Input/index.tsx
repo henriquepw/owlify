@@ -74,7 +74,6 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
       setIsFilled(!!inputValueRef.current.value);
     }
   }
-
   return (
     <S.Container style={containerStyle}>
       <S.Content isFocused={isFocused} isFilled={isFilled} isErrored={!!error}>
