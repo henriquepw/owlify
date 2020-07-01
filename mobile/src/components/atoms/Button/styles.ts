@@ -25,7 +25,6 @@ export const Content = styled.Text`
   color: ${({ theme }) => theme.colors.background};
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: 16px;
-  margin-bottom: 24px;
 `;
 
 export const IconContainer = styled.View`
