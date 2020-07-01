@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
 import { Button } from 'react-native';
 
@@ -7,21 +6,23 @@ import { storiesOf } from '@storybook/react-native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
 
-import Input from '../../../src/components/atoms/Input';
+import Input from '@atoms/Input';
+
+const onSubmit = (): string => '';
 
 storiesOf('Input', module)
   .add('With Icon', () => (
-    <Form onSubmit={() => {}}>
+    <Form onSubmit={onSubmit}>
       <Input icon="mail" name="withIcon" placeholder="With Icon" />
     </Form>
   ))
   .add('Without Icon', () => (
-    <Form onSubmit={() => {}}>
+    <Form onSubmit={onSubmit}>
       <Input name="withoutIcon" placeholder="Without Icon" />
     </Form>
   ))
   .add('With Error', () => {
-    const formRef = useRef<FormHandles>(null);
+    const formRef = useRef<FormHandles>({} as FormHandles);
     const [isErrored, setIsErrored] = useState(true);
 
     useEffect(() => {
@@ -36,7 +37,7 @@ storiesOf('Input', module)
     }
 
     return (
-      <Form onSubmit={() => {}} ref={formRef}>
+      <Form onSubmit={onSubmit} ref={formRef}>
         <Input
           icon="mail"
           name="email"

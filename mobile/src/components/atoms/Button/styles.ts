@@ -1,32 +1,36 @@
+import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
-interface propsStyledButton {
-  optionsButtom: string;
+interface ContainerProps {
+  optionsButtom: 'default' | 'disabled' | 'attention';
+  hasIcon: boolean;
+}
+
+interface ContentProps {
   hasIcon?: boolean;
 }
 
-export const Container = styled.View<propsStyledButton>`
-  background-color: ${({ theme, optionsButtom }) => {
-    if (optionsButtom === 'Focused') return theme.colors.background;
-    if (optionsButtom === 'Errored') return theme.colors.attention;
-    if (optionsButtom === 'Filled') return theme.colors.active;
+export const Container = styled(RectButton)<ContainerProps>`
+  background-color: ${({ theme, enabled, optionsButtom }) => {
+    if (!enabled) return theme.colors.withoutFocus;
+    if (optionsButtom === 'attention') return theme.colors.attention;
 
-    return theme.colors.withoutFocus;
+    return theme.colors.active;
   }};
+
   display: flex;
-  width: 283px;
-  height: ${(props) => (props.hasIcon ? '158px' : '48px')};
   justify-content: center;
   align-items: center;
+
+  width: 100%;
+  height: ${({ hasIcon }) => (hasIcon ? '158px' : '48px')};
   border-radius: 10px;
 `;
 
-export const Content = styled.Text`
+export const Content = styled.Text<ContentProps>`
+  text-transform: uppercase;
+  font-family: ${({ theme }) => theme.fonts.bold};
+  font-size: ${({ hasIcon }) => (hasIcon ? '18px' : '16px')};
+  margin-top: ${({ hasIcon }) => (hasIcon ? '24px' : '0')};
   color: ${({ theme }) => theme.colors.background};
-  font-family: ${({ theme }) => theme.fonts.regular};
-  font-size: 16px;
-`;
-
-export const IconContainer = styled.View`
-  margin: 24px;
 `;
