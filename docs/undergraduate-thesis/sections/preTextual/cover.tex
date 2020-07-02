@@ -1,0 +1,49 @@
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+
+\titulo{Sistema de Monitoramento de Qualidade de Vacinas}
+\autor{Henrique Martins Miranda}
+\local{Campina Grande}
+\data{\the\year{}}
+\orientador{Ruan Delgado Gomes}
+\newcommand{\instituto}{
+  Instituto Federal de Educação, Ciência e Tecnologia\\
+  da Paraíba - Campus Campina Grande\\
+  Curso Superior de Tecnologia em Telemática
+}
+\tipotrabalho{Trabalho de conclusão de curso}
+% O preambulo deve conter o tipo do trabalho, o objetivo, 
+% o nome da instituição e a área de concentração 
+\preambulo{Trabalho de conclusão de curso, Instituto Federal de Educação, 
+Ciência e Tecnologia da Paraíba - Campus Campina Grande, 
+curso superior de Tecnologia em Telemática}
+
+\renewcommand{\imprimircapa}{
+  \begin{capa}
+    \center
+    
+    \begin{figure}
+      \begin{center}
+        \includegraphics[width=1.8cm]{./assets/logo-ifpb.png}
+      \end{center}
+    \end{figure}
+    
+    \ABNTEXchapterfont \large \MakeUppercase{\instituto}
+    
+    \vspace*{2.5cm}
+    
+    \ABNTEXchapterfont \large \MakeUppercase{\imprimirautor}
+    
+    \vfill
+    \begin{center}
+      \ABNTEXchapterfont \bfseries \large \MakeUppercase{\imprimirtitulo}
+    \end{center}
+    \vfill
+    % \vspace*{6.25cm}
+
+    \large \imprimirlocal
+    \par
+    \large \imprimirdata
+    \vspace*{1cm}
+  \end{capa}
+}
