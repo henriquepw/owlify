@@ -14,7 +14,7 @@ import * as S from './styles';
 interface InputProps extends TextInputProps {
   icon?: string;
   name: string;
-  containerStyle?: StyleProp<ViewStyle>;
+  contentStyle?: StyleProp<ViewStyle>;
 }
 
 interface InputRef {
@@ -26,7 +26,7 @@ interface InputValueRef {
 }
 
 const Input: React.RefForwardingComponent<InputRef, InputProps> = (
-  { name, icon, containerStyle = {}, ...rest },
+  { name, icon, style, contentStyle = {}, ...rest },
   ref,
 ) => {
   const { registerField, defaultValue = '', fieldName, error } = useField(name);
@@ -75,7 +75,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
     }
   }
   return (
-    <S.Container style={containerStyle}>
+    <S.Container style={style}>
       <S.Content isFocused={isFocused} isFilled={isFilled} isErrored={!!error}>
         {icon && (
           <S.InputIcon
@@ -87,6 +87,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
         )}
         <S.TextInput
           ref={inputElementRef}
+          style={contentStyle}
           keyboardAppearance="light"
           defaultValue={defaultValue}
           onChangeText={setInputValue}
