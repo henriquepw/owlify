@@ -10,8 +10,17 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
 
-  padding: 32px;
   background: ${({ theme }) => theme.colors.background};
+`;
+
+export const ScrollForm = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    alignItems: 'center',
+    padding: 32,
+  },
+})`
+  width: 100%;
 `;
 
 export const Background = styled.View`
@@ -65,6 +74,8 @@ export const SubmitButton = styled(Button)`
 export const ToggleSignView = styled.View`
   flex: 1;
   align-items: center;
+
+  margin-bottom: 32px;
 `;
 
 export const ToggleSignText = styled.Text`
