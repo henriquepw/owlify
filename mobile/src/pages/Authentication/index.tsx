@@ -19,8 +19,10 @@ const Authentication: React.FC = () => {
 
   return (
     <S.Container>
-      <S.TopConner source={connerImg} />
-      <S.ButtonConner source={connerImg} />
+      <S.Background>
+        <S.TopConner source={connerImg} />
+        <S.ButtonConner source={connerImg} />
+      </S.Background>
 
       <Logo size={100} />
       <S.Title>Owlify</S.Title>
@@ -39,12 +41,18 @@ const Authentication: React.FC = () => {
         <S.SubmitButton text={`Sign ${isSignUp ? 'up' : 'in'}`} />
       </S.AuthForm>
 
-      <S.NoAccountText>
-        {isSignUp ? 'Have an account ?' : "Don't have an account yet?"}
-      </S.NoAccountText>
-      <S.ToggleSign onPress={toggleSignUp}>
-        <S.ToggleSignText>{`Sign ${!isSignUp ? 'up' : 'in'}`}</S.ToggleSignText>
-      </S.ToggleSign>
+      <S.ToggleSignView>
+        <S.ToggleSignText>
+          {isSignUp ? 'Have an account ?' : "Don't have an account yet?"}
+        </S.ToggleSignText>
+
+        <S.ToggleSignButton onPress={toggleSignUp}>
+          <S.ToggleSignButtonText>
+            {`Sign ${!isSignUp ? 'up' : 'in'}`}
+          </S.ToggleSignButtonText>
+          <S.ToggleSignButtonBorder />
+        </S.ToggleSignButton>
+      </S.ToggleSignView>
     </S.Container>
   );
 };

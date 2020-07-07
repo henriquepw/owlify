@@ -1,3 +1,4 @@
+import { Dimensions, StatusBar } from 'react-native';
 import styled from 'styled-components/native';
 
 import { Form } from '@unform/mobile';
@@ -11,6 +12,14 @@ export const Container = styled.View`
 
   padding: 40px;
   background: ${({ theme }) => theme.colors.background};
+`;
+
+export const Background = styled.View`
+  position: absolute;
+  flex: 1;
+
+  width: ${Dimensions.get('window').width}px;
+  height: ${Dimensions.get('window').height - (StatusBar.currentHeight ?? 0)}px;
 `;
 
 export const TopConner = styled.Image`
@@ -53,7 +62,12 @@ export const SubmitButton = styled(Button)`
   width: 100%;
 `;
 
-export const NoAccountText = styled.Text`
+export const ToggleSignView = styled.View`
+  flex: 1;
+  align-items: center;
+`;
+
+export const ToggleSignText = styled.Text`
   font-size: 16px;
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme }) => theme.colors.withoutFocus};
@@ -61,12 +75,26 @@ export const NoAccountText = styled.Text`
   margin: auto 0 8px;
 `;
 
-export const ToggleSign = styled.TouchableOpacity``;
+export const ToggleSignButton = styled.TouchableOpacity`
+  align-items: center;
+  position: relative;
+`;
 
-export const ToggleSignText = styled.Text`
+export const ToggleSignButtonText = styled.Text`
   font-size: 16px;
-  font-family: ${({ theme }) => theme.fonts.regular};
+  font-family: ${({ theme }) => theme.fonts.bold};
   color: ${({ theme }) => theme.colors.active};
 
   text-transform: uppercase;
+`;
+
+export const ToggleSignButtonBorder = styled.View`
+  background: ${({ theme }) => theme.colors.activeLight};
+
+  width: 72px;
+  height: 8px;
+
+  margin-top: -8px;
+  opacity: 0.5;
+  z-index: -1;
 `;
