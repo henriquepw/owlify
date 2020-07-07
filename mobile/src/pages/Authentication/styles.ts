@@ -10,7 +10,7 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
 
-  padding: 40px;
+  padding: 32px;
   background: ${({ theme }) => theme.colors.background};
 `;
 
@@ -53,7 +53,7 @@ export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.bold};
   color: ${({ theme }) => theme.colors.active};
 
-  margin: 8px 0 24px;
+  margin: 8px 0 16px;
 `;
 
 export const SubmitButton = styled(Button)`

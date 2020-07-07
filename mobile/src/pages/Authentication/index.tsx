@@ -1,13 +1,29 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { TextInput, Keyboard } from 'react-native';
 
 import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
 
 import Logo from '@atoms/Logo';
+
+import getValidationErrors from '@utils/getValidationErrors';
 
 import connerImg from '@assets/default/conner.png';
 
 import * as S from './styles';
+
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
+const signInSchema = {
+  email: Yup.string()
+    .required('The email is required')
+    .email('Enter a valid email address'),
+  password: Yup.string().min(6, 'At least 6 character'),
+};
 
 const Authentication: React.FC = () => {
   const [isSignUp, setIsSingUp] = useState(false);
@@ -25,13 +41,39 @@ const Authentication: React.FC = () => {
     setIsSingUp((state) => !state);
   }
 
-  function handleSubmit(): void {
-    console.log('submit');
-  }
-
   function handleOnPress(): void {
     formRef.current?.submitForm();
   }
+
+  const handleSubmit = useCallback(
+    async (data: FormData) => {
+      console.log('submit', data);
+
+      try {
+        const schemaData = Object.assign(
+          signInSchema,
+          isSignUp
+            ? {
+                name: Yup.string().required('The name is required'),
+              }
+            : {},
+        );
+
+        const schema = Yup.object().shape(schemaData);
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        formRef.current?.setErrors({});
+      } catch (error) {
+        const errors = getValidationErrors(error);
+
+        formRef.current?.setErrors(errors);
+      }
+    },
+    [isSignUp],
+  );
 
   return (
     <S.Container>
@@ -43,7 +85,7 @@ const Authentication: React.FC = () => {
       <Logo size={100} />
       <S.Title>Owlify</S.Title>
 
-      <S.AuthForm onSubmit={handleSubmit}>
+      <S.AuthForm ref={formRef} onSubmit={handleSubmit}>
         {isSignUp && (
           <S.Input
             ref={nameInputRef}
@@ -60,7 +102,7 @@ const Authentication: React.FC = () => {
           ref={emailInputRef}
           icon="mail"
           name="email"
-          placeholder="E-mail"
+          placeholder="Email"
           keyboardType="email-address"
           autoCorrect={false}
           autoCapitalize="none"
@@ -88,7 +130,6 @@ const Authentication: React.FC = () => {
         <S.ToggleSignText>
           {isSignUp ? 'Have an account ?' : "Don't have an account yet?"}
         </S.ToggleSignText>
-
         <S.ToggleSignButton onPress={toggleSignUp}>
           <S.ToggleSignButtonText>
             {`Sign ${!isSignUp ? 'up' : 'in'}`}

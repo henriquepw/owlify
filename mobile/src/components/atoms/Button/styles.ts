@@ -18,7 +18,6 @@ export const Container = styled(RectButton)<ContainerProps>`
     return theme.colors.active;
   }};
 
-  display: flex;
   justify-content: center;
   align-items: center;
 
