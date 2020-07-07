@@ -44,7 +44,7 @@ export const AuthForm = styled(Form)`
 `;
 
 export const Input = styled(AtomInput)`
-  margin-top: 24px;
+  margin-top: 16px;
 `;
 
 export const Title = styled.Text`
@@ -57,7 +57,7 @@ export const Title = styled.Text`
 `;
 
 export const SubmitButton = styled(Button)`
-  margin-top: 32px;
+  margin-top: 24px;
 
   width: 100%;
 `;

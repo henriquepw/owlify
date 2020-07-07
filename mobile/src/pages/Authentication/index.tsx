@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { TextInput, Keyboard } from 'react-native';
+
+import { FormHandles } from '@unform/core';
 
 import Logo from '@atoms/Logo';
 
@@ -9,12 +12,25 @@ import * as S from './styles';
 const Authentication: React.FC = () => {
   const [isSignUp, setIsSingUp] = useState(false);
 
+  const formRef = useRef<FormHandles>(null);
+  const nameInputRef = useRef<TextInput>(null);
+  const emailInputRef = useRef<TextInput>(null);
+  const passwordInputRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    Keyboard.dismiss();
+  }, [isSignUp]);
+
   function toggleSignUp(): void {
     setIsSingUp((state) => !state);
   }
 
   function handleSubmit(): void {
     console.log('submit');
+  }
+
+  function handleOnPress(): void {
+    formRef.current?.submitForm();
   }
 
   return (
@@ -28,17 +44,44 @@ const Authentication: React.FC = () => {
       <S.Title>Owlify</S.Title>
 
       <S.AuthForm onSubmit={handleSubmit}>
-        {isSignUp && <S.Input name="name" placeholder="Name" icon="user" />}
+        {isSignUp && (
+          <S.Input
+            ref={nameInputRef}
+            icon="user"
+            name="name"
+            placeholder="Name"
+            autoCapitalize="words"
+            returnKeyType="next"
+            onSubmitEditing={() => emailInputRef.current?.focus()}
+          />
+        )}
 
-        <S.Input name="email" placeholder="E-mail" icon="mail" />
         <S.Input
+          ref={emailInputRef}
+          icon="mail"
+          name="email"
+          placeholder="E-mail"
+          keyboardType="email-address"
+          autoCorrect={false}
+          autoCapitalize="none"
+          returnKeyType="next"
+          onSubmitEditing={() => passwordInputRef.current?.focus()}
+        />
+
+        <S.Input
+          ref={passwordInputRef}
+          icon="lock"
           name="password"
           placeholder="Password"
-          icon="lock"
+          returnKeyType="send"
+          onSubmitEditing={handleOnPress}
           secureTextEntry
         />
 
-        <S.SubmitButton text={`Sign ${isSignUp ? 'up' : 'in'}`} />
+        <S.SubmitButton
+          onPress={handleOnPress}
+          text={`Sign ${isSignUp ? 'up' : 'in'}`}
+        />
       </S.AuthForm>
 
       <S.ToggleSignView>
