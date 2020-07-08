@@ -25,7 +25,7 @@ const Icon: React.FC<IconProps> = ({
   size = 64,
   ...rest
 }) => {
-  const { colors } = useTheme();
+  const { colours } = useTheme();
 
   const CurrentIcon = MyIcons[name] || VectorIcon;
 
@@ -35,7 +35,7 @@ const Icon: React.FC<IconProps> = ({
       size={size}
       background={background}
       theme={color === 'light' ? 'light' : 'default'}
-      color={color === 'light' ? colors.background : colors.activeLight}
+      color={color === 'light' ? colours.background : colours.activeLight}
       {...rest}
     />
   );

@@ -10,7 +10,7 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
 
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colours.background};
 `;
 
 export const ScrollForm = styled.ScrollView.attrs({
@@ -60,7 +60,7 @@ export const Title = styled.Text`
   font-size: 24px;
   letter-spacing: 2.4px;
   font-family: ${({ theme }) => theme.fonts.bold};
-  color: ${({ theme }) => theme.colors.active};
+  color: ${({ theme }) => theme.colours.active};
 
   margin: 8px 0 16px;
 `;
@@ -81,7 +81,7 @@ export const ToggleSignView = styled.View`
 export const ToggleSignText = styled.Text`
   font-size: 16px;
   font-family: ${({ theme }) => theme.fonts.regular};
-  color: ${({ theme }) => theme.colors.withoutFocus};
+  color: ${({ theme }) => theme.colours.withoutFocus};
 
   margin: auto 0 8px;
 `;
@@ -94,13 +94,13 @@ export const ToggleSignButton = styled.TouchableOpacity`
 export const ToggleSignButtonText = styled.Text`
   font-size: 16px;
   font-family: ${({ theme }) => theme.fonts.bold};
-  color: ${({ theme }) => theme.colors.active};
+  color: ${({ theme }) => theme.colours.active};
 
   text-transform: uppercase;
 `;
 
 export const ToggleSignButtonBorder = styled.View`
-  background: ${({ theme }) => theme.colors.activeLight};
+  background: ${({ theme }) => theme.colours.activeLight};
 
   width: 72px;
   height: 8px;
