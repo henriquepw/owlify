@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { TextInput, Keyboard } from 'react-native';
+import { TextInput, Keyboard, Alert } from 'react-native';
 
+import api from '@services/api';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
 import Logo from '@atoms/Logo';
+
+import { useAuth } from '@hooks/auth';
 
 import getValidationErrors from '@utils/getValidationErrors';
 
@@ -26,15 +29,20 @@ const signInSchema = {
 };
 
 const Authentication: React.FC = () => {
+  const { signIn } = useAuth();
+
+  // Using for the transaction between sign in and sign up
   const [isSignUp, setIsSingUp] = useState(false);
+
+  // Using for controller the logo visibility
+  const [isKeyboardHidden, setIsKeyboardHidden] = useState(true);
 
   const formRef = useRef<FormHandles>(null);
   const nameInputRef = useRef<TextInput>(null);
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const [isKeyboardHidden, setIsKeyboardHidden] = useState(true);
-
+  // Create listerners for keyboard
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -52,6 +60,7 @@ const Authentication: React.FC = () => {
     };
   }, []);
 
+  // Remove the focus on any input when toggle isSignUp variable
   useEffect(() => {
     Keyboard.dismiss();
   }, [isSignUp]);
@@ -64,12 +73,21 @@ const Authentication: React.FC = () => {
     formRef.current?.submitForm();
   }
 
+  function setEmailInputFocus(): void {
+    emailInputRef.current?.focus();
+  }
+
+  function setPasswordInputFocus(): void {
+    passwordInputRef.current?.focus();
+  }
+
   const handleSubmit = useCallback(
     async (data: FormData) => {
       console.log('submit', data);
 
       try {
-        const schemaData = Object.assign(
+        // Validation of the inputs
+        const validationSchema = Object.assign(
           signInSchema,
           isSignUp
             ? {
@@ -78,20 +96,53 @@ const Authentication: React.FC = () => {
             : {},
         );
 
-        const schema = Yup.object().shape(schemaData);
+        const schema = Yup.object().shape(validationSchema);
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
         formRef.current?.setErrors({});
-      } catch (error) {
-        const errors = getValidationErrors(error);
 
-        formRef.current?.setErrors(errors);
+        // Register the user on server
+        if (isSignUp) {
+          await api.post('/users', data);
+
+          // display a sucess alert
+          Alert.alert('Success!', 'You registered with success :D', [
+            {
+              text: 'Ok',
+              onPress: () => setIsSingUp(false), // navigate to signIn
+            },
+          ]);
+
+          return;
+        }
+
+        signIn({
+          email: data.email,
+          password: data.password,
+        });
+
+        // TODO: Navigate to dashboard page
+        console.log('Sign In sucess');
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(error);
+
+          formRef.current?.setErrors(errors);
+
+          return;
+        }
+
+        // If not a Validation error, probaly is a request error
+        // display a alery with the error
+        Alert.alert('Something went wrong :(!', 'Try again later');
+
+        console.log('Deu ruim', JSON.stringify(error));
       }
     },
-    [isSignUp],
+    [isSignUp, signIn],
   );
 
   return (
@@ -109,7 +160,7 @@ const Authentication: React.FC = () => {
               placeholder="Name"
               autoCapitalize="words"
               returnKeyType="next"
-              onSubmitEditing={() => emailInputRef.current?.focus()}
+              onSubmitEditing={setEmailInputFocus}
             />
           )}
 
@@ -122,7 +173,7 @@ const Authentication: React.FC = () => {
             autoCorrect={false}
             autoCapitalize="none"
             returnKeyType="next"
-            onSubmitEditing={() => passwordInputRef.current?.focus()}
+            onSubmitEditing={setPasswordInputFocus}
           />
 
           <S.Input
