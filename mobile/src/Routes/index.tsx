@@ -9,6 +9,8 @@ import Dashboard from '@pages/Dashboard';
 
 import { useAuth } from '@hooks/auth';
 
+import RegistrationRoutes from './registration.routes';
+
 const Tab = createBottomTabNavigator();
 
 const Routes: React.FC = () => {
@@ -31,6 +33,7 @@ const Routes: React.FC = () => {
         },
       })}
     >
+      <Tab.Screen name="Plus" component={RegistrationRoutes} />
       <Tab.Screen name="Home" component={Dashboard} />
     </Tab.Navigator>
   );
