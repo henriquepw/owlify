@@ -58,8 +58,6 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signIn = useCallback(async (userData: SignInUserDTO) => {
-    console.log('signIn', userData);
-
     const response = await api.post<Data>('/sessions', userData);
 
     const { user, token } = response.data;
@@ -74,6 +72,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const signOut = useCallback(async () => {
     await AsyncStorage.multiRemove(['@Owlify:user', '@Owlidy:token']);
+
+    setData({} as Data);
   }, []);
 
   return (

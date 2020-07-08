@@ -5,15 +5,14 @@ import { StatusBar } from 'react-native';
 
 import AppProvider from '@templates/AppProvider';
 
-import Authentication from '@pages/Authentication';
-
 import Storebook from '../storybook';
+import Routes from './Routes';
 
 const App: React.FC = () => {
   return (
     <AppProvider>
       <StatusBar barStyle="light-content" backgroundColor="#6BA7AF" />
-      <Authentication />
+      <Routes />
     </AppProvider>
   );
 };

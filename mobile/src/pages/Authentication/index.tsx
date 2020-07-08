@@ -83,8 +83,6 @@ const Authentication: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: FormData) => {
-      console.log('submit', data);
-
       try {
         // Validation of the inputs
         const validationSchema = Object.assign(
@@ -123,9 +121,7 @@ const Authentication: React.FC = () => {
           email: data.email,
           password: data.password,
         });
-
-        // TODO: Navigate to dashboard page
-        console.log('Sign In sucess');
+        // Alert.alert('Success!', 'You successfully logged in :D');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationErrors(error);
@@ -139,7 +135,7 @@ const Authentication: React.FC = () => {
         // display a alery with the error
         Alert.alert('Something went wrong :(!', 'Try again later');
 
-        console.log('Deu ruim', JSON.stringify(error));
+        // console.log('Deu ruim', JSON.stringify(error));
       }
     },
     [isSignUp, signIn],
