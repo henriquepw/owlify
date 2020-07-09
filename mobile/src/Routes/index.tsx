@@ -1,8 +1,8 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/Feather';
-import { useTheme } from 'styled-components/native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import TabBar from '@molecules/TabBar';
 
 import Authentication from '@pages/Authentication';
 import Dashboard from '@pages/Dashboard';
@@ -13,28 +13,22 @@ import RegistrationRoutes from './registration.routes';
 
 const Tab = createBottomTabNavigator();
 
+const iconNames = ['home', 'list', 'plus', 'bell', 'user'];
+
 const Routes: React.FC = () => {
   const { token } = useAuth();
-  const theme = useTheme();
 
   if (!token) return <Authentication />;
 
   return (
     <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: theme.colours.active,
-        inactiveTintColor: theme.colours.withoutFocus,
-      }}
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          return (
-            <Icon name={route.name.toLowerCase()} size={size} color={color} />
-          );
-        },
-      })}
+      tabBar={(props) => <TabBar {...props} iconNames={iconNames} />}
     >
-      <Tab.Screen name="Plus" component={RegistrationRoutes} />
-      <Tab.Screen name="Home" component={Dashboard} />
+      <Tab.Screen name="dashboard" component={Dashboard} />
+      <Tab.Screen name="list" component={Dashboard} />
+      <Tab.Screen name="registration" component={RegistrationRoutes} />
+      <Tab.Screen name="notification" component={Dashboard} />
+      <Tab.Screen name="profile" component={Dashboard} />
     </Tab.Navigator>
   );
 };
