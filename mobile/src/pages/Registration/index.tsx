@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import Button from '@atoms/Button';
 
+import backgroundImg from '@assets/default/registration-background.png';
+
 import * as S from './styles';
 
 const Registration: React.FC = () => {
@@ -15,6 +17,7 @@ const Registration: React.FC = () => {
 
   return (
     <S.Container>
+      <S.Background source={backgroundImg} />
       <Button
         icon="gateway"
         text="gateway"

@@ -7,6 +7,13 @@ export const Container = styled.View`
   padding: 64px;
 `;
 
+export const Background = styled.Image`
+  position: absolute;
+
+  right: 0;
+  bottom: 0;
+`;
+
 export const DividerContainer = styled.View`
   flex-direction: row;
   align-items: center;

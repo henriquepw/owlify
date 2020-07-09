@@ -16,6 +16,7 @@ const RegistrationRoutes: React.FC = () => {
   return (
     <Navigator
       screenOptions={{
+        // headerStatusBarHeight: 8,
         headerTintColor: theme.colours.active,
         headerStyle: {
           backgroundColor: theme.colours.background,
@@ -36,7 +37,7 @@ const RegistrationRoutes: React.FC = () => {
       <Screen
         name="GatewayRegistration"
         component={GatewayRegistration}
-        options={{ title: 'Select a Gateway' }}
+        options={{ title: '' }}
       />
     </Navigator>
   );
