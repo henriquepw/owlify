@@ -1,3 +1,4 @@
+import { Dimensions, StatusBar } from 'react-native';
 import styled from 'styled-components/native';
 
 import { Form } from '@unform/mobile';
@@ -7,6 +8,21 @@ import AtomInput from '@atoms/Input';
 export const Container = styled.View`
   flex: 1;
   /* padding: 32px; */
+`;
+
+export const Background = styled.View`
+  position: absolute;
+
+  height: ${Dimensions.get('window').height -
+  (StatusBar.currentHeight ?? 0) -
+  56 /* Header height */}px;
+`;
+
+export const BackgroundImage = styled.Image`
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
 `;
 
 export const ScrollContainer = styled.ScrollView`

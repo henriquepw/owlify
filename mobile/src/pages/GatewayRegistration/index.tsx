@@ -11,6 +11,8 @@ import Icon from '@atoms/Icon';
 
 import getValidationErrors from '@utils/getValidationErrors';
 
+import backgroundImg from '@assets/default/gateway-registration-background.png';
+
 import * as S from './styles';
 
 interface FormData {
@@ -68,6 +70,10 @@ const GatewayRegistration: React.FC = () => {
 
   return (
     <S.Container>
+      <S.Background>
+        <S.BackgroundImage source={backgroundImg} />
+      </S.Background>
+
       <S.ScrollContainer>
         <Icon name="gateway" background={false} size={100} />
         <S.Title>Gateway</S.Title>
