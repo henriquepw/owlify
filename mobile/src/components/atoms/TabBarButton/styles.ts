@@ -37,11 +37,11 @@ export const Content = styled.View<ContentProps>`
 `;
 
 export const Icon = styled(FeatherIcon)<IconProps>`
-  color: ${({ theme, isRegistrationPage, isFocused }) => {
-    if (isRegistrationPage) return theme.colours.background;
+  opacity: ${({ isFocused, isRegistrationPage }) =>
+    isRegistrationPage || isFocused ? 1 : 0.6};
 
-    return isFocused ? theme.colours.active : theme.colours.withoutFocus;
-  }};
+  color: ${({ theme, isRegistrationPage }) =>
+    isRegistrationPage ? theme.colours.background : theme.colours.active};
 `;
 
 export const Label = styled.Text`

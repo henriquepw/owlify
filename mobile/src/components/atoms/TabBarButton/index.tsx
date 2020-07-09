@@ -4,6 +4,7 @@ import {
   BottomTabBarProps,
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
 
 import * as S from './styles';
 
@@ -18,41 +19,40 @@ interface TabBarButtonProps extends Omit<BottomTabBarProps, 'descriptors'> {
 const TabBarButton: React.FC<TabBarButtonProps> = ({
   state,
   options,
-  navigation,
+  navigation: tabBarNavigation,
   iconName,
   routeKey,
   routeName,
   routeIndex,
 }) => {
+  const rootNavigation = useNavigation();
+
   const label = options.tabBarLabel || options.title || routeName;
   const isFocused = state.index === routeIndex;
   const isRegistrationPage = iconName === 'plus';
 
   function onPress(): void {
-    const event = navigation.emit({
+    const event = tabBarNavigation.emit({
       type: 'tabPress',
       target: routeKey,
       canPreventDefault: true,
     });
 
+    if (isRegistrationPage) {
+      rootNavigation.navigate('Registration');
+      return;
+    }
+
     if (!isFocused && !event.defaultPrevented) {
-      navigation.navigate(routeName);
+      tabBarNavigation.navigate(routeName);
     }
   }
-
-  // function onLongPress(): void {
-  //   navigation.emit({
-  //     type: 'tabLongPress',
-  //     target: routeKey,
-  //   });
-  // }
 
   return (
     <S.Container
       accessibilityLabel={options.tabBarAccessibilityLabel}
       testID={options.tabBarTestID}
       onPress={onPress}
-      // onLongPress={onLongPress}
       style={{ flex: 1 }}
     >
       <S.Content isRegistrationPage={isRegistrationPage}>

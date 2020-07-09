@@ -6,7 +6,7 @@ import { StatusBar } from 'react-native';
 import AppProvider from '@templates/AppProvider';
 
 import Storebook from '../storybook';
-import Routes from './Routes';
+import Routes from './routes';
 
 const App: React.FC = () => {
   return (
