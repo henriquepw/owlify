@@ -22,7 +22,7 @@ const Routes: React.FC = () => {
         headerShown: false,
       }}
     >
-      <Root.Screen name="TabBar" component={TabBarRoutes} />
+      <Root.Screen name="Home" component={TabBarRoutes} />
       <Root.Screen name="Registration" component={RegistrationRoutes} />
     </Root.Navigator>
   );

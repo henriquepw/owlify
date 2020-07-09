@@ -2,6 +2,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useLayoutEffect,
   useEffect,
   useState,
 } from 'react';
@@ -40,6 +41,10 @@ const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<Data>({} as Data);
 
   useEffect(() => {
+    api.defaults.headers.authorization = `Bearer ${data.token}`;
+  }, [data.token]);
+
+  useLayoutEffect(() => {
     async function getDataFromAsyncStorage(): Promise<void> {
       const [user, token] = await AsyncStorage.multiGet([
         '@Owlify:user',
