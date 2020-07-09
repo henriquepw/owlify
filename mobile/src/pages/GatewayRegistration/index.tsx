@@ -1,15 +1,14 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Alert } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import api from '@services/api';
-import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
 import Button from '@atoms/Button';
 import Icon from '@atoms/Icon';
 
-import getValidationErrors from '@utils/getValidationErrors';
+import { useForm } from '@hooks/form';
 
 import backgroundImg from '@assets/default/gateway-registration-background.png';
 
@@ -18,25 +17,22 @@ import * as S from './styles';
 interface FormData {
   location: string;
 }
+const schema = {
+  location: Yup.string().required('Location is required'),
+};
 
 const GatewayRegistration: React.FC = () => {
   const navigation = useNavigation();
 
-  const formRef = useRef<FormHandles>(null);
+  const { formRef, validate } = useForm(schema);
 
   const handleSubmit = useCallback(
     async (data: FormData) => {
+      const isValid = await validate(data);
+
+      if (!isValid) return;
+
       try {
-        const schema = Yup.object().shape({
-          location: Yup.string().required('Location is required'),
-        });
-
-        await schema.validate(data, {
-          abortEarly: false,
-        });
-
-        formRef.current?.setErrors({});
-
         await api.post('/gateways', data);
 
         Alert.alert('Success!', 'You successfully registered a gateway :D', [
@@ -49,19 +45,10 @@ const GatewayRegistration: React.FC = () => {
           },
         ]);
       } catch (error) {
-        if (error instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(error);
-          formRef.current?.setErrors(errors);
-
-          return;
-        }
-
-        // If not a Validation error, probaly is a request error
-        // display a alery with the error
         Alert.alert('Something went wrong :(!', 'Try again later');
       }
     },
-    [navigation],
+    [navigation, validate],
   );
 
   function submitForm(): void {
