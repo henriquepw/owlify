@@ -32,10 +32,8 @@
   ],
   "rules": {
     "prettier/prettier": "error",
-
     "no-useless-constructor": "off",
     "no-unused-expressions": "off",
-
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -48,19 +46,18 @@
         "allowExpressions": true
       }
     ],
-
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-
     "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-filename-extension": [
       "error",
       {
-        "extensions": [".tsx"]
+        "extensions": [
+          ".tsx"
+        ]
       }
     ],
-
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": [
       "error",
@@ -68,7 +65,6 @@
         "devDependencies": true
       }
     ],
-
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -77,7 +73,6 @@
         "tsx": "never"
       }
     ],
-
     "import-helpers/order-imports": [
       "warn",
       {
@@ -92,11 +87,18 @@
           "/^.*pages/",
           "/^.*hooks/",
           "/^.*utils/",
-          ["parent", "sibling", "index"],
+          [
+            "parent",
+            "sibling",
+            "index"
+          ],
           "/^.*assets/",
           "/^.*styles/"
         ],
-        "alphabetize": { "order": "asc", "ignoreCase": true }
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
       }
     ]
   },
