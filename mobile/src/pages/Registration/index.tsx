@@ -15,20 +15,31 @@ const Registration: React.FC = () => {
     navigation.navigate('GatewayRegistration');
   }
 
+  function navigateToSelectGateway(): void {
+    navigation.navigate('SelectGateway');
+  }
+
   return (
     <S.Container>
       <S.Background source={backgroundImg} />
+
       <Button
         icon="gateway"
         text="gateway"
         onPress={navigateToGatewayRegistration}
       />
+
       <S.DividerContainer>
         <S.Divider />
         <S.DividerText>or</S.DividerText>
         <S.Divider />
       </S.DividerContainer>
-      <Button icon="endnode" text="end-node" />
+
+      <Button
+        icon="endnode"
+        text="end-node"
+        onPress={navigateToSelectGateway}
+      />
     </S.Container>
   );
 };

@@ -14,6 +14,7 @@ interface TextWrapperProps {
   isCentered?: boolean;
 }
 
+// TODO: Fix the elevation/shadow
 export const Container = styled.TouchableOpacity<ContainerProps>`
   ${({ isVertical }) =>
     !isVertical &&
@@ -25,10 +26,10 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
 
   border-radius: 10px;
 
-  elevation: 3;
+  /* elevation: 3;
   shadow-color: #000;
   shadow-opacity: 0.1;
-  shadow-offset: 2px 2px;
+  shadow-offset: 2px 2px; */
 `;
 
 export const Content = styled.View<ContentProps>`

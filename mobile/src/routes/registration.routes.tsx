@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import GatewayRegistration from '@pages/GatewayRegistration';
 import Registration from '@pages/Registration';
+import SelectGateway from '@pages/SelectGateway';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -38,6 +39,12 @@ const RegistrationRoutes: React.FC = () => {
         name="GatewayRegistration"
         component={GatewayRegistration}
         options={{ title: '' }}
+      />
+
+      <Screen
+        name="SelectGateway"
+        component={SelectGateway}
+        options={{ title: 'Select a Gateway' }}
       />
     </Navigator>
   );
