@@ -8,6 +8,10 @@ import backgroundImg from '@assets/default/registration-background.png';
 
 import * as S from './styles';
 
+const iconProps = {
+  background: false,
+};
+
 const Registration: React.FC = () => {
   const navigation = useNavigation();
 
@@ -26,6 +30,7 @@ const Registration: React.FC = () => {
       <Button
         icon="gateway"
         text="gateway"
+        iconProps={iconProps}
         onPress={navigateToGatewayRegistration}
       />
 
@@ -38,6 +43,7 @@ const Registration: React.FC = () => {
       <Button
         icon="endnode"
         text="end-node"
+        iconProps={iconProps}
         onPress={navigateToSelectGateway}
       />
     </S.Container>

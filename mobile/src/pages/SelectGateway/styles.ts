@@ -9,6 +9,15 @@ export const Container = styled.View`
   flex: 1;
 `;
 
+export const Background = styled.Image`
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  z-index: 1;
+`;
+
 export const List = styled(FlatList as new () => FlatList<Gateway>)`
   flex: 1;
   padding: 32px;
@@ -20,4 +29,6 @@ export const Card = styled(MoleculeCard)`
 
 export const ButtonContainer = styled.View`
   padding: 32px;
+
+  z-index: 2;
 `;

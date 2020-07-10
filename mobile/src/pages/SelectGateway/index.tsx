@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
+import { useNavigation } from '@react-navigation/native';
 import api from '@services/api';
 
 import Button from '@atoms/Button';
+
+import backgroundImg from '@assets/default/endnode-registration-background.png';
 
 import * as S from './styles';
 
@@ -14,6 +17,8 @@ export interface Gateway {
 }
 
 const SelectGateway: React.FC = () => {
+  const navigation = useNavigation();
+
   const [gateways, setGateways] = useState<Gateway[]>([]);
   const [selectedGateway, setSelectedGateway] = useState<string | null>(null);
 
@@ -27,8 +32,16 @@ const SelectGateway: React.FC = () => {
     loadGateways();
   }, []);
 
+  function navigateToEndnodeRegistration(): void {
+    navigation.navigate('EndnodeRegistration', {
+      gatewayId: selectedGateway,
+    });
+  }
+
   return (
     <S.Container>
+      <S.Background source={backgroundImg} />
+
       <S.List
         data={gateways}
         keyExtractor={(gateway) => gateway.id}
@@ -44,7 +57,11 @@ const SelectGateway: React.FC = () => {
       />
 
       <S.ButtonContainer>
-        <Button enabled={!!selectedGateway} text="next" />
+        <Button
+          text="next"
+          enabled={!!selectedGateway}
+          onPress={navigateToEndnodeRegistration}
+        />
       </S.ButtonContainer>
     </S.Container>
   );
