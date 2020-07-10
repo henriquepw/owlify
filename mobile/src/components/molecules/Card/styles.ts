@@ -21,7 +21,7 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
       width: 100%;
     `}
 
-  background: ${({ theme }) => theme.colors.card};
+  background: ${({ theme }) => theme.colours.card};
 
   border-radius: 10px;
 
@@ -44,7 +44,7 @@ export const Content = styled.View<ContentProps>`
   border-width: 2px;
   border-radius: 10px;
   border-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.active : 'transparent'};
+    isSelected ? theme.colours.active : 'transparent'};
 `;
 
 export const TextWrapper = styled.View<TextWrapperProps>`
@@ -57,7 +57,7 @@ export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.bold};
   font-size: 18px;
 
-  color: ${({ theme }) => theme.colors.active};
+  color: ${({ theme }) => theme.colours.active};
 `;
 
 export const SubTitle = styled.Text`
@@ -66,7 +66,7 @@ export const SubTitle = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: 14px;
 
-  color: ${({ theme }) => theme.colors.active};
+  color: ${({ theme }) => theme.colours.active};
   opacity: 0.7;
 `;
 
@@ -75,5 +75,5 @@ export const CheckIcon = styled(VectorIcon).attrs({
 })`
   margin-left: auto;
 
-  color: ${({ theme }) => theme.colors.active};
+  color: ${({ theme }) => theme.colours.active};
 `;

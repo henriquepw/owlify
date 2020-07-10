@@ -21,10 +21,16 @@ const Card: React.FC<CardProps> = ({
   iconProps,
   title,
   subTitle,
+  disabled,
   ...rest
 }) => {
   return (
-    <S.Container activeOpacity={0.6} isVertical={isVertical} {...rest}>
+    <S.Container
+      activeOpacity={0.6}
+      isVertical={isVertical}
+      disabled={!!disabled}
+      {...rest}
+    >
       <S.Content isVertical={isVertical} isSelected={isSelected}>
         {iconName && <Icon name={iconName} {...iconProps} />}
 

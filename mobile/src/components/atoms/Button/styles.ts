@@ -12,13 +12,12 @@ interface ContentProps {
 
 export const Container = styled(RectButton)<ContainerProps>`
   background-color: ${({ theme, enabled, optionsButtom }) => {
-    if (!enabled) return theme.colors.withoutFocus;
-    if (optionsButtom === 'attention') return theme.colors.attention;
+    if (!enabled) return theme.colours.withoutFocus;
+    if (optionsButtom === 'attention') return theme.colours.attention;
 
-    return theme.colors.active;
+    return theme.colours.active;
   }};
 
-  display: flex;
   justify-content: center;
   align-items: center;
 
@@ -32,5 +31,5 @@ export const Content = styled.Text<ContentProps>`
   font-family: ${({ theme }) => theme.fonts.bold};
   font-size: ${({ hasIcon }) => (hasIcon ? '18px' : '16px')};
   margin-top: ${({ hasIcon }) => (hasIcon ? '24px' : '0')};
-  color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colours.background};
 `;
