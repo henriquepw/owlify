@@ -5,26 +5,33 @@ import * as Yup from 'yup';
 
 import getValidationErrors from '@utils/getValidationErrors';
 
-type ValidateFunction = <FormData>(data: FormData) => Promise<boolean>;
+type ValidateFunction = <FormData, Shape extends Record<string, unknown>>(
+  data: FormData,
+  validateShape?: Yup.ObjectSchemaDefinition<Shape>,
+) => Promise<boolean>;
 
 interface FormValidationData {
   formRef: RefObject<FormHandles>;
-  validate: ValidateFunction;
+  validateForm: ValidateFunction;
 }
 
-function useForm<Schema extends Record<string, unknown>>(
-  shape: Yup.ObjectSchemaDefinition<Schema>,
+function useForm<InitialShape extends Record<string, unknown>>(
+  initialShape?: Yup.ObjectSchemaDefinition<InitialShape>,
 ): FormValidationData {
   const formRef = useRef<FormHandles>(null);
 
-  const validate: ValidateFunction = useCallback(
-    async (data) => {
+  const validateForm = useCallback(
+    async (data, validateShape) => {
       try {
-        const schema = Yup.object().shape(shape);
+        const currentShape = validateShape || initialShape;
 
-        await schema.validate(data, {
-          abortEarly: false,
-        });
+        if (currentShape) {
+          const schema = Yup.object().shape(currentShape);
+
+          await schema.validate(data, {
+            abortEarly: false,
+          });
+        }
 
         formRef.current?.setErrors({});
 
@@ -38,10 +45,10 @@ function useForm<Schema extends Record<string, unknown>>(
         return false;
       }
     },
-    [shape],
+    [initialShape],
   );
 
-  return { formRef, validate };
+  return { formRef, validateForm };
 }
 
 export { useForm };

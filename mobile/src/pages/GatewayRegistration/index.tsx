@@ -24,12 +24,11 @@ const schema = {
 const GatewayRegistration: React.FC = () => {
   const navigation = useNavigation();
 
-  const { formRef, validate } = useForm(schema);
+  const { formRef, validateForm } = useForm(schema);
 
   const handleSubmit = useCallback(
     async (data: FormData) => {
-      const isValid = await validate(data);
-
+      const isValid = await validateForm(data);
       if (!isValid) return;
 
       try {
@@ -48,7 +47,7 @@ const GatewayRegistration: React.FC = () => {
         Alert.alert('Something went wrong :(!', 'Try again later');
       }
     },
-    [navigation, validate],
+    [navigation, validateForm],
   );
 
   function submitForm(): void {
@@ -66,7 +65,13 @@ const GatewayRegistration: React.FC = () => {
         <S.Title>Gateway</S.Title>
 
         <S.RegistrationForm ref={formRef} onSubmit={handleSubmit}>
-          <S.Input name="location" icon="map-pin" placeholder="Location" />
+          <S.Input
+            name="location"
+            icon="map-pin"
+            placeholder="Location"
+            returnKeyType="send"
+            onSubmitEditing={submitForm}
+          />
 
           <Button text="Register" onPress={submitForm} />
         </S.RegistrationForm>

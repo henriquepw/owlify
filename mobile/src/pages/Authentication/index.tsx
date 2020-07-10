@@ -2,14 +2,12 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { TextInput, Keyboard, Alert } from 'react-native';
 
 import api from '@services/api';
-import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
 import Logo from '@atoms/Logo';
 
 import { useAuth } from '@hooks/auth';
-
-import getValidationErrors from '@utils/getValidationErrors';
+import { useForm } from '@hooks/form';
 
 import connerImg from '@assets/default/conner.png';
 
@@ -28,6 +26,11 @@ const signInSchema = {
   password: Yup.string().min(6, 'At least 6 character'),
 };
 
+const signUpSchema = {
+  ...signInSchema,
+  name: Yup.string().required('The name is required'),
+};
+
 const Authentication: React.FC = () => {
   const { signIn } = useAuth();
 
@@ -37,7 +40,7 @@ const Authentication: React.FC = () => {
   // Using for controller the logo visibility
   const [isKeyboardHidden, setIsKeyboardHidden] = useState(true);
 
-  const formRef = useRef<FormHandles>(null);
+  const { formRef, validateForm } = useForm();
   const nameInputRef = useRef<TextInput>(null);
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
@@ -83,25 +86,13 @@ const Authentication: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: FormData) => {
+      // Validation of the inputs
+      const validationSchema = isSignUp ? signUpSchema : signInSchema;
+
+      const isValid = await validateForm(data, validationSchema);
+      if (!isValid) return;
+
       try {
-        // Validation of the inputs
-        const validationSchema = Object.assign(
-          signInSchema,
-          isSignUp
-            ? {
-                name: Yup.string().required('The name is required'),
-              }
-            : {},
-        );
-
-        const schema = Yup.object().shape(validationSchema);
-
-        await schema.validate(data, {
-          abortEarly: false,
-        });
-
-        formRef.current?.setErrors({});
-
         // Register the user on server
         if (isSignUp) {
           await api.post('/users', data);
@@ -121,23 +112,13 @@ const Authentication: React.FC = () => {
           email: data.email,
           password: data.password,
         });
+
         // Alert.alert('Success!', 'You successfully logged in :D');
       } catch (error) {
-        if (error instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(error);
-          formRef.current?.setErrors(errors);
-
-          return;
-        }
-
-        // If not a Validation error, probaly is a request error
-        // display a alery with the error
         Alert.alert('Something went wrong :(!', 'Try again later');
-
-        // console.log('Deu ruim', JSON.stringify(error));
       }
     },
-    [isSignUp, signIn],
+    [isSignUp, signIn, validateForm],
   );
 
   return (
