@@ -20,7 +20,6 @@ export const Background = styled.Image`
 
 export const List = styled(FlatList as new () => FlatList<Gateway>).attrs({
   contentContainerStyle: {
-    alignItems: 'center',
     padding: 32,
   },
 })`
