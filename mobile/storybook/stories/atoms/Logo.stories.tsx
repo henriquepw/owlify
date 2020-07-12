@@ -8,11 +8,11 @@ import { backgroundDark } from '../../decorators';
 
 const size = 180;
 
-storiesOf('Logo')
+storiesOf('Logo', module)
   .add('Default', () => <Logo size={size} />)
   .add('Wihout Background', () => <Logo background={false} size={size} />);
 
-storiesOf('Logo light color')
+storiesOf('Logo light color', module)
   .addDecorator(backgroundDark)
   .add('Light', () => <Logo color="light" size={size} />)
   .add('Light Wihout Background', () => (
