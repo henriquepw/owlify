@@ -26,7 +26,7 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
 
   border-radius: 10px;
 
-  /* elevation: 3;
+  /* elevation: 1;
   shadow-color: #000;
   shadow-opacity: 0.1;
   shadow-offset: 2px 2px; */

@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { Alert } from 'react-native';
+import React, { useCallback, useRef } from 'react';
+import { Alert, TextInput } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import api from '@services/api';
@@ -28,6 +28,7 @@ const EndnodeRegistration: React.FC = () => {
   const route = useRoute();
 
   const { formRef, validateForm } = useForm(schema);
+  const roomInputRef = useRef<TextInput>(null);
 
   const handleSubmit = useCallback(
     async (data: FormData) => {
@@ -59,7 +60,10 @@ const EndnodeRegistration: React.FC = () => {
     formRef.current?.submitForm();
   }
 
-  // TODO: Fix the scrollContainer when keyboard is up
+  function setRoomInputFocus(): void {
+    roomInputRef.current?.focus();
+  }
+
   return (
     <S.Container>
       <S.Background>
@@ -75,11 +79,12 @@ const EndnodeRegistration: React.FC = () => {
             name="name"
             icon="tag"
             placeholder="Name"
-            returnKeyType="send"
-            onSubmitEditing={submitForm}
+            returnKeyType="next"
+            onSubmitEditing={setRoomInputFocus}
           />
 
           <S.Input
+            ref={roomInputRef}
             name="room"
             icon="map-pin"
             placeholder="Room"

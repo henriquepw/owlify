@@ -51,7 +51,6 @@ const GatewayRegistration: React.FC = () => {
     formRef.current?.submitForm();
   }
 
-  // TODO: Fix the scrollContainer when keyboard is up
   return (
     <S.Container>
       <S.Background>

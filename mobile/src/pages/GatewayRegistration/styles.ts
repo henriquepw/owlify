@@ -25,9 +25,13 @@ export const BackgroundImage = styled.Image`
   bottom: 0;
 `;
 
-export const ScrollContainer = styled.ScrollView`
-  padding: 32px;
-`;
+export const ScrollContainer = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    alignItems: 'center',
+    padding: 32,
+  },
+})``;
 
 export const Title = styled.Text`
   font-size: 24px;
@@ -41,6 +45,7 @@ export const Title = styled.Text`
 export const RegistrationForm = styled(Form)`
   flex: 1;
   align-items: center;
+  width: 100%;
 `;
 
 export const Input = styled(AtomInput)`

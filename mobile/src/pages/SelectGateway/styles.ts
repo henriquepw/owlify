@@ -18,9 +18,13 @@ export const Background = styled.Image`
   z-index: 1;
 `;
 
-export const List = styled(FlatList as new () => FlatList<Gateway>)`
+export const List = styled(FlatList as new () => FlatList<Gateway>).attrs({
+  contentContainerStyle: {
+    alignItems: 'center',
+    padding: 32,
+  },
+})`
   flex: 1;
-  padding: 32px;
 `;
 
 export const Card = styled(MoleculeCard)`

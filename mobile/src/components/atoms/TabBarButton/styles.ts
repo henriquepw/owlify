@@ -47,8 +47,9 @@ export const Icon = styled(FeatherIcon)<IconProps>`
 export const Label = styled.Text`
   margin-top: 2px;
 
-  /* font-size: 14px; */
+  font-size: 12px;
   text-transform: capitalize;
+  text-align: center;
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme }) => theme.colours.active};
 `;
