@@ -5,43 +5,54 @@ import MoleculeCard from '@molecules/Card';
 
 import { Gateway, Endnode } from './index';
 
-export const Container = styled.View`
+const VerticalListOptions = {
+  horizontal: true,
+  showsHorizontalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingLeft: 24,
+    paddingBottom: 8,
+  },
+};
+
+export const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
-export const Content = styled.View`
+export const ScrollView = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingBottom: 24,
+  },
+})`
   flex: 1;
-
-  padding: 24px;
-  padding-right: 0;
 `;
 
-export const Title = styled.Text`
+export const SessionTitle = styled.Text`
   font-size: 18px;
   font-family: ${({ theme }) => theme.fonts.bold};
   color: ${({ theme }) => theme.colours.active};
 
-  margin: 40px 0 16px;
+  margin: 32px 0 16px 24px;
 `;
 
 export const VerticalCard = styled(MoleculeCard).attrs({
   isVertical: true,
 })`
+  height: 176px;
+  width: 152px;
+
   margin-right: 24px;
 
-  width: 146px;
+  elevation: 2;
+  shadow-color: #000;
+  shadow-opacity: 0.1;
+  shadow-offset: 2px 2px;
 `;
 
 export const GatewayList = styled(
   FlatList as new () => FlatList<Gateway>,
-).attrs({
-  horizontal: true,
-  showsHorizontalScrollIndicator: false,
-})``;
+).attrs(VerticalListOptions)``;
 
 export const EndnodeList = styled(
   FlatList as new () => FlatList<Endnode>,
-).attrs({
-  horizontal: true,
-  showsHorizontalScrollIndicator: false,
-})``;
+).attrs(VerticalListOptions)``;

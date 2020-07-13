@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import api from '@services/api';
+import { parseISO, format } from 'date-fns';
+
+import Header from '@molecules/Header';
 
 import * as S from './styles';
 
@@ -27,8 +30,16 @@ const List: React.FC = () => {
         api.get<Endnode[]>('endnodes'),
       ]);
 
-      setGateways(result[0].data);
       setEndnodes(result[1].data);
+      setGateways(
+        result[0].data.map((gateway) => ({
+          ...gateway,
+          createdAt: `Created at ${format(
+            parseISO(gateway.createdAt),
+            'dd/MM/yyyy',
+          )}`,
+        })),
+      );
     }
 
     loadDevices();
@@ -36,8 +47,9 @@ const List: React.FC = () => {
 
   return (
     <S.Container>
-      <S.Content>
-        <S.Title>Gateways</S.Title>
+      <Header isElevated>Your devices</Header>
+      <S.ScrollView>
+        <S.SessionTitle>Gateways</S.SessionTitle>
         <S.GatewayList
           data={gateways}
           keyExtractor={(gateway) => gateway.id}
@@ -50,7 +62,7 @@ const List: React.FC = () => {
           )}
         />
 
-        <S.Title>End-nodes</S.Title>
+        <S.SessionTitle>End-nodes</S.SessionTitle>
         <S.EndnodeList
           data={endnodes}
           keyExtractor={(endnode) => endnode.id}
@@ -62,7 +74,7 @@ const List: React.FC = () => {
             />
           )}
         />
-      </S.Content>
+      </S.ScrollView>
     </S.Container>
   );
 };
