@@ -3,7 +3,7 @@ import { ViewProps } from 'react-native';
 
 import * as S from './styles';
 
-interface HeaderProps extends ViewProps {
+export interface HeaderProps extends ViewProps {
   isElevated?: boolean;
 }
 

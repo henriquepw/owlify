@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import api from '@services/api';
 import { parseISO, format } from 'date-fns';
 
-import Header from '@molecules/Header';
+import TabFragment from '@templates/TabFragment';
 
 import * as S from './styles';
 
@@ -46,36 +46,33 @@ const List: React.FC = () => {
   }, []);
 
   return (
-    <S.Container>
-      <Header isElevated>Your devices</Header>
-      <S.ScrollView>
-        <S.SessionTitle>Gateways</S.SessionTitle>
-        <S.GatewayList
-          data={gateways}
-          keyExtractor={(gateway) => gateway.id}
-          renderItem={({ item }) => (
-            <S.VerticalCard
-              iconName="gateway"
-              title={item.location}
-              subTitle={item.createdAt}
-            />
-          )}
-        />
+    <TabFragment title="Your devices">
+      <S.SessionTitle>Gateways</S.SessionTitle>
+      <S.GatewayList
+        data={gateways}
+        keyExtractor={(gateway) => gateway.id}
+        renderItem={({ item }) => (
+          <S.VerticalCard
+            iconName="gateway"
+            title={item.location}
+            subTitle={item.createdAt}
+          />
+        )}
+      />
 
-        <S.SessionTitle>End-nodes</S.SessionTitle>
-        <S.EndnodeList
-          data={endnodes}
-          keyExtractor={(endnode) => endnode.id}
-          renderItem={({ item }) => (
-            <S.VerticalCard
-              iconName="endnode"
-              title={item.name}
-              subTitle={item.room}
-            />
-          )}
-        />
-      </S.ScrollView>
-    </S.Container>
+      <S.SessionTitle>End-nodes</S.SessionTitle>
+      <S.EndnodeList
+        data={endnodes}
+        keyExtractor={(endnode) => endnode.id}
+        renderItem={({ item }) => (
+          <S.VerticalCard
+            iconName="endnode"
+            title={item.name}
+            subTitle={item.room}
+          />
+        )}
+      />
+    </TabFragment>
   );
 };
 

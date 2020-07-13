@@ -14,19 +14,6 @@ const VerticalListOptions = {
   },
 };
 
-export const Container = styled.SafeAreaView`
-  flex: 1;
-`;
-
-export const ScrollView = styled.ScrollView.attrs({
-  showsVerticalScrollIndicator: false,
-  contentContainerStyle: {
-    paddingBottom: 24,
-  },
-})`
-  flex: 1;
-`;
-
 export const SessionTitle = styled.Text`
   font-size: 18px;
   font-family: ${({ theme }) => theme.fonts.bold};
