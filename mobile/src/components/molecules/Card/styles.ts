@@ -1,7 +1,7 @@
 import VectorIcon from 'react-native-vector-icons/Feather';
 import styled, { css } from 'styled-components/native';
 
-interface ContainerProps {
+interface VerticalProps {
   isVertical?: boolean;
 }
 
@@ -15,7 +15,7 @@ interface TextWrapperProps {
 }
 
 // TODO: Fix the elevation/shadow
-export const Container = styled.TouchableOpacity<ContainerProps>`
+export const Container = styled.TouchableOpacity<VerticalProps>`
   ${({ isVertical }) =>
     !isVertical &&
     css`
@@ -54,18 +54,21 @@ export const TextWrapper = styled.View<TextWrapperProps>`
   margin: ${(props) => (props.isCentered ? '16px 0 0' : '0 0 0 16px')};
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text<VerticalProps>`
   font-family: ${({ theme }) => theme.fonts.bold};
-  font-size: 18px;
+  font-size: ${({ isVertical }) => (isVertical ? 16 : 18)}px;
+  text-align: ${({ isVertical }) => (isVertical ? 'center' : 'left')};
+  text-transform: capitalize;
 
   color: ${({ theme }) => theme.colours.active};
 `;
 
-export const SubTitle = styled.Text`
+export const SubTitle = styled.Text<VerticalProps>`
   margin-top: 8px;
 
   font-family: ${({ theme }) => theme.fonts.regular};
-  font-size: 14px;
+  font-size: ${({ isVertical }) => (isVertical ? 12 : 14)}px;
+  text-align: ${({ isVertical }) => (isVertical ? 'center' : 'left')};
 
   color: ${({ theme }) => theme.colours.active};
   opacity: 0.7;
