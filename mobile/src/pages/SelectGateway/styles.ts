@@ -9,13 +9,24 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const Background = styled.Image`
+export const BackgroundContainer = styled.View.attrs({
+  pointerEvents: 'none',
+})`
   position: absolute;
 
   left: 0;
   bottom: 0;
 
   z-index: 1;
+`;
+
+export const BackgroundImage = styled.Image.attrs({
+  pointerEvents: 'none',
+})`
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
 `;
 
 export const List = styled(FlatList as new () => FlatList<Gateway>).attrs({

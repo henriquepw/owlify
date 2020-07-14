@@ -35,8 +35,8 @@ const Card: React.FC<CardProps> = ({
         {iconName && <Icon name={iconName} {...iconProps} />}
 
         <S.TextWrapper isCentered={isVertical}>
-          <S.Title>{title}</S.Title>
-          <S.SubTitle>{subTitle}</S.SubTitle>
+          <S.Title isVertical={isVertical}>{title}</S.Title>
+          <S.SubTitle isVertical={isVertical}>{subTitle}</S.SubTitle>
         </S.TextWrapper>
 
         {isSelected && !isVertical && <S.CheckIcon size={32} />}
