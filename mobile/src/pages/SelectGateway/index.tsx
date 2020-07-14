@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 import api from '@services/api';
+import { format, parseISO } from 'date-fns';
 
 import Button from '@atoms/Button';
 
@@ -26,7 +27,15 @@ const SelectGateway: React.FC = () => {
     async function loadGateways(): Promise<void> {
       const response = await api.get<Gateway[]>('gateways');
 
-      setGateways(response.data);
+      setGateways(
+        response.data.map((gateway) => ({
+          ...gateway,
+          createdAt: `Created at ${format(
+            parseISO(gateway.createdAt),
+            'dd/MM/yyyy',
+          )}`,
+        })),
+      );
     }
 
     loadGateways();
@@ -40,7 +49,9 @@ const SelectGateway: React.FC = () => {
 
   return (
     <S.Container>
-      <S.Background source={backgroundImg} />
+      <S.BackgroundContainer>
+        <S.BackgroundImage source={backgroundImg} />
+      </S.BackgroundContainer>
 
       <S.List
         data={gateways}

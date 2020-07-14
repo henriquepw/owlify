@@ -72,6 +72,19 @@ const List: React.FC = () => {
           />
         )}
       />
+
+      <S.SessionTitle>End-nodes</S.SessionTitle>
+      <S.EndnodeList
+        data={endnodes}
+        keyExtractor={(endnode) => endnode.id}
+        renderItem={({ item }) => (
+          <S.VerticalCard
+            iconName="endnode"
+            title={item.name}
+            subTitle={item.room}
+          />
+        )}
+      />
     </TabFragment>
   );
 };

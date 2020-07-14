@@ -14,7 +14,7 @@ export const Container = styled.View<ContainerProps>`
   ${({ isElevated }) =>
     isElevated &&
     css`
-      elevation: 2;
+      elevation: 3;
       shadow-color: #000;
       shadow-opacity: 0.1;
       shadow-offset: 2px 2px;
