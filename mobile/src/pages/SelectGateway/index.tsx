@@ -6,16 +6,11 @@ import { format, parseISO } from 'date-fns';
 
 import Button from '@atoms/Button';
 
+import { Gateway } from '@utils/interfaces';
+
 import backgroundImg from '@assets/default/endnode-registration-background.png';
 
 import * as S from './styles';
-
-export interface Gateway {
-  id: string;
-  location: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 const SelectGateway: React.FC = () => {
   const navigation = useNavigation();

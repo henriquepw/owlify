@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 import MoleculeCard from '@molecules/Card';
 
-import { Gateway, Endnode } from './index';
+import { Gateway, Endnode } from '@utils/interfaces';
 
 const VerticalListOptions = {
   horizontal: true,
