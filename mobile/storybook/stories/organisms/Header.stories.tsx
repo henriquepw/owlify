@@ -4,4 +4,4 @@ import { storiesOf } from '@storybook/react-native';
 
 import Header from '@organisms/Header';
 
-storiesOf('Profile page', module).add('Header', () => <Header />);
+storiesOf('Header', module).add('Header profile', () => <Header />);
