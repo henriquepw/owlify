@@ -3,6 +3,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Authentication from '@pages/Authentication';
+import ShowGateway from '@pages/ShowGateway';
 
 import { useAuth } from '@hooks/auth';
 
@@ -24,6 +25,7 @@ const Routes: React.FC = () => {
     >
       <Root.Screen name="Home" component={TabBarRoutes} />
       <Root.Screen name="Registration" component={RegistrationRoutes} />
+      <Root.Screen name="ShowGateway" component={ShowGateway} />
     </Root.Navigator>
   );
 };
