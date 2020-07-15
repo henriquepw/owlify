@@ -10,7 +10,7 @@ interface ContentProps {
   hasIcon?: boolean;
 }
 
-export const Container = styled(RectButton) <ContainerProps>`
+export const Container = styled(RectButton)<ContainerProps>`
   background-color: ${({ theme, enabled, optionsButtom }) => {
     if (!enabled) return theme.colors.withoutFocus;
     if (optionsButtom === 'attention') return theme.colors.attention;
