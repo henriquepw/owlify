@@ -1,16 +1,20 @@
 import React, { useMemo, useCallback } from 'react';
-import { Text, Alert } from 'react-native';
+import { Alert } from 'react-native';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 import api from '@services/api';
 import { format, parseISO } from 'date-fns';
 import { trigger, mutate } from 'swr';
 
+import EndnodesList from '@organisms/EndnodesList';
+
 import ShowContainer from '@templates/ShowContainer';
 
-import { useDevices } from '@hooks';
+import { useDevices, useGet } from '@hooks';
 
-// import * as S from './styles';
+import { Endnode } from '@utils/interfaces';
+
+import * as S from './styles';
 
 interface RouteParams {
   gateway: {
@@ -25,6 +29,8 @@ const ShowGateway: React.FC = () => {
   const route = useRoute();
 
   const { gateway } = route.params as RouteParams;
+
+  const [endnodes] = useGet<Endnode[]>(`/endnodes/gateway/${gateway.id}`);
   const { gateways } = useDevices();
 
   const formattedUpdatedAt = useMemo(
@@ -61,7 +67,7 @@ const ShowGateway: React.FC = () => {
         },
       ],
     );
-  }, [gateway.id, navigation]);
+  }, [navigation, gateways, gateway.id]);
 
   return (
     <ShowContainer
@@ -73,7 +79,10 @@ const ShowGateway: React.FC = () => {
         description: formattedUpdatedAt,
       }}
     >
-      <Text>Fimmmmm</Text>
+      <S.Graphic />
+      <S.SessionTitle>End-nodes</S.SessionTitle>
+      <EndnodesList data={endnodes || []} />
+      <S.Graphic />
     </ShowContainer>
   );
 };

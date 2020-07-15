@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import api from '@services/api';
-import { trigger, mutate } from 'swr';
+import { mutate } from 'swr';
 import * as Yup from 'yup';
 
 import Button from '@atoms/Button';
@@ -37,7 +37,6 @@ const GatewayRegistration: React.FC = () => {
         const response = await api.post('/gateways', data);
 
         mutate('/gateways', [...gateways, response.data]);
-        trigger('/gateways');
 
         Alert.alert('Success!', 'You successfully registered a gateway :D', [
           {

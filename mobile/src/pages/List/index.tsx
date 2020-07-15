@@ -4,6 +4,8 @@ import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { parseISO, format } from 'date-fns';
 
+import EndnodeList from '@organisms/EndnodesList';
+
 import TabFragment from '@templates/TabFragment';
 
 import { useDevices } from '@hooks';
@@ -56,17 +58,7 @@ const List: React.FC = () => {
 
       <S.SessionTitle>End-nodes</S.SessionTitle>
       {isEndnodesLoading ? (
-        <S.EndnodeList
-          data={endnodes}
-          keyExtractor={(endnode) => endnode.id}
-          renderItem={({ item }) => (
-            <S.VerticalCard
-              iconName="endnode"
-              title={item.name}
-              subTitle={item.room}
-            />
-          )}
-        />
+        <EndnodeList data={endnodes} />
       ) : (
         <Text>Loading...</Text>
       )}

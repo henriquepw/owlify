@@ -3,7 +3,7 @@ import { Alert, TextInput } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import api from '@services/api';
-import { trigger, mutate } from 'swr';
+import { mutate } from 'swr';
 import * as Yup from 'yup';
 
 import Icon from '@atoms/Icon';
@@ -47,7 +47,6 @@ const EndnodeRegistration: React.FC = () => {
         });
 
         mutate('/endnodes', [...endnodes, response.data]);
-        trigger('/endnodes');
 
         Alert.alert('Success!', 'You successfully registered a end-node :D', [
           {
