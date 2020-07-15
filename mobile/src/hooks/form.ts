@@ -51,4 +51,4 @@ function useForm<InitialShape extends Record<string, unknown>>(
   return { formRef, validateForm };
 }
 
-export { useForm };
+export default useForm;

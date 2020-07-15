@@ -3,11 +3,12 @@ import { Alert, TextInput } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import api from '@services/api';
+import { trigger } from 'swr';
 import * as Yup from 'yup';
 
 import Icon from '@atoms/Icon';
 
-import { useForm } from '@hooks/form';
+import { useForm } from '@hooks';
 
 import backgroundImg from '@assets/default/endnode-registration-background.png';
 
@@ -42,6 +43,8 @@ const EndnodeRegistration: React.FC = () => {
           gatewayId,
           ...data,
         });
+
+        trigger('/endnodes');
 
         Alert.alert('Success!', 'You successfully registered a end-node :D', [
           {

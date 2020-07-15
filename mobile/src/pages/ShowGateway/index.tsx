@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { Text, Alert } from 'react-native';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 import api from '@services/api';
-import { useCallback } from '@storybook/addons';
 import { format, parseISO } from 'date-fns';
+import { trigger } from 'swr';
 
 import ShowContainer from '@templates/ShowContainer';
 
@@ -29,6 +29,7 @@ const ShowGateway: React.FC = () => {
     [gateway.updatedAt],
   );
 
+  // TODO: edit the gateway data
   function handleEdit(): void {
     console.log('Edit');
   }
@@ -36,8 +37,9 @@ const ShowGateway: React.FC = () => {
   const handleDelete = useCallback(() => {
     async function deleteGateway(): Promise<void> {
       await api.delete(`/gateways/${gateway.id}`);
+      trigger('/gateways');
 
-      navigation.navigate('Home', { screen: 'Dashboard' });
+      navigation.goBack();
     }
 
     Alert.alert(

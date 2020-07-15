@@ -3,12 +3,13 @@ import { Alert } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import api from '@services/api';
+import { trigger } from 'swr';
 import * as Yup from 'yup';
 
 import Button from '@atoms/Button';
 import Icon from '@atoms/Icon';
 
-import { useForm } from '@hooks/form';
+import { useForm } from '@hooks';
 
 import backgroundImg from '@assets/default/gateway-registration-background.png';
 
@@ -33,6 +34,8 @@ const GatewayRegistration: React.FC = () => {
 
       try {
         await api.post('/gateways', data);
+
+        trigger('/gateways');
 
         Alert.alert('Success!', 'You successfully registered a gateway :D', [
           {

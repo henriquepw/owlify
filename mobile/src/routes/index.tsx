@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Authentication from '@pages/Authentication';
 import ShowGateway from '@pages/ShowGateway';
 
-import { useAuth } from '@hooks/auth';
+import { useAuth } from '@hooks';
 
 import RegistrationRoutes from './registration.routes';
 import TabBarRoutes from './tabBar.routes';

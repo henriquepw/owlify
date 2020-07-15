@@ -6,8 +6,7 @@ import * as Yup from 'yup';
 
 import Logo from '@atoms/Logo';
 
-import { useAuth } from '@hooks/auth';
-import { useForm } from '@hooks/form';
+import { useAuth, useForm } from '@hooks';
 
 import connerImg from '@assets/default/conner.png';
 

@@ -3,7 +3,7 @@ import { Button } from 'react-native';
 
 import TabFragment from '@templates/TabFragment';
 
-import { useAuth } from '@hooks/auth';
+import { useAuth } from '@hooks';
 
 // import * as S from './styles';
 
