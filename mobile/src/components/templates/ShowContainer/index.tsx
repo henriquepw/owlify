@@ -1,11 +1,18 @@
 import React from 'react';
-import { View, TouchableOpacity, GestureResponderEvent } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  GestureResponderEvent,
+  Animated,
+} from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
 import Icon from '@atoms/Icon';
 
 import * as S from './styles';
+
+const HEADER_HEIGHT = 224;
 
 interface ShowContainerProps {
   handleEdit: (event: GestureResponderEvent) => void;
@@ -26,36 +33,78 @@ const ShowContainer: React.FC<ShowContainerProps> = ({
 }) => {
   const { goBack } = useNavigation();
 
+  const scrollY = new Animated.Value(0);
+
+  const headerY = scrollY.interpolate({
+    inputRange: [0, HEADER_HEIGHT],
+    outputRange: [0, -HEADER_HEIGHT],
+    extrapolate: 'clamp',
+  });
+
+  const headerContentY = scrollY.interpolate({
+    inputRange: [0, HEADER_HEIGHT],
+    outputRange: [0, HEADER_HEIGHT],
+    extrapolate: 'clamp',
+  });
+
+  const headerContentOpacity = scrollY.interpolate({
+    inputRange: [0, HEADER_HEIGHT / 2],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
+
   return (
     <S.Container>
-      <S.Header>
-        <TouchableOpacity onPress={goBack}>
-          <S.Icon name="chevron-left" size={24} />
-        </TouchableOpacity>
+      <S.Header
+        style={{
+          transform: [{ translateY: headerY }],
+        }}
+      >
+        <Animated.View
+          style={{
+            transform: [{ translateY: headerContentY }],
+            opacity: headerContentOpacity,
+          }}
+        >
+          <TouchableOpacity onPress={goBack} style={{ marginLeft: 24 }}>
+            <S.Icon name="chevron-left" size={24} />
+          </TouchableOpacity>
 
-        <S.HeaderContent>
-          <Icon name={header.iconName} color="light" />
+          <S.HeaderContent>
+            <Icon name={header.iconName} color="light" />
 
-          <S.HeaderTextContainer>
-            <S.HeaderTitle>{header.title}</S.HeaderTitle>
-            {header.subTitle && (
-              <S.HeaderTitle>{header.subTitle}</S.HeaderTitle>
-            )}
-            <S.HeaderDescription>{header.description}</S.HeaderDescription>
-          </S.HeaderTextContainer>
+            <S.HeaderTextContainer>
+              <S.HeaderTitle>{header.title}</S.HeaderTitle>
+              {header.subTitle && (
+                <S.HeaderTitle>{header.subTitle}</S.HeaderTitle>
+              )}
+              <S.HeaderDescription>{header.description}</S.HeaderDescription>
+            </S.HeaderTextContainer>
 
-          <View>
-            <TouchableOpacity onPress={handleEdit}>
-              <S.Icon size={24} name="edit-3" style={{ marginBottom: 24 }} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleDelete}>
-              <S.Icon size={24} name="trash-2" />
-            </TouchableOpacity>
-          </View>
-        </S.HeaderContent>
+            <View>
+              <TouchableOpacity onPress={handleEdit}>
+                <S.Icon size={24} name="edit-3" style={{ marginBottom: 24 }} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleDelete}>
+                <S.Icon size={24} name="trash-2" />
+              </TouchableOpacity>
+            </View>
+          </S.HeaderContent>
+        </Animated.View>
+
+        <S.HeaderFooter />
       </S.Header>
 
-      <S.ScrollView>{children}</S.ScrollView>
+      <S.ScrollView
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          {
+            useNativeDriver: true,
+          },
+        )}
+      >
+        {children}
+      </S.ScrollView>
     </S.Container>
   );
 };

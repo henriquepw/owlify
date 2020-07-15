@@ -1,19 +1,22 @@
+import { Animated } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
 
-  background: ${({ theme }) => theme.colours.attention};
+  background: ${({ theme }) => theme.colours.background};
 `;
 
-export const Header = styled.View`
+export const Header = styled(Animated.View)`
   position: absolute;
 
   width: 100%;
   background: ${({ theme }) => theme.colours.active};
 
-  padding: 24px;
+  padding-top: 24px;
+
+  z-index: 5;
 `;
 
 export const Icon = styled(FeatherIcon)`
@@ -24,7 +27,7 @@ export const HeaderContent = styled.View`
   flex-direction: row;
   align-items: center;
 
-  margin: 32px 16px 64px;
+  margin: 32px 40px;
 `;
 
 export const HeaderTextContainer = styled.View`
@@ -47,16 +50,21 @@ export const HeaderDescription = styled.Text`
   opacity: 0.8;
 `;
 
-export const HeaderIconsContainer = styled.View``;
+export const HeaderFooter = styled.View`
+  background: ${({ theme }) => theme.colours.background};
 
-export const ScrollView = styled.ScrollView.attrs(({ theme }) => ({
-  showsVerticalScrollIndicator: false,
+  height: 32px;
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+`;
+
+export const ScrollView = styled(Animated.ScrollView).attrs(({ theme }) => ({
+  // showsVerticalScrollIndicator: false,
   contentContainerStyle: {
     alignItems: 'center',
     padding: 32,
-    marginTop: 192,
-    paddingBottom: 216,
-    borderRadius: 48,
+    paddingBotton: 272,
+    marginTop: 208,
     backgroundColor: theme.colours.background,
   },
 }))``;
