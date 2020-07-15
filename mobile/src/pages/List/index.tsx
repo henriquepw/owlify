@@ -6,17 +6,19 @@ import { parseISO, format } from 'date-fns';
 
 import TabFragment from '@templates/TabFragment';
 
-import { useGet } from '@hooks';
-
-import { Gateway, Endnode } from '@utils/interfaces';
+import { useDevices } from '@hooks';
 
 import * as S from './styles';
 
 const List: React.FC = () => {
   const navigation = useNavigation();
 
-  const [gateways, isGatewaysLoading] = useGet<Gateway[]>('/gateways');
-  const [endnodes, isEndnodesLoading] = useGet<Endnode[]>('/endnodes');
+  const {
+    gateways,
+    endnodes,
+    isGatewaysLoading,
+    isEndnodesLoading,
+  } = useDevices();
 
   const formattedGateway = useMemo(
     () =>

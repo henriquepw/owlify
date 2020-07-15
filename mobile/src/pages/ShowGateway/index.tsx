@@ -4,9 +4,11 @@ import { Text, Alert } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import api from '@services/api';
 import { format, parseISO } from 'date-fns';
-import { trigger } from 'swr';
+import { trigger, mutate } from 'swr';
 
 import ShowContainer from '@templates/ShowContainer';
+
+import { useDevices } from '@hooks';
 
 // import * as S from './styles';
 
@@ -23,6 +25,7 @@ const ShowGateway: React.FC = () => {
   const route = useRoute();
 
   const { gateway } = route.params as RouteParams;
+  const { gateways } = useDevices();
 
   const formattedUpdatedAt = useMemo(
     () => `Updated at ${format(parseISO(gateway.updatedAt), 'dd/MM/yyyy')}`,
@@ -36,7 +39,13 @@ const ShowGateway: React.FC = () => {
 
   const handleDelete = useCallback(() => {
     async function deleteGateway(): Promise<void> {
+      mutate(
+        '/gateways',
+        gateways.filter((current) => current.id !== gateway.id),
+      );
+
       await api.delete(`/gateways/${gateway.id}`);
+
       trigger('/gateways');
 
       navigation.goBack();

@@ -3,13 +3,13 @@ import { Alert } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import api from '@services/api';
-import { trigger } from 'swr';
+import { trigger, mutate } from 'swr';
 import * as Yup from 'yup';
 
 import Button from '@atoms/Button';
 import Icon from '@atoms/Icon';
 
-import { useForm } from '@hooks';
+import { useForm, useDevices } from '@hooks';
 
 import backgroundImg from '@assets/default/gateway-registration-background.png';
 
@@ -26,6 +26,7 @@ const GatewayRegistration: React.FC = () => {
   const navigation = useNavigation();
 
   const { formRef, validateForm } = useForm(schema);
+  const { gateways } = useDevices();
 
   const handleSubmit = useCallback(
     async (data: FormData) => {
@@ -33,8 +34,9 @@ const GatewayRegistration: React.FC = () => {
       if (!isValid) return;
 
       try {
-        await api.post('/gateways', data);
+        const response = await api.post('/gateways', data);
 
+        mutate('/gateways', [...gateways, response.data]);
         trigger('/gateways');
 
         Alert.alert('Success!', 'You successfully registered a gateway :D', [
@@ -47,7 +49,7 @@ const GatewayRegistration: React.FC = () => {
         Alert.alert('Something went wrong :(!', 'Try again later');
       }
     },
-    [navigation, validateForm],
+    [navigation, validateForm, gateways],
   );
 
   function submitForm(): void {
