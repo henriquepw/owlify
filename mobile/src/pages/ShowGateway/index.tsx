@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
-import { Text } from 'react-native';
+import { Text, Alert } from 'react-native';
 
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import api from '@services/api';
+import { useCallback } from '@storybook/addons';
 import { format, parseISO } from 'date-fns';
 
 import ShowContainer from '@templates/ShowContainer';
@@ -17,6 +19,7 @@ interface RouteParams {
 }
 
 const ShowGateway: React.FC = () => {
+  const navigation = useNavigation();
   const route = useRoute();
 
   const { gateway } = route.params as RouteParams;
@@ -30,9 +33,24 @@ const ShowGateway: React.FC = () => {
     console.log('Edit');
   }
 
-  function handleDelete(): void {
-    console.log('Delete');
-  }
+  const handleDelete = useCallback(() => {
+    async function deleteGateway(): Promise<void> {
+      await api.delete(`/gateways/${gateway.id}`);
+
+      navigation.navigate('Home', { screen: 'Dashboard' });
+    }
+
+    Alert.alert(
+      'Attention! Are you sure about that?',
+      'You are about to delete the gateway, by deleting it, all end-nodes linked will also be deleted.',
+      [
+        {
+          text: 'Delete',
+          onPress: deleteGateway,
+        },
+      ],
+    );
+  }, [gateway.id, navigation]);
 
   return (
     <ShowContainer
@@ -44,46 +62,6 @@ const ShowGateway: React.FC = () => {
         description: formattedUpdatedAt,
       }}
     >
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>Quase</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
       <Text>Fimmmmm</Text>
     </ShowContainer>
   );
