@@ -51,6 +51,8 @@ export const HeaderDescription = styled.Text`
 `;
 
 export const HeaderFooter = styled.View`
+  align-items: center;
+
   background: ${({ theme }) => theme.colours.background};
 
   height: 32px;
@@ -58,13 +60,23 @@ export const HeaderFooter = styled.View`
   border-top-right-radius: 32px;
 `;
 
+export const HeaderPuller = styled.View`
+  margin-top: 8px;
+  opacity: 0.4;
+
+  width: 64px;
+  height: 4px;
+  border-radius: 2px;
+  background: ${({ theme }) => theme.colours.withoutFocus};
+`;
+
 export const ScrollView = styled(Animated.ScrollView).attrs(({ theme }) => ({
-  // showsVerticalScrollIndicator: false,
+  showsVerticalScrollIndicator: false,
   contentContainerStyle: {
     alignItems: 'center',
     padding: 32,
-    paddingBotton: 272,
-    marginTop: 208,
+    marginTop: 192,
+    paddingBottom: 216,
     backgroundColor: theme.colours.background,
   },
 }))``;

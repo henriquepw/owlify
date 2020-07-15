@@ -12,8 +12,6 @@ import Icon from '@atoms/Icon';
 
 import * as S from './styles';
 
-const HEADER_HEIGHT = 224;
-
 interface ShowContainerProps {
   handleEdit: (event: GestureResponderEvent) => void;
   handleDelete: (event: GestureResponderEvent) => void;
@@ -24,6 +22,13 @@ interface ShowContainerProps {
     iconName: string;
   };
 }
+
+const HEADER_HEIGHT = 224;
+
+const interpolate = {
+  inputRange: [0, HEADER_HEIGHT],
+  extrapolate: 'clamp',
+} as Animated.InterpolationConfigType;
 
 const ShowContainer: React.FC<ShowContainerProps> = ({
   header,
@@ -36,21 +41,18 @@ const ShowContainer: React.FC<ShowContainerProps> = ({
   const scrollY = new Animated.Value(0);
 
   const headerY = scrollY.interpolate({
-    inputRange: [0, HEADER_HEIGHT],
+    ...interpolate,
     outputRange: [0, -HEADER_HEIGHT],
-    extrapolate: 'clamp',
   });
 
   const headerContentY = scrollY.interpolate({
-    inputRange: [0, HEADER_HEIGHT],
+    ...interpolate,
     outputRange: [0, HEADER_HEIGHT],
-    extrapolate: 'clamp',
   });
 
   const headerContentOpacity = scrollY.interpolate({
-    inputRange: [0, HEADER_HEIGHT / 2],
+    ...interpolate,
     outputRange: [1, 0],
-    extrapolate: 'clamp',
   });
 
   return (
@@ -92,15 +94,15 @@ const ShowContainer: React.FC<ShowContainerProps> = ({
           </S.HeaderContent>
         </Animated.View>
 
-        <S.HeaderFooter />
+        <S.HeaderFooter>
+          <S.HeaderPuller />
+        </S.HeaderFooter>
       </S.Header>
 
       <S.ScrollView
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          {
-            useNativeDriver: true,
-          },
+          { useNativeDriver: true },
         )}
       >
         {children}

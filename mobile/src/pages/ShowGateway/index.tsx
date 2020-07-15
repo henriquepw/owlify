@@ -75,6 +75,7 @@ const ShowGateway: React.FC = () => {
       <Text>{gateway.location}</Text>
       <Text>{gateway.location}</Text>
       <Text>{gateway.location}</Text>
+      <Text>Quase</Text>
       <Text>{gateway.location}</Text>
       <Text>{gateway.location}</Text>
       <Text>{gateway.location}</Text>
@@ -83,25 +84,7 @@ const ShowGateway: React.FC = () => {
       <Text>{gateway.location}</Text>
       <Text>{gateway.location}</Text>
       <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>{gateway.location}</Text>
-      <Text>Fim</Text>
+      <Text>Fimmmmm</Text>
     </ShowContainer>
   );
 };
