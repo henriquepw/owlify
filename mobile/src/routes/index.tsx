@@ -1,4 +1,5 @@
 import React from 'react';
+import { ActivityIndicator, View } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -13,7 +14,15 @@ import TabBarRoutes from './tabBar.routes';
 const Root = createStackNavigator();
 
 const Routes: React.FC = () => {
-  const { token } = useAuth();
+  const { token, isLoading } = useAuth();
+
+  // TODO: add slash screen when is loading
+  if (isLoading)
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#6BA7AF" />
+      </View>
+    );
 
   if (!token) return <Authentication />;
 

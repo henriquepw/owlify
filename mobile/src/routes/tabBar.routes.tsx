@@ -14,7 +14,10 @@ const iconNames = ['home', 'list', 'plus', 'bell', 'user'];
 
 const TabBarRoutes: React.FC = () => {
   return (
-    <Navigator tabBar={(props) => <TabBar {...props} iconNames={iconNames} />}>
+    <Navigator
+      tabBar={(props) => <TabBar {...props} iconNames={iconNames} />}
+      initialRouteName="List"
+    >
       <Screen name="Dashboard" component={Dashboard} />
       <Screen name="List" component={List} />
       <Screen name="Registration" component={Dashboard} />
