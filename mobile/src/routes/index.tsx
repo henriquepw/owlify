@@ -7,6 +7,7 @@ import Authentication from '@pages/Authentication';
 import ShowGateway from '@pages/ShowGateway';
 
 import { useAuth } from '@hooks';
+import { DevicesProvider } from '@hooks/devices';
 
 import RegistrationRoutes from './registration.routes';
 import TabBarRoutes from './tabBar.routes';
@@ -27,15 +28,17 @@ const Routes: React.FC = () => {
   if (!token) return <Authentication />;
 
   return (
-    <Root.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Root.Screen name="Home" component={TabBarRoutes} />
-      <Root.Screen name="Registration" component={RegistrationRoutes} />
-      <Root.Screen name="ShowGateway" component={ShowGateway} />
-    </Root.Navigator>
+    <DevicesProvider>
+      <Root.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Root.Screen name="Home" component={TabBarRoutes} />
+        <Root.Screen name="Registration" component={RegistrationRoutes} />
+        <Root.Screen name="ShowGateway" component={ShowGateway} />
+      </Root.Navigator>
+    </DevicesProvider>
   );
 };
 
