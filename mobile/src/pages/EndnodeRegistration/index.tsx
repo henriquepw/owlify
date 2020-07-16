@@ -28,7 +28,7 @@ const EndnodeRegistration: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const { formRef, validateForm } = useForm(schema);
+  const { formRef, validateForm, submitForm } = useForm(schema);
   const { endnodes } = useDevices();
 
   const roomInputRef = useRef<TextInput>(null);
@@ -60,10 +60,6 @@ const EndnodeRegistration: React.FC = () => {
     },
     [navigation, validateForm, route.params, endnodes],
   );
-
-  function submitForm(): void {
-    formRef.current?.submitForm();
-  }
 
   function setRoomInputFocus(): void {
     roomInputRef.current?.focus();

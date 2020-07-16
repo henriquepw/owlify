@@ -1,9 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Graphic = styled.View`
-  flex: 1;
-
-  width: 100%;
+  width: 340px;
   height: 240px;
   border-radius: 10px;
 

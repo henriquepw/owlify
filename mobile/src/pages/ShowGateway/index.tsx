@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Alert } from 'react-native';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -6,6 +6,7 @@ import api from '@services/api';
 import { format, parseISO } from 'date-fns';
 import { trigger, mutate } from 'swr';
 
+import EditGatewayModal from '@organisms/EditGatewayModal';
 import EndnodesList from '@organisms/EndnodesList';
 
 import ShowContainer from '@templates/ShowContainer';
@@ -26,27 +27,34 @@ const ShowGateway: React.FC = () => {
 
   const { gateway } = route.params as RouteParams;
 
+  // const getGateway = useGet<Gateway>(`/gateways/${routeParams.gateway.id}`, {
+  //   initialData: routeParams.gateway,
+  // });
+
+  // const gateway = getGateway[0] as Gateway;
+
   const [endnodes] = useGet<Endnode[]>(`/endnodes/gateway/${gateway.id}`);
   const { gateways } = useDevices();
+
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const formattedUpdatedAt = useMemo(
     () => `Updated at ${format(parseISO(gateway.updatedAt), 'dd/MM/yyyy')}`,
     [gateway.updatedAt],
   );
 
-  // TODO: edit the gateway data
-  function handleEdit(): void {
-    console.log('Edit');
+  function toggleModalVisible(): void {
+    setModalVisible(!isModalVisible);
   }
 
   const handleDelete = useCallback(() => {
     async function deleteGateway(): Promise<void> {
       mutate(
         '/gateways',
-        gateways.filter((current) => current.id !== gateway.id),
+        gateways.filter((current) => current.id !== gateway?.id),
       );
 
-      await api.delete(`/gateways/${gateway.id}`);
+      await api.delete(`/gateways/${gateway?.id}`);
 
       trigger('/gateways');
 
@@ -67,23 +75,31 @@ const ShowGateway: React.FC = () => {
         },
       ],
     );
-  }, [navigation, gateways, gateway.id]);
+  }, [navigation, gateways, gateway?.id]);
 
   return (
-    <ShowContainer
-      handleEdit={handleEdit}
-      handleDelete={handleDelete}
-      header={{
-        iconName: 'gateway',
-        title: gateway.location,
-        description: formattedUpdatedAt,
-      }}
-    >
-      <S.Graphic />
-      <S.SessionTitle>End-nodes</S.SessionTitle>
-      <EndnodesList data={endnodes || []} />
-      <S.Graphic />
-    </ShowContainer>
+    <>
+      <EditGatewayModal
+        gateway={gateway}
+        isVisible={isModalVisible}
+        onCancel={toggleModalVisible}
+      />
+
+      <ShowContainer
+        handleEdit={toggleModalVisible}
+        handleDelete={handleDelete}
+        header={{
+          iconName: 'gateway',
+          title: gateway.location,
+          description: formattedUpdatedAt,
+        }}
+      >
+        <S.Graphic />
+        <S.SessionTitle>End-nodes</S.SessionTitle>
+        <EndnodesList data={endnodes || []} />
+        <S.Graphic />
+      </ShowContainer>
+    </>
   );
 };
 

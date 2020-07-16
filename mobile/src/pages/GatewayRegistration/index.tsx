@@ -25,7 +25,7 @@ const schema = {
 const GatewayRegistration: React.FC = () => {
   const navigation = useNavigation();
 
-  const { formRef, validateForm } = useForm(schema);
+  const { formRef, validateForm, submitForm } = useForm(schema);
   const { gateways } = useDevices();
 
   const handleSubmit = useCallback(
@@ -50,10 +50,6 @@ const GatewayRegistration: React.FC = () => {
     },
     [navigation, validateForm, gateways],
   );
-
-  function submitForm(): void {
-    formRef.current?.submitForm();
-  }
 
   return (
     <S.Container>

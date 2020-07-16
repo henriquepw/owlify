@@ -1,5 +1,5 @@
 import api from '@services/api';
-import useSWR from 'swr';
+import useSWR, { ConfigInterface } from 'swr';
 
 async function fetcher<Data>(url: string): Promise<Data> {
   const response = await api.get<Data>(url);
@@ -9,8 +9,9 @@ async function fetcher<Data>(url: string): Promise<Data> {
 
 function useGet<Data = Record<string, unknown>, Err = Error>(
   url: string,
+  options?: ConfigInterface,
 ): [Data | undefined, boolean, Err | undefined] {
-  const { data, error } = useSWR<Data, Err>(url, fetcher);
+  const { data, error } = useSWR<Data, Err>(url, fetcher, options);
 
   const isLoading = !data || !error;
 

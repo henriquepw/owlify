@@ -29,11 +29,7 @@ const Routes: React.FC = () => {
 
   return (
     <DevicesProvider>
-      <Root.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
+      <Root.Navigator screenOptions={{ headerShown: false }}>
         <Root.Screen name="Home" component={TabBarRoutes} />
         <Root.Screen name="Registration" component={RegistrationRoutes} />
         <Root.Screen name="ShowGateway" component={ShowGateway} />
