@@ -5,7 +5,7 @@ import Icon, { IconProps } from '@atoms/Icon';
 
 import * as S from './styles';
 
-interface ButtonProps extends RectButtonProperties {
+export interface ButtonProps extends RectButtonProperties {
   text: string;
   icon?: string;
   iconProps?: Omit<IconProps, 'name'>;
