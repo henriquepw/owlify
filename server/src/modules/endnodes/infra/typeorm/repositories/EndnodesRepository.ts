@@ -37,7 +37,10 @@ class FakeEndnodesRepository implements IEndnodesRepository {
   }
 
   public async findAllFromGateway(gatewayId: string): Promise<Endnode[]> {
-    const endnodes = this.ormRepository.find({ where: { gatewayId } });
+    const endnodes = this.ormRepository.find({
+      where: { gatewayId },
+      order: { name: 'ASC' },
+    });
 
     return endnodes;
   }
@@ -57,9 +60,7 @@ class FakeEndnodesRepository implements IEndnodesRepository {
 
     const endnodes = this.ormRepository.find({
       relations: ['gateway'],
-      where: {
-        'gateway.ownerId': ownerId,
-      },
+      where: { 'gateway.ownerId': ownerId },
       order: { name: 'ASC' },
       ...findOptions,
     });
