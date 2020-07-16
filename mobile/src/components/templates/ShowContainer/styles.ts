@@ -74,7 +74,7 @@ export const ScrollView = styled(Animated.ScrollView).attrs(({ theme }) => ({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
     alignItems: 'center',
-    padding: 32,
+    paddingVertical: 32,
     marginTop: 192,
     paddingBottom: 216,
     backgroundColor: theme.colours.background,

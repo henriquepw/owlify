@@ -7,11 +7,13 @@ export const Graphic = styled.View`
   height: 240px;
   border-radius: 10px;
 
+  margin: 0 24px;
+
   background: ${({ theme }) => theme.colours.activeLight};
 `;
 
 export const SessionTitle = styled.Text`
-  margin: 32px auto 16px 0;
+  margin: 32px auto 16px 24px;
   letter-spacing: 1.8px;
 
   font-size: 18px;

@@ -51,8 +51,9 @@ const ShowContainer: React.FC<ShowContainerProps> = ({
   });
 
   const headerContentOpacity = scrollY.interpolate({
-    ...interpolate,
+    inputRange: [0, HEADER_HEIGHT / 3],
     outputRange: [1, 0],
+    extrapolate: 'clamp',
   });
 
   return (

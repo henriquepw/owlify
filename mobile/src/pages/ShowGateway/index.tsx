@@ -12,16 +12,12 @@ import ShowContainer from '@templates/ShowContainer';
 
 import { useDevices, useGet } from '@hooks';
 
-import { Endnode } from '@utils/interfaces';
+import { Endnode, Gateway } from '@utils/interfaces';
 
 import * as S from './styles';
 
 interface RouteParams {
-  gateway: {
-    id: string;
-    location: string;
-    updatedAt: string;
-  };
+  gateway: Gateway;
 }
 
 const ShowGateway: React.FC = () => {
@@ -64,6 +60,10 @@ const ShowGateway: React.FC = () => {
         {
           text: 'Delete',
           onPress: deleteGateway,
+          style: 'destructive',
+        },
+        {
+          text: 'Cancel',
         },
       ],
     );
