@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 
+import NoEndnodeCard from '@molecules/NoEndnodeCard';
+
 import { Endnode } from '@utils/interfaces';
 
 import * as S from './styles';
@@ -12,6 +14,10 @@ interface EndnodeList {
 
 const EndnodesList: React.FC<EndnodeList> = ({ data }) => {
   const navigation = useNavigation();
+
+  if (data.length === 0) {
+    return <NoEndnodeCard />;
+  }
 
   return (
     <S.Container

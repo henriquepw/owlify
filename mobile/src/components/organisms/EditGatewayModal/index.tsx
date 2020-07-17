@@ -73,8 +73,8 @@ const EditGatewayModal: React.FC<EditGatewayModalProps> = ({
         />
 
         <S.ButtonContainer>
-          <S.Button text="Update" onPress={submitForm} />
           <S.Button text="Cancel" onPress={onCancel} />
+          <S.Button text="Update" onPress={submitForm} />
         </S.ButtonContainer>
       </S.UpdateForm>
     </Modal>
