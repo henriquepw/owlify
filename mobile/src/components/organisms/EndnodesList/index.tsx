@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { Endnode } from '@utils/interfaces';
 
 import * as S from './styles';
@@ -9,6 +11,8 @@ interface EndnodeList {
 }
 
 const EndnodesList: React.FC<EndnodeList> = ({ data }) => {
+  const navigation = useNavigation();
+
   return (
     <S.Container
       data={data}
@@ -18,6 +22,9 @@ const EndnodesList: React.FC<EndnodeList> = ({ data }) => {
           iconName="endnode"
           title={item.name}
           subTitle={item.room}
+          onPress={() => {
+            navigation.navigate('ShowEndnode', { endnode: item });
+          }}
         />
       )}
     />

@@ -97,7 +97,6 @@ const ShowGateway: React.FC = () => {
         <S.Graphic />
         <S.SessionTitle>End-nodes</S.SessionTitle>
         <EndnodesList data={endnodes || []} />
-        <S.Graphic />
       </ShowContainer>
     </>
   );

@@ -4,6 +4,7 @@ import { ActivityIndicator, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Authentication from '@pages/Authentication';
+import ShowEndnode from '@pages/ShowEndnode';
 import ShowGateway from '@pages/ShowGateway';
 
 import { useAuth } from '@hooks';
@@ -32,7 +33,9 @@ const Routes: React.FC = () => {
       <Root.Navigator screenOptions={{ headerShown: false }}>
         <Root.Screen name="Home" component={TabBarRoutes} />
         <Root.Screen name="Registration" component={RegistrationRoutes} />
+
         <Root.Screen name="ShowGateway" component={ShowGateway} />
+        <Root.Screen name="ShowEndnode" component={ShowEndnode} />
       </Root.Navigator>
     </DevicesProvider>
   );
