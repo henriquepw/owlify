@@ -60,7 +60,9 @@ class FakeEndnodesRepository implements IEndnodesRepository {
 
     const endnodes = this.ormRepository.find({
       relations: ['gateway'],
-      where: { 'gateway.ownerId': ownerId },
+      where: {
+        gateway: { ownerId },
+      },
       order: { name: 'ASC' },
       ...findOptions,
     });
