@@ -51,21 +51,17 @@ class FakeEndnodesRepository implements IEndnodesRepository {
   }: IListUserEndnodesDTO): Promise<Endnode[]> {
     const { all = false, page = 1, limit = 20 } = options;
 
-    const findOptions = all
-      ? {}
-      : {
-          skip: (page - 1) * limit,
-          take: limit,
-        };
+    let queryBuilder = this.ormRepository
+      .createQueryBuilder('endnode')
+      .leftJoinAndSelect('endnode.gateway', 'gateway')
+      .where('gateway.ownerId = :ownerId', { ownerId })
+      .orderBy('endnode.name', 'ASC');
 
-    const endnodes = this.ormRepository.find({
-      relations: ['gateway'],
-      where: {
-        gateway: { ownerId },
-      },
-      order: { name: 'ASC' },
-      ...findOptions,
-    });
+    if (!all) {
+      queryBuilder = queryBuilder.skip((page - 1) * limit).take(limit);
+    }
+
+    const endnodes = await queryBuilder.getMany();
 
     return endnodes;
   }
