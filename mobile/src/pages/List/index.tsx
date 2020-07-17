@@ -4,6 +4,7 @@ import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { parseISO, format } from 'date-fns';
 
+import EmplyList from '@organisms/EmplyList';
 import EndnodeList from '@organisms/EndnodesList';
 
 import TabFragment from '@templates/TabFragment';
@@ -33,6 +34,14 @@ const List: React.FC = () => {
       })),
     [gateways],
   );
+
+  if (gateways.length === 0) {
+    return (
+      <TabFragment title="Your devices">
+        <EmplyList />
+      </TabFragment>
+    );
+  }
 
   return (
     <TabFragment title="Your devices">

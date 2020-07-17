@@ -20,7 +20,7 @@ const TabBarRoutes: React.FC = () => {
     >
       <Screen name="Dashboard" component={Dashboard} />
       <Screen name="List" component={List} />
-      <Screen name="Registration" component={Dashboard} />
+      <Screen name="@temporary" component={Dashboard} />
       <Screen name="Notifications" component={Notifications} />
       <Screen name="Profile" component={Dashboard} />
     </Navigator>
