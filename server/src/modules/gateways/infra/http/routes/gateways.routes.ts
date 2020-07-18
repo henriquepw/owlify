@@ -11,7 +11,7 @@ routes.use('/', authMiddleware);
 routes.route('/').get(GatewaysController.index).post(GatewaysController.store);
 
 routes
-  .route('/:id')
+  .route('/:gatewayId')
   .put(GatewaysController.update)
   .delete(GatewaysController.delete);
 
