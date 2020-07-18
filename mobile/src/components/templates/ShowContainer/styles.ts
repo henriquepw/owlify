@@ -73,7 +73,6 @@ export const HeaderPuller = styled.View`
 export const ScrollView = styled(Animated.ScrollView).attrs(({ theme }) => ({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
-    alignItems: 'center',
     paddingVertical: 32,
     marginTop: 192,
     paddingBottom: 216,

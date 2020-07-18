@@ -3,6 +3,7 @@ export interface Gateway {
   location: string;
   createdAt: string;
   updatedAt: string;
+  ownerId: string;
 }
 
 export interface Endnode {
@@ -11,4 +12,5 @@ export interface Endnode {
   room: string;
   createdAt: string;
   updatedAt: string;
+  gatewayId: string;
 }

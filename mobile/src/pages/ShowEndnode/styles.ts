@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import MoleculeCard from '@molecules/Card';
+
 export const Graphic = styled.View`
   width: 340px;
   height: 240px;
@@ -17,4 +19,14 @@ export const SessionTitle = styled.Text`
   font-size: 18px;
   font-family: ${({ theme }) => theme.fonts.bold};
   color: ${({ theme }) => theme.colours.active};
+`;
+
+export const Card = styled(MoleculeCard)`
+  width: auto;
+  margin: 0 24px;
+
+  elevation: 1;
+  shadow-color: #000;
+  shadow-opacity: 0.1;
+  shadow-offset: 2px 2px;
 `;

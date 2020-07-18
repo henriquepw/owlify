@@ -8,6 +8,8 @@ import { trigger } from 'swr';
 
 import ShowContainer from '@templates/ShowContainer';
 
+import { useDevices } from '@hooks';
+
 import { Endnode } from '@utils/interfaces';
 
 import * as S from './styles';
@@ -21,6 +23,23 @@ const ShowEndnode: React.FC = () => {
   const route = useRoute();
 
   const { endnode } = route.params as RouteParams;
+  const { gateways } = useDevices();
+
+  const currentGateway = useMemo(() => {
+    const findGateway = gateways.find(
+      (gateway) => gateway.id === endnode.gatewayId,
+    );
+
+    if (!findGateway) return findGateway;
+
+    return {
+      ...findGateway,
+      createdAt: `Created at ${format(
+        parseISO(findGateway.createdAt),
+        'dd/MM/yyyy',
+      )}`,
+    };
+  }, [gateways, endnode.gatewayId]);
 
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -31,6 +50,10 @@ const ShowEndnode: React.FC = () => {
 
   function toggleModalVisible(): void {
     setModalVisible(!isModalVisible);
+  }
+
+  function navigateToCurrentGatewayDetail(): void {
+    navigation.navigate('ShowGateway', { gateway: currentGateway });
   }
 
   const handleDelete = useCallback(() => {
@@ -71,7 +94,17 @@ const ShowEndnode: React.FC = () => {
         }}
       >
         <S.Graphic />
-        <S.SessionTitle>Gateway</S.SessionTitle>
+        {currentGateway && (
+          <>
+            <S.SessionTitle>Gateway</S.SessionTitle>
+            <S.Card
+              iconName="gateway"
+              title={currentGateway.location}
+              subTitle={currentGateway.createdAt}
+              onPress={navigateToCurrentGatewayDetail}
+            />
+          </>
+        )}
       </ShowContainer>
     </>
   );
