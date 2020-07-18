@@ -5,15 +5,13 @@ import api from '@services/api';
 import { trigger } from 'swr';
 import * as Yup from 'yup';
 
-import Input from '@atoms/Input';
-
 import { useForm } from '@hooks';
 
 import { Endnode } from '@utils/interfaces';
 
 import * as S from './styles';
 
-interface EditGatewayModalProps {
+interface EditEndnodeModalProps {
   isVisible: boolean;
   endnode: Endnode;
   onCancel: () => void;
@@ -29,7 +27,7 @@ const validationSchema = {
   room: Yup.string().required('Room is required'),
 };
 
-const EditGatewayModal: React.FC<EditGatewayModalProps> = ({
+const EditEndnodeModal: React.FC<EditEndnodeModalProps> = ({
   isVisible,
   endnode,
   onCancel,
@@ -38,11 +36,10 @@ const EditGatewayModal: React.FC<EditGatewayModalProps> = ({
 
   async function handleSubmit({ name, room }: FormData): Promise<void> {
     const isValid = validateForm({ name, room });
-
     if (!isValid) return;
 
     try {
-      if (endnode.name !== name && endnode.room !== room) {
+      if (endnode.name !== name || endnode.room !== room) {
         // TODO: mutate the endnode.
 
         await api.put(`/endnodes/${endnode.id}`, { name, room });
@@ -59,9 +56,9 @@ const EditGatewayModal: React.FC<EditGatewayModalProps> = ({
   return (
     <Modal isVisible={isVisible} coverScreen={false}>
       <S.UpdateForm ref={formRef} onSubmit={handleSubmit} initialData={endnode}>
-        <S.Title>New location</S.Title>
+        <S.Title>Update end-node</S.Title>
 
-        <Input
+        <S.Input
           name="name"
           icon="user"
           placeholder="Name"
@@ -69,7 +66,7 @@ const EditGatewayModal: React.FC<EditGatewayModalProps> = ({
           onSubmitEditing={submitForm}
         />
 
-        <Input
+        <S.Input
           name="room"
           icon="map-pin"
           placeholder="Room"
@@ -86,4 +83,4 @@ const EditGatewayModal: React.FC<EditGatewayModalProps> = ({
   );
 };
 
-export default EditGatewayModal;
+export default EditEndnodeModal;

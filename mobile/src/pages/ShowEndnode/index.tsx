@@ -6,6 +6,8 @@ import api from '@services/api';
 import { format, parseISO } from 'date-fns';
 import { trigger } from 'swr';
 
+import EditEndnodeModal from '@organisms/EditEndnodeModal';
+
 import ShowContainer from '@templates/ShowContainer';
 
 import { useDevices } from '@hooks';
@@ -48,14 +50,6 @@ const ShowEndnode: React.FC = () => {
     [endnode.updatedAt],
   );
 
-  function toggleModalVisible(): void {
-    setModalVisible(!isModalVisible);
-  }
-
-  function navigateToCurrentGatewayDetail(): void {
-    navigation.navigate('ShowGateway', { gateway: currentGateway });
-  }
-
   const handleDelete = useCallback(() => {
     async function deleteEndnode(): Promise<void> {
       await api.delete(`/endnodes/${endnode.id}`);
@@ -81,8 +75,21 @@ const ShowEndnode: React.FC = () => {
     );
   }, [navigation, endnode.id]);
 
+  function toggleModalVisible(): void {
+    setModalVisible(!isModalVisible);
+  }
+
+  function navigateToCurrentGatewayDetail(): void {
+    navigation.navigate('ShowGateway', { gateway: currentGateway });
+  }
+
   return (
     <>
+      <EditEndnodeModal
+        endnode={endnode}
+        isVisible={isModalVisible}
+        onCancel={toggleModalVisible}
+      />
       <ShowContainer
         handleEdit={toggleModalVisible}
         handleDelete={handleDelete}

@@ -26,6 +26,7 @@ export const ButtonContainer = styled.View`
 
 export const Button = styled(AtomButton)<ButtonProps>`
   flex: 1;
+  height: 40px;
 
   margin-left: ${({ text }) => (text === 'Cancel' ? 0 : 24)}px;
   background: ${({ theme, text }) =>

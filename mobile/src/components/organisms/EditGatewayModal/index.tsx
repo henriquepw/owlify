@@ -36,7 +36,6 @@ const EditGatewayModal: React.FC<EditGatewayModalProps> = ({
 
   async function handleSubmit({ location }: FormData): Promise<void> {
     const isValid = validateForm({ location });
-
     if (!isValid) return;
 
     try {

@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import { Form } from '@unform/mobile';
 
 import AtomButton, { ButtonProps } from '@atoms/Button';
+import AtomInput from '@atoms/Input';
 
 export const UpdateForm = styled(Form)`
   background: ${({ theme }) => theme.colours.card};
@@ -19,15 +20,21 @@ export const Title = styled.Text`
   margin-bottom: 16px;
 `;
 
+export const Input = styled(AtomInput)`
+  margin-bottom: 16px;
+  flex-direction: row;
+`;
+
 export const ButtonContainer = styled.View`
-  margin-top: 24px;
+  margin-top: 8px;
   flex-direction: row;
 `;
 
 export const Button = styled(AtomButton)<ButtonProps>`
   flex: 1;
+  height: 40px;
 
-  margin-left: ${({ text }) => (text === 'Cancel' ? 24 : 0)}px;
+  margin-left: ${({ text }) => (text === 'Cancel' ? 0 : 24)}px;
   background: ${({ theme, text }) =>
     text === 'Cancel' ? theme.colours.withoutFocus : theme.colours.active};
 `;
