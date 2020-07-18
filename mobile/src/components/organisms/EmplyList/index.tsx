@@ -17,7 +17,7 @@ const EmplyList: React.FC = () => {
   return (
     <S.Container>
       <Image source={noDataImg} />
-      <S.Title>Is emply!</S.Title>
+      <S.Title>It&apos;s little empty here...</S.Title>
       <S.Description>
         {"You don't have any devices registered. "}
         <S.Strong>Would like to register a gateway?</S.Strong>

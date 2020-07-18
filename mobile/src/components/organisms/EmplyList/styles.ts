@@ -15,7 +15,7 @@ export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.bold};
   color: ${({ theme }) => theme.colours.active};
 
-  letter-spacing: 2.8px;
+  letter-spacing: 1.4px;
 
   margin-top: 48px;
 `;
