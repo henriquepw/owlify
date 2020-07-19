@@ -6,18 +6,25 @@ import api from '@services/api';
 import { format, parseISO } from 'date-fns';
 import { trigger } from 'swr';
 
+import LineGraph from '@molecules/LineGraph';
+
 import EditEndnodeModal from '@organisms/EditEndnodeModal';
 
 import ShowContainer from '@templates/ShowContainer';
 
-import { useDevices } from '@hooks';
+import { useDevices, useGet } from '@hooks';
 
-import { Endnode } from '@utils/interfaces';
+import { Endnode, SensorsData } from '@utils/interfaces';
 
 import * as S from './styles';
 
 interface RouteParams {
   endnode: Endnode;
+}
+
+interface FormattedData {
+  temperature: number[];
+  humidity: number[];
 }
 
 const ShowEndnode: React.FC = () => {
@@ -26,6 +33,7 @@ const ShowEndnode: React.FC = () => {
 
   const { endnode } = route.params as RouteParams;
   const { gateways } = useDevices();
+  const [sensorsData] = useGet<SensorsData[]>(`/sensors/${endnode.id}`);
 
   const currentGateway = useMemo(() => {
     const findGateway = gateways.find(
@@ -83,6 +91,18 @@ const ShowEndnode: React.FC = () => {
     navigation.navigate('ShowGateway', { gateway: currentGateway });
   }
 
+  const formattedData = useMemo(
+    () =>
+      sensorsData?.reduce<FormattedData>(
+        (result, currentData) => ({
+          temperature: [...result.temperature, currentData.temperature],
+          humidity: [...result.humidity, currentData.humidity],
+        }),
+        { temperature: [], humidity: [] },
+      ),
+    [sensorsData],
+  );
+
   return (
     <>
       <EditEndnodeModal
@@ -100,7 +120,12 @@ const ShowEndnode: React.FC = () => {
           description: formattedUpdatedAt,
         }}
       >
-        <S.Graphic />
+        <S.SessionTitle>Temperature</S.SessionTitle>
+        <LineGraph data={formattedData?.temperature || []} />
+
+        <S.SessionTitle>Humidity</S.SessionTitle>
+        <LineGraph data={formattedData?.humidity || []} />
+
         {currentGateway && (
           <>
             <S.SessionTitle>Gateway</S.SessionTitle>

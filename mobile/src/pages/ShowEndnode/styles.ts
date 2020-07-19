@@ -1,15 +1,37 @@
+import { LineChart, YAxis } from 'react-native-svg-charts';
 import styled from 'styled-components/native';
 
 import MoleculeCard from '@molecules/Card';
 
-export const Graphic = styled.View`
-  width: 340px;
+export const ChartContainer = styled.View`
+  flex-direction: row;
+
   height: 240px;
+
+  padding: 16px;
+  margin: 0 24px;
   border-radius: 10px;
 
-  margin: 0 24px;
+  background: ${({ theme }) => theme.colours.card};
 
-  background: ${({ theme }) => theme.colours.activeLight};
+  elevation: 2;
+  shadow-color: #000;
+  shadow-opacity: 0.1;
+  shadow-offset: 2px 2px;
+`;
+
+export const ChartYAxis = styled(YAxis).attrs(({ theme }) => ({
+  contentInset: { top: 10, bottom: 10 },
+  svg: { fontSize: 12, fill: theme.colours.active },
+}))``;
+
+export const Chart = styled(LineChart).attrs(({ theme }) => ({
+  svg: { stroke: theme.colours.active },
+  contentInset: { top: 10, bottom: 10 },
+}))`
+  flex: 1;
+
+  margin-left: 8px;
 `;
 
 export const SessionTitle = styled.Text`

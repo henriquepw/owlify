@@ -14,3 +14,10 @@ export interface Endnode {
   updatedAt: string;
   gatewayId: string;
 }
+
+export interface SensorsData {
+  time: string;
+  endnodeId: string;
+  humidity: number;
+  temperature: number;
+}
