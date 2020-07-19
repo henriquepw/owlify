@@ -2,7 +2,8 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Authentication from '@pages/Authentication';
+/* import Authentication from '@pages/Authentication'; */
+import Notification from '@pages/Notifications';
 
 import { useAuth } from '@hooks/auth';
 
@@ -14,7 +15,8 @@ const Root = createStackNavigator();
 const Routes: React.FC = () => {
   const { token } = useAuth();
 
-  if (!token) return <Authentication />;
+  /* if (!token) return <Authentication />; */
+  if (!token) return <Notification />;
 
   return (
     <Root.Navigator

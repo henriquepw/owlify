@@ -11,6 +11,9 @@ import Header from '@molecules/Header';
 
 import * as S from './styles';
 
+interface ScrollViewProps {
+  isEmpty: boolean;
+}
 interface TabFragmentProps extends ViewProps {
   headerStyle?: StyleProp<ViewStyle>;
   scrollViewStyle?: StyleProp<ViewStyle>;
