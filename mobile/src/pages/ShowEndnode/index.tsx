@@ -33,7 +33,10 @@ const ShowEndnode: React.FC = () => {
 
   const { endnode } = route.params as RouteParams;
   const { gateways } = useDevices();
-  const [sensorsData] = useGet<SensorsData[]>(`/sensors/${endnode.id}`);
+
+  const [sensorsData] = useGet<SensorsData[]>(
+    `/sensors/${endnode.id}?all=true`,
+  );
 
   const currentGateway = useMemo(() => {
     const findGateway = gateways.find(

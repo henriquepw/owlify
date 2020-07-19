@@ -1,10 +1,12 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Alert } from 'react-native';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 import api from '@services/api';
 import { format, parseISO } from 'date-fns';
 import { trigger, mutate } from 'swr';
+
+import LineGraph from '@molecules/LineGraph';
 
 import EditGatewayModal from '@organisms/EditGatewayModal';
 import EndnodesList from '@organisms/EndnodesList';
@@ -13,12 +15,17 @@ import ShowContainer from '@templates/ShowContainer';
 
 import { useDevices, useGet } from '@hooks';
 
-import { Endnode, Gateway } from '@utils/interfaces';
+import { Endnode, Gateway, SensorsData } from '@utils/interfaces';
 
 import * as S from './styles';
 
 interface RouteParams {
   gateway: Gateway;
+}
+
+interface FormattedData {
+  temperature: number[];
+  humidity: number[];
 }
 
 const ShowGateway: React.FC = () => {
@@ -37,15 +44,15 @@ const ShowGateway: React.FC = () => {
   const { gateways } = useDevices();
 
   const [isModalVisible, setModalVisible] = useState(false);
+  const [sensorsData, setSensorsData] = useState<FormattedData>({
+    temperature: [],
+    humidity: [],
+  });
 
   const formattedUpdatedAt = useMemo(
     () => `Updated at ${format(parseISO(gateway.updatedAt), 'dd/MM/yyyy')}`,
     [gateway.updatedAt],
   );
-
-  function toggleModalVisible(): void {
-    setModalVisible(!isModalVisible);
-  }
 
   const handleDelete = useCallback(() => {
     async function deleteGateway(): Promise<void> {
@@ -70,12 +77,45 @@ const ShowGateway: React.FC = () => {
           onPress: deleteGateway,
           style: 'destructive',
         },
-        {
-          text: 'Cancel',
-        },
+        { text: 'Cancel' },
       ],
     );
   }, [navigation, gateways, gateway?.id]);
+
+  useEffect(() => {
+    async function loadSensorsData(): Promise<void> {
+      if (endnodes) {
+        const endnodesSensorsData = await Promise.all(
+          endnodes.map((node) =>
+            api.get<SensorsData[]>(`/sensors/${node.id}?all=true`),
+          ),
+        );
+
+        const reduceredSensorsData = endnodesSensorsData.reduce<SensorsData[]>(
+          (result, current) => [...result, ...current.data],
+          [],
+        );
+
+        const formattedSensorsData = reduceredSensorsData?.reduce<
+          FormattedData
+        >(
+          (result, currentData) => ({
+            temperature: [...result.temperature, currentData.temperature],
+            humidity: [...result.humidity, currentData.humidity],
+          }),
+          { temperature: [], humidity: [] },
+        );
+
+        setSensorsData(formattedSensorsData);
+      }
+    }
+
+    loadSensorsData();
+  }, [endnodes]);
+
+  function toggleModalVisible(): void {
+    setModalVisible(!isModalVisible);
+  }
 
   return (
     <>
@@ -94,7 +134,12 @@ const ShowGateway: React.FC = () => {
           description: formattedUpdatedAt,
         }}
       >
-        <S.Graphic />
+        <S.SessionTitle>Temperature</S.SessionTitle>
+        <LineGraph data={sensorsData.temperature} />
+
+        <S.SessionTitle>Humidity</S.SessionTitle>
+        <LineGraph data={sensorsData.humidity} />
+
         <S.SessionTitle>End-nodes</S.SessionTitle>
         <EndnodesList data={endnodes || []} />
       </ShowContainer>
