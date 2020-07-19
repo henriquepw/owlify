@@ -5,3 +5,4 @@ import './atoms/Logo.stories';
 
 import './molecules/Card.stories';
 import './molecules/Header.stories';
+import './molecules/LineGraph.stories';
