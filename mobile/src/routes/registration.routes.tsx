@@ -3,8 +3,6 @@ import { useTheme } from 'styled-components/native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-// import HeaderLeftButton from '@atoms/HeaderLeftButton';
-
 import EndnodeRegistration from '@pages/EndnodeRegistration';
 import GatewayRegistration from '@pages/GatewayRegistration';
 import Registration from '@pages/Registration';
@@ -28,7 +26,6 @@ const RegistrationRoutes: React.FC = () => {
           fontFamily: theme.fonts.bold,
           letterSpacing: 2,
         },
-        // headerLeft: (props) => <HeaderLeftButton {...props} />,
       }}
     >
       <Screen

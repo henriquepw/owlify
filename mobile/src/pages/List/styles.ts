@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 import MoleculeCard from '@molecules/Card';
 
-import { Gateway, Endnode } from './index';
+import { Gateway } from '@utils/interfaces';
 
 const VerticalListOptions = {
   horizontal: true,
@@ -38,8 +38,4 @@ export const VerticalCard = styled(MoleculeCard).attrs({
 
 export const GatewayList = styled(
   FlatList as new () => FlatList<Gateway>,
-).attrs(VerticalListOptions)``;
-
-export const EndnodeList = styled(
-  FlatList as new () => FlatList<Endnode>,
 ).attrs(VerticalListOptions)``;

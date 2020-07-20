@@ -37,7 +37,10 @@ class FakeEndnodesRepository implements IEndnodesRepository {
   }
 
   public async findAllFromGateway(gatewayId: string): Promise<Endnode[]> {
-    const endnodes = this.ormRepository.find({ where: { gatewayId } });
+    const endnodes = this.ormRepository.find({
+      where: { gatewayId },
+      order: { name: 'ASC' },
+    });
 
     return endnodes;
   }

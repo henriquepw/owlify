@@ -3,11 +3,12 @@ import { Alert, TextInput } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import api from '@services/api';
+import { mutate } from 'swr';
 import * as Yup from 'yup';
 
 import Icon from '@atoms/Icon';
 
-import { useForm } from '@hooks/form';
+import { useForm, useDevices } from '@hooks';
 
 import backgroundImg from '@assets/default/endnode-registration-background.png';
 
@@ -27,7 +28,9 @@ const EndnodeRegistration: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const { formRef, validateForm } = useForm(schema);
+  const { formRef, validateForm, submitForm } = useForm(schema);
+  const { endnodes } = useDevices();
+
   const roomInputRef = useRef<TextInput>(null);
 
   const handleSubmit = useCallback(
@@ -38,10 +41,12 @@ const EndnodeRegistration: React.FC = () => {
       try {
         const { gatewayId } = route.params as { gatewayId: string };
 
-        await api.post('/endnodes', {
+        const response = await api.post('/endnodes', {
           gatewayId,
           ...data,
         });
+
+        mutate('/endnodes', [...endnodes, response.data]);
 
         Alert.alert('Success!', 'You successfully registered a end-node :D', [
           {
@@ -53,12 +58,8 @@ const EndnodeRegistration: React.FC = () => {
         Alert.alert('Something went wrong :(!', 'Try again later');
       }
     },
-    [navigation, validateForm, route.params],
+    [navigation, validateForm, route.params, endnodes],
   );
-
-  function submitForm(): void {
-    formRef.current?.submitForm();
-  }
 
   function setRoomInputFocus(): void {
     roomInputRef.current?.focus();
