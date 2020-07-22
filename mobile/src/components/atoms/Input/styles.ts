@@ -14,7 +14,8 @@ interface ContentProps {
 
 export const Container = styled.View`
   width: 100%;
-  padding-bottom: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 `;
 
 export const Content = styled.View<ContentProps>`

@@ -9,7 +9,7 @@ interface ButtonProps extends RectButtonProperties {
   text: string;
   icon?: string;
   iconProps?: Omit<IconProps, 'name'>;
-  type?: 'default' | 'attention';
+  type?: 'default' | 'attention' | 'disabled';
 }
 
 const Button: React.FC<ButtonProps> = ({
