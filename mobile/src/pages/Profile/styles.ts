@@ -6,7 +6,7 @@ interface ContainerProps {
 
 export const Container = styled.View<ContainerProps>`
   border-bottom-width: ${({ hasBorder }) => (hasBorder ? '1px' : '0px')};
-  border-bottom-color: ${({ theme }) => theme.colors.withoutFocus};
+  border-bottom-color: ${({ theme }) => theme.colours.withoutFocus};
 
   padding: 8px 0px;
   margin: 0px 40px;
@@ -14,7 +14,7 @@ export const Container = styled.View<ContainerProps>`
 
 export const ButtonContainer = styled.View<ContainerProps>`
   border-bottom-width: ${({ hasBorder }) => (hasBorder ? '1px' : '0px')};
-  border-bottom-color: ${({ theme }) => theme.colors.withoutFocus};
+  border-bottom-color: ${({ theme }) => theme.colours.withoutFocus};
   padding-top: 16px;
   padding-bottom: 16px;
 `;

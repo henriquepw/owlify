@@ -11,7 +11,7 @@ export const Content = styled.View`
 
 export const HeaderTitle = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
-  color: ${({ theme }) => theme.colors.active};
+  color: ${({ theme }) => theme.colours.active};
   font-size: 24px;
   font-weight: bold;
   margin: 24px;
