@@ -21,16 +21,22 @@ const Card: React.FC<CardProps> = ({
   iconProps,
   title,
   subTitle,
+  disabled,
   ...rest
 }) => {
   return (
-    <S.Container activeOpacity={0.6} isVertical={isVertical} {...rest}>
+    <S.Container
+      activeOpacity={0.6}
+      isVertical={isVertical}
+      disabled={!!disabled}
+      {...rest}
+    >
       <S.Content isVertical={isVertical} isSelected={isSelected}>
         {iconName && <Icon name={iconName} {...iconProps} />}
 
         <S.TextWrapper isCentered={isVertical}>
-          <S.Title>{title}</S.Title>
-          <S.SubTitle>{subTitle}</S.SubTitle>
+          <S.Title isVertical={isVertical}>{title}</S.Title>
+          <S.SubTitle isVertical={isVertical}>{subTitle}</S.SubTitle>
         </S.TextWrapper>
 
         {isSelected && !isVertical && <S.CheckIcon size={32} />}

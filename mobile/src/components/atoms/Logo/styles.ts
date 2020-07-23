@@ -28,7 +28,7 @@ export const Background = styled.View<BackgroundProps>`
   opacity: 0.3;
   border-radius: ${({ size }) => size / 2}px;
   background: ${({ theme, color }) =>
-    color === 'light' ? theme.colors.background : theme.colors.activeLight};
+    color === 'light' ? theme.colours.background : theme.colours.activeLight};
 
   z-index: -1;
 `;

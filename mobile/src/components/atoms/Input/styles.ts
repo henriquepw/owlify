@@ -28,39 +28,39 @@ export const Content = styled.View<ContentProps>`
 
   border-width: 2px;
   border-radius: 10px;
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colours.background};
 
   border-color: ${({ theme, isFilled, isFocused, isErrored }) => {
-    if (isFocused) return theme.colors.active;
-    if (isErrored) return theme.colors.attention;
-    if (isFilled) return theme.colors.active;
+    if (isFocused) return theme.colours.active;
+    if (isErrored) return theme.colours.attention;
+    if (isFilled) return theme.colours.active;
 
-    return theme.colors.withoutFocus;
+    return theme.colours.withoutFocus;
   }};
 `;
 
 export const InputIcon = styled(Icon)<IconProps>`
   color: ${({ theme, isErrored, isFilled }) => {
-    if (isErrored) return theme.colors.attention;
-    if (isFilled) return theme.colors.active;
+    if (isErrored) return theme.colours.attention;
+    if (isFilled) return theme.colours.active;
 
-    return theme.colors.withoutFocus;
+    return theme.colours.withoutFocus;
   }};
 `;
 
 export const TextInput = styled.TextInput.attrs(({ theme }) => ({
-  placeholderTextColor: theme.colors.withoutFocus,
+  placeholderTextColor: theme.colours.withoutFocus,
 }))`
   flex: 1;
 
   margin-left: 14px;
   font-size: 16px;
   font-family: ${({ theme }) => theme.fonts.regular};
-  color: ${({ theme }) => theme.colors.active};
+  color: ${({ theme }) => theme.colours.active};
 `;
 
 export const TextError = styled.Text`
-  color: ${({ theme }) => theme.colors.attention};
+  color: ${({ theme }) => theme.colours.attention};
   font-family: ${({ theme }) => theme.fonts.regular};
   margin: 8px 0 0 2px;
 `;

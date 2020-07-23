@@ -3,7 +3,7 @@ export const light = {
     regular: 'Lato-Regular',
     bold: 'Lato-Bold',
   },
-  colors: {
+  colours: {
     active: '#6BA7AF',
     activeLight: '#A2CEDE',
     background: '#F3F3F3',
@@ -12,3 +12,6 @@ export const light = {
     card: '#FBFBFB',
   },
 };
+
+export type FontsTheme = typeof light.fonts;
+export type ColoursTheme = typeof light.colours;
