@@ -18,7 +18,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ../node_modules/typeorm/cli.js",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ../../node_modules/typeorm/cli.js",
     "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpileOnly --ignore-watch node_modules src/shared/infra/http/server.ts",
     "test": "cross-env NODE_ENV=test jest",
     "start": "ts-node -r tsconfig-paths/register --files ./src/shared/infra/http/server.ts"
@@ -27,7 +27,6 @@
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.3",
     "cors": "^2.8.5",
-    "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
@@ -48,10 +47,13 @@
     "@babel/cli": "^7.10.3",
     "@babel/core": "^7.10.3",
     "@babel/node": "^7.10.3",
+
     "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/plugin-proposal-decorators": "^7.10.3",
+
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-typescript": "^7.10.1",
+
     "@types/bcryptjs": "^2.4.2",
     "@types/bluebird": "^3.5.30",
     "@types/cors": "^2.8.6",
@@ -62,12 +64,11 @@
     "@types/supertest": "^2.0.9",
     "@types/validator": "^13.0.0",
     "@types/yup": "^0.29.3",
-    "babel-plugin-module-resolver": "^4.0.0",
+
     "babel-plugin-transform-typescript-metadata": "^0.3.0",
+
     "date-fns": "^2.12.0",
     "faker": "^4.1.0",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11",
     "rimraf": "^3.0.2",
     "sqlite3": "^4.2.0",
     "supertest": "^4.0.2",
