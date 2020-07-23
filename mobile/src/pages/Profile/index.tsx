@@ -1,15 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ScrollView, Alert } from 'react-native';
 
+import api from '@services/api';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
+import { AxiosRequestConfig } from 'axios';
 
 import Buttom from '@atoms/Button';
 import Input from '@atoms/Input';
 
-import Header from '@organisms/Header';
-
-import api from '../../services/api';
+/* import Header from '@organisms/Header'; */
+import Header from '@molecules/Header';
 
 import * as S from './styles';
 
@@ -24,34 +25,20 @@ const Profile: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const [token, setToken] = useState<string>('');
 
-  async function handleSubmitUpdate(data: FormData) {
+  async function handleSubmitUpdate(data: FormData): Promise<void> {
     /* await api.get('users/profile').then((res) => console.log(res.data)); */
-    api.interceptors.request.use(
-      (CONFIG) => {
-        CONFIG.headers.authorization = `Bearer ${token}`;
-        return CONFIG;
-      },
-      (error) => {
-        return Promise.reject(error);
-      },
-    );
+
+    api.defaults.headers.authorization = `Bearer ${token}`;
+
     await api
       .put('users', data)
       .then(() => Alert.alert('Updated Successfully!'))
       .catch(() => Alert.alert('Failed To Update.'));
   }
 
-  async function handleSubmitDelete() {
+  async function handleSubmitDelete(): Promise<void> {
     /* await api.get('users/profile').then((res) => console.log(res.data)); */
-    api.interceptors.request.use(
-      (CONFIG) => {
-        CONFIG.headers.authorization = `Bearer ${token}`;
-        return CONFIG;
-      },
-      (error) => {
-        return Promise.reject(error);
-      },
-    );
+    api.defaults.headers.authorization = `Bearer ${token}`;
     await api.delete('users').then(() => Alert.alert('Deleted Account!'));
   }
 
@@ -59,7 +46,7 @@ const Profile: React.FC = () => {
     api
       .post('sessions', {
         email: 'glegogle84@gmail.com',
-        password: '1',
+        password: '12',
       })
       .then((res) => setToken(res.data.token));
   }, []);
@@ -67,7 +54,7 @@ const Profile: React.FC = () => {
   return (
     <>
       <ScrollView>
-        <Header />
+        <Header>Notifications</Header>
 
         <Form ref={formRef} onSubmit={() => ''}>
           <S.Container hasBorder>
