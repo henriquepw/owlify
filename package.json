@@ -8,8 +8,12 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "mobile",
-      "server"
+      "packages/*"
     ]
+  },
+  "devDependencies": {
+    "typescript": "^3.9.7",
+    "@owlify/eslint-config": "*",
+    "eslint-plugin-import-helpers": "^1.0.2"
   }
 }

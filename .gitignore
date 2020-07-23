@@ -3,9 +3,6 @@
 .env
 env.h
 
-# Server
-./server/node_modules
-./server/dist
 node_modules
 
 # Analytics

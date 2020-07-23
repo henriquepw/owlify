@@ -1,0 +1,54 @@
+Arguments: 
+  /home/henrique/.nvm/versions/node/v12.18.2/bin/node /usr/share/yarn/bin/yarn.js
+
+PATH: 
+  /home/henrique/.zinit/polaris/sbin:/home/henrique/.zinit/polaris/bin:/home/henrique/.nvm/versions/node/v12.18.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/henrique/android/android-studio/bin:/home/henrique/android/sdk/emulator:/home/henrique/android/sdk/tools:/home/henrique/android/sdk/tools/bin:/home/henrique/android/sdk/platform-tools:/usr/local/bin:/home/henrique/.fastlane/bin:/home/linuxbrew/.linuxbrew/bin:/home/henrique/apps/flipper:/home/henrique/.yarn/bin:/home/henrique/.config/yarn/global/node_modules/.bin:/home/henrique/android/android-studio/bin:/home/henrique/android/sdk/emulator:/home/henrique/android/sdk/tools:/home/henrique/android/sdk/tools/bin:/home/henrique/android/sdk/platform-tools:/usr/local/bin:/home/henrique/.fastlane/bin:/home/linuxbrew/.linuxbrew/bin:/home/henrique/apps/flipper:/home/henrique/.yarn/bin:/home/henrique/.config/yarn/global/node_modules/.bin
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.18.2
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@owlify%2feslint-config: Not found
+      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66987:18)
+      at Request.self.callback (/usr/share/yarn/lib/cli.js:140748:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (/usr/share/yarn/lib/cli.js:141720:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (/usr/share/yarn/lib/cli.js:141642:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (_stream_readable.js:1221:12)
+      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+
+npm manifest: 
+  {
+    "name": "owlify",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/henry-ns/owlify.git",
+    "author": "Henrique Miranda <enrque.ns@gmail.com>",
+    "license": "MIT",
+    "private": true,
+    "workspaces": {
+      "packages": [
+        "mobile",
+        "server"
+      ]
+    },
+    "devDependencies": {
+      "typescript": "^3.9.7",
+      "@owlify/eslint-config": "*"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
