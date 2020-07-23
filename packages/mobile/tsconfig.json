@@ -1,20 +1,15 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
     "target": "esnext",
     "lib": ["es6"],
     "jsx": "react-native",
 
-    "allowJs": true,
-    "sourceMap": true,
-    "noEmit": true,
     "isolatedModules": true,
-    "strict": true,
+    "allowSyntheticDefaultImports": true,
 
-    "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "noImplicitAny": false,
-    "baseUrl": "./",
+    "rootDirs": ["src", "storybook"],
+
     "paths": {
       "@assets/*": ["./src/assets/*"],
 
@@ -31,15 +26,7 @@
       "@services/*": ["./src/services/*"],
       "@styles/*": ["./src/styles/*"],
       "@utils/*": ["./src/utils/*"],
-    },
-
-    "rootDirs": ["src", "storybook"],
-
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    }
   },
   "include": ["./src/**/*", "./storybook/**/*"],
   "exclude": [

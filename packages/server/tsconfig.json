@@ -1,26 +1,19 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
 
-    "strict": true,
     "strictPropertyInitialization": false,
-    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
 
     "baseUrl": "./src",
     "paths": {
       "@config/*": ["config/*"],
       "@modules/*": ["modules/*"],
       "@shared/*": ["shared/*"]
-    },
-    "esModuleInterop": true,
-
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-
-    "forceConsistentCasingInFileNames": true
+    }
   },
   "exclude": ["./__tests__/**/*", "./*.js", "./dist"]
 }

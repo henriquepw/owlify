@@ -5,6 +5,9 @@ env.h
 
 node_modules
 
+yarn-error.log
+package-lock.json
+
 # Analytics
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
