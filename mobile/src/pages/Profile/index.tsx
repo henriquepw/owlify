@@ -26,7 +26,12 @@ const Profile: React.FC = () => {
 
   async function handleSubmitUpdate(data: FormData): Promise<void> {
     /* await api.get('users/profile').then((res) => console.log(res.data)); */
-
+    api
+      .post('sessions', {
+        email: data.email,
+        password: data.oldPassword,
+      })
+      .then((res) => setToken(res.data.token));
     api.defaults.headers.authorization = `Bearer ${token}`;
 
     await api
@@ -35,20 +40,26 @@ const Profile: React.FC = () => {
       .catch(() => Alert.alert('Failed To Update.'));
   }
 
-  async function handleSubmitDelete(): Promise<void> {
+  async function handleSubmitDelete(data: FormData): Promise<void> {
     /* await api.get('users/profile').then((res) => console.log(res.data)); */
+    api
+      .post('sessions', {
+        email: data.email,
+        password: data.oldPassword,
+      })
+      .then((res) => setToken(res.data.token));
     api.defaults.headers.authorization = `Bearer ${token}`;
     await api.delete('users').then(() => Alert.alert('Deleted Account!'));
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     api
       .post('sessions', {
         email: 'glegogle84@gmail.com',
         password: '12',
       })
       .then((res) => setToken(res.data.token));
-  }, []);
+  }, []); */
 
   return (
     <>
@@ -82,7 +93,7 @@ const Profile: React.FC = () => {
             <S.ButtonContainer
               hasBorder={false}
               onTouchStart={() => {
-                handleSubmitDelete();
+                handleSubmitDelete(formRef.current?.getData());
                 return formRef.current?.submitForm();
               }}
             >
