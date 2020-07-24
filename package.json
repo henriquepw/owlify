@@ -13,7 +13,8 @@
   },
   "lint-staged": {
     "src/**/*": [
-      "eslint --fix"
+      "eslint --fix",
+      "yarn test --findRelatedTests"
     ]
   },
   "scripts": {
@@ -22,14 +23,14 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/*",
+      "packages/shared/*"
     ]
   },
   "devDependencies": {
     "@owlify/eslint-config": "*",
 
     "@types/jest": "^26.0.6",
-    "babel-plugin-module-resolver": "^4.0.0",
     "cross-env": "^7.0.2",
     "cz-customizable": "^6.2.1",
     "eslint-plugin-import-helpers": "^1.0.2",

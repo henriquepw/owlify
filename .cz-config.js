@@ -40,6 +40,7 @@ module.exports = {
     { name: 'endnode' },
     { name: 'gateway' },
     { name: 'analytics' },
+    { name: 'docs' },
   ],
 
   allowTicketNumber: false,
