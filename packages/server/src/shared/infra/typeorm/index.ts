@@ -1,3 +1,5 @@
 import { createConnection } from 'typeorm';
 
-createConnection();
+import ormConfig from '@config/typeorm';
+
+createConnection(ormConfig);

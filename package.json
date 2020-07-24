@@ -19,7 +19,16 @@
   },
   "scripts": {
     "commit": "./node_modules/cz-customizable/standalone.js",
-    "test": "cross-env NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test jest",
+
+    "mobile:android": "yarn workspace @owlify/mobile android",
+    "mobile:ios": "yarn workspace @owlify/mobile ios",
+    "mobile:start": "yarn workspace @owlify/mobile start",
+    "mobile:storybook": "yarn workspace @owlify/mobile storybook",
+
+    "server:dev:start": "yarn workspace @owlify/server dev:server",
+    "server:typeorm": "yarn workspace @owlify/server typeorm",
+    "server:build": "yarn workspace @owlify/server build"
   },
   "workspaces": {
     "packages": [
