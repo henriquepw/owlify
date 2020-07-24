@@ -4,7 +4,6 @@ import { ScrollView, Alert } from 'react-native';
 import api from '@services/api';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
-import { AxiosRequestConfig } from 'axios';
 
 import Buttom from '@atoms/Button';
 import Input from '@atoms/Input';
