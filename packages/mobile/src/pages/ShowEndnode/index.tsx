@@ -40,7 +40,7 @@ const ShowEndnode: React.FC = () => {
 
   const currentGateway = useMemo(() => {
     const findGateway = gateways.find(
-      (gateway) => gateway.id === endnode.gatewayId,
+      gateway => gateway.id === endnode.gatewayId,
     );
 
     if (!findGateway) return findGateway;

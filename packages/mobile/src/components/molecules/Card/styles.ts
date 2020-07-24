@@ -49,9 +49,9 @@ export const Content = styled.View<ContentProps>`
 `;
 
 export const TextWrapper = styled.View<TextWrapperProps>`
-  align-items: ${(props) => (props.isCentered ? 'center' : 'flex-start')};
+  align-items: ${props => (props.isCentered ? 'center' : 'flex-start')};
 
-  margin: ${(props) => (props.isCentered ? '16px 0 0' : '0 0 0 16px')};
+  margin: ${props => (props.isCentered ? '16px 0 0' : '0 0 0 16px')};
 `;
 
 export const Title = styled.Text<VerticalProps>`

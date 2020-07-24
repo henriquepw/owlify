@@ -16,7 +16,7 @@ const iconNames = ['home', 'plus', 'user'];
 const TabBarRoutes: React.FC = () => {
   return (
     <Navigator
-      tabBar={(props) => <TabBar {...props} iconNames={iconNames} />}
+      tabBar={props => <TabBar {...props} iconNames={iconNames} />}
       initialRouteName="List"
     >
       <Screen name="Dashboard" component={List} />

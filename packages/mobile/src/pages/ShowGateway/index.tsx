@@ -58,7 +58,7 @@ const ShowGateway: React.FC = () => {
     async function deleteGateway(): Promise<void> {
       mutate(
         '/gateways',
-        gateways.filter((current) => current.id !== gateway?.id),
+        gateways.filter(current => current.id !== gateway?.id),
       );
 
       await api.delete(`/gateways/${gateway?.id}`);
@@ -86,7 +86,7 @@ const ShowGateway: React.FC = () => {
     async function loadSensorsData(): Promise<void> {
       if (endnodes) {
         const endnodesSensorsData = await Promise.all(
-          endnodes.map((node) =>
+          endnodes.map(node =>
             api.get<SensorsData[]>(`/sensors/${node.id}?all=true`),
           ),
         );

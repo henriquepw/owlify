@@ -22,7 +22,7 @@ const EndnodesList: React.FC<EndnodeList> = ({ data }) => {
   return (
     <S.Container
       data={data}
-      keyExtractor={(endnode) => endnode.id}
+      keyExtractor={endnode => endnode.id}
       renderItem={({ item }) => (
         <S.VerticalCard
           iconName="endnode"

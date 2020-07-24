@@ -12,8 +12,8 @@ const LineGraph: React.FC<LineGraphProps> = ({ data, yAxis }) => {
   return (
     <S.Container>
       <S.Y
-        data={yAxis || data.map((item) => Math.floor(item))}
-        formatLabel={(value) => (+value).toFixed(1)}
+        data={yAxis || data.map(item => Math.floor(item))}
+        formatLabel={value => (+value).toFixed(1)}
       />
       <S.Plot data={data}>
         <Grid />

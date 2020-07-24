@@ -33,7 +33,7 @@ storiesOf('Input', module)
     }, [formRef, isErrored]);
 
     function toogleError(): void {
-      setIsErrored((state) => !state);
+      setIsErrored(state => !state);
     }
 
     return (

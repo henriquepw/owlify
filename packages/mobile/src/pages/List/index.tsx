@@ -25,7 +25,7 @@ const List: React.FC = () => {
 
   const formattedGateway = useMemo(
     () =>
-      gateways?.map((gateway) => ({
+      gateways?.map(gateway => ({
         ...gateway,
         createdAt: `Created at ${format(
           parseISO(gateway.createdAt),
@@ -49,7 +49,7 @@ const List: React.FC = () => {
       {isGatewaysLoading ? (
         <S.GatewayList
           data={formattedGateway}
-          keyExtractor={(gateway) => gateway.id}
+          keyExtractor={gateway => gateway.id}
           renderItem={({ item }) => (
             <S.VerticalCard
               iconName="gateway"

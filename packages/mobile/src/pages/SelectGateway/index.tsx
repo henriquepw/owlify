@@ -23,7 +23,7 @@ const SelectGateway: React.FC = () => {
       const response = await api.get<Gateway[]>('gateways');
 
       setGateways(
-        response.data.map((gateway) => ({
+        response.data.map(gateway => ({
           ...gateway,
           createdAt: `Created at ${format(
             parseISO(gateway.createdAt),
@@ -50,7 +50,7 @@ const SelectGateway: React.FC = () => {
 
       <S.List
         data={gateways}
-        keyExtractor={(gateway) => gateway.id}
+        keyExtractor={gateway => gateway.id}
         renderItem={({ item }) => (
           <S.Card
             iconName="gateway"

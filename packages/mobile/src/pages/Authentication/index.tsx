@@ -68,7 +68,7 @@ const Authentication: React.FC = () => {
   }, [isSignUp]);
 
   function toggleSignUp(): void {
-    setIsSingUp((state) => !state);
+    setIsSingUp(state => !state);
   }
 
   function setEmailInputFocus(): void {
