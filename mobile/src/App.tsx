@@ -6,8 +6,7 @@ import { enableScreens } from 'react-native-screens';
 
 import AppProvider from '@templates/AppProvider';
 
-import Profile from './pages/Profile';
-
+import { ENABLE_STORYBOOK } from '../env.json';
 import Storebook from '../storybook';
 import Routes from './routes';
 
@@ -21,11 +20,11 @@ const App: React.FC = () => {
   return (
     <>
       <AppProvider>
-        <Profile />
+        <StatusBar barStyle="light-content" backgroundColor="#6BA7AF" />
+        <Routes />
       </AppProvider>
     </>
   );
 };
 
-const ENABLE_STORYBOOK = false;
 export default ENABLE_STORYBOOK ? Storebook : App;

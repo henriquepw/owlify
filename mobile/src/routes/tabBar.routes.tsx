@@ -4,8 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import TabBar from '@molecules/TabBar';
 
-import Dashboard from '@pages/Dashboard';
 import List from '@pages/List';
+import Profile from '@pages/Profile';
 // import Notifications from '@pages/Notifications';
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -21,9 +21,9 @@ const TabBarRoutes: React.FC = () => {
     >
       <Screen name="Dashboard" component={List} />
       {/* <Screen name="List" component={List} /> */}
-      <Screen name="@temporary" component={Dashboard} />
+      <Screen name="@temporary" component={Profile} />
       {/* <Screen name="Notifications" component={Notifications} /> */}
-      <Screen name="Profile" component={Dashboard} />
+      <Screen name="Profile" component={Profile} />
     </Navigator>
   );
 };
