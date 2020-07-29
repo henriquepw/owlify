@@ -7,7 +7,7 @@ import Authentication from '@pages/Authentication';
 import ShowEndnode from '@pages/ShowEndnode';
 import ShowGateway from '@pages/ShowGateway';
 
-import { useAuth } from '@hooks';
+import { useAuth } from '@hooks/auth';
 import { DevicesProvider } from '@hooks/devices';
 
 import RegistrationRoutes from './registration.routes';
