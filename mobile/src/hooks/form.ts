@@ -13,6 +13,7 @@ type ValidateFunction = <FormData, Shape extends Record<string, unknown>>(
 interface FormValidationData {
   formRef: RefObject<FormHandles>;
   validateForm: ValidateFunction;
+  submitForm: () => void;
 }
 
 function useForm<InitialShape extends Record<string, unknown>>(
@@ -48,7 +49,11 @@ function useForm<InitialShape extends Record<string, unknown>>(
     [initialShape],
   );
 
-  return { formRef, validateForm };
+  function submitForm(): void {
+    formRef.current?.submitForm();
+  }
+
+  return { formRef, validateForm, submitForm };
 }
 
-export { useForm };
+export default useForm;

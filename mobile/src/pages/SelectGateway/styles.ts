@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 import MoleculeCard from '@molecules/Card';
 
-import { Gateway } from './index';
+import { Gateway } from '@utils/interfaces';
 
 export const Container = styled.View`
   flex: 1;

@@ -6,8 +6,7 @@ import * as Yup from 'yup';
 
 import Logo from '@atoms/Logo';
 
-import { useAuth } from '@hooks/auth';
-import { useForm } from '@hooks/form';
+import { useAuth, useForm } from '@hooks';
 
 import connerImg from '@assets/default/conner.png';
 
@@ -40,7 +39,7 @@ const Authentication: React.FC = () => {
   // Using for controller the logo visibility
   const [isKeyboardHidden, setIsKeyboardHidden] = useState(true);
 
-  const { formRef, validateForm } = useForm();
+  const { formRef, validateForm, submitForm } = useForm();
   const nameInputRef = useRef<TextInput>(null);
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
@@ -70,10 +69,6 @@ const Authentication: React.FC = () => {
 
   function toggleSignUp(): void {
     setIsSingUp((state) => !state);
-  }
-
-  function handleOnPress(): void {
-    formRef.current?.submitForm();
   }
 
   function setEmailInputFocus(): void {
@@ -158,12 +153,12 @@ const Authentication: React.FC = () => {
             name="password"
             placeholder="Password"
             returnKeyType="send"
-            onSubmitEditing={handleOnPress}
+            onSubmitEditing={submitForm}
             secureTextEntry
           />
 
           <S.SubmitButton
-            onPress={handleOnPress}
+            onPress={submitForm}
             text={`Sign ${isSignUp ? 'up' : 'in'}`}
           />
         </S.AuthForm>
