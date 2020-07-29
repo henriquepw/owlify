@@ -2,7 +2,6 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  useLayoutEffect,
   useEffect,
   useState,
 } from 'react';
@@ -31,6 +30,7 @@ interface SignInUserDTO {
 interface AuthContextData {
   user: User;
   token: string;
+  isLoading: boolean;
   signIn: (data: SignInUserDTO) => Promise<void>;
   signOut: () => Promise<void>;
 }
@@ -39,27 +39,28 @@ const AuthContext = createContext({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<Data>({} as Data);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    api.defaults.headers.authorization = `Bearer ${data.token}`;
-  }, [data.token]);
-
-  useLayoutEffect(() => {
-    async function getDataFromAsyncStorage(): Promise<void> {
+    async function loadStoragedData(): Promise<void> {
       const [user, token] = await AsyncStorage.multiGet([
         '@Owlify:user',
         '@Owlidy:token',
       ]);
 
       if (token[1] && user[1]) {
+        api.defaults.headers.authorization = `Bearer ${token[1]}`;
+
         setData({
           token: token[1],
           user: JSON.parse(user[1]),
         });
       }
+
+      setIsLoading(false);
     }
 
-    getDataFromAsyncStorage();
+    loadStoragedData();
   }, []);
 
   const signIn = useCallback(async (userData: SignInUserDTO) => {
@@ -72,10 +73,13 @@ const AuthProvider: React.FC = ({ children }) => {
       ['@Owlidy:token', token],
     ]);
 
+    api.defaults.headers.authorization = `Bearer ${token}`;
+
     setData({ user, token });
   }, []);
 
   const signOut = useCallback(async () => {
+    api.defaults.headers.authorization = null;
     await AsyncStorage.multiRemove(['@Owlify:user', '@Owlidy:token']);
 
     setData({} as Data);
@@ -88,6 +92,7 @@ const AuthProvider: React.FC = ({ children }) => {
         token: data.token,
         signIn,
         signOut,
+        isLoading,
       }}
     >
       {children}

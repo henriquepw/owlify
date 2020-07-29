@@ -1,90 +1,76 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
+import { Text } from 'react-native';
 
-import api from '@services/api';
+import { useNavigation } from '@react-navigation/native';
 import { parseISO, format } from 'date-fns';
+
+import EmplyList from '@organisms/EmplyList';
+import EndnodeList from '@organisms/EndnodesList';
 
 import TabFragment from '@templates/TabFragment';
 
+import { useDevices } from '@hooks';
+
 import * as S from './styles';
 
-export interface Gateway {
-  id: string;
-  location: string;
-  createdAt: string;
-}
-
-export interface Endnode {
-  id: string;
-  name: string;
-  room: string;
-}
-
 const List: React.FC = () => {
-  const [gateways, setGateways] = useState<Gateway[]>([]);
-  const [endnodes, setEndnodes] = useState<Endnode[]>([]);
+  const navigation = useNavigation();
 
-  useEffect(() => {
-    async function loadDevices(): Promise<void> {
-      const result = await Promise.all([
-        api.get<Gateway[]>('gateways'),
-        api.get<Endnode[]>('endnodes'),
-      ]);
+  const {
+    gateways,
+    endnodes,
+    isGatewaysLoading,
+    isEndnodesLoading,
+  } = useDevices();
 
-      setEndnodes(result[1].data);
-      setGateways(
-        result[0].data.map((gateway) => ({
-          ...gateway,
-          createdAt: `Created at ${format(
-            parseISO(gateway.createdAt),
-            'dd/MM/yyyy',
-          )}`,
-        })),
-      );
-    }
+  const formattedGateway = useMemo(
+    () =>
+      gateways?.map((gateway) => ({
+        ...gateway,
+        createdAt: `Created at ${format(
+          parseISO(gateway.createdAt),
+          'dd/MM/yyyy',
+        )}`,
+      })),
+    [gateways],
+  );
 
-    loadDevices();
-  }, []);
+  if (gateways.length === 0) {
+    return (
+      <TabFragment title="Your devices">
+        <EmplyList />
+      </TabFragment>
+    );
+  }
 
   return (
     <TabFragment title="Your devices">
-      <S.SessionTitle>Gateways</S.SessionTitle>
-      <S.GatewayList
-        data={gateways}
-        keyExtractor={(gateway) => gateway.id}
-        renderItem={({ item }) => (
-          <S.VerticalCard
-            iconName="gateway"
-            title={item.location}
-            subTitle={item.createdAt}
-          />
-        )}
-      />
+      <S.SessionTitle style={{ marginTop: 24 }}>Gateways</S.SessionTitle>
+      {isGatewaysLoading ? (
+        <S.GatewayList
+          data={formattedGateway}
+          keyExtractor={(gateway) => gateway.id}
+          renderItem={({ item }) => (
+            <S.VerticalCard
+              iconName="gateway"
+              title={item.location}
+              subTitle={item.createdAt}
+              onPress={() => {
+                navigation.navigate('ShowGateway', { gateway: item });
+              }}
+            />
+          )}
+        />
+      ) : (
+        <Text>Loading...</Text>
+      )}
 
       <S.SessionTitle>End-nodes</S.SessionTitle>
-      <S.EndnodeList
-        data={endnodes}
-        keyExtractor={(endnode) => endnode.id}
-        renderItem={({ item }) => (
-          <S.VerticalCard
-            iconName="endnode"
-            title={item.name}
-            subTitle={item.room}
-          />
-        )}
-      />
-
-      <S.SessionTitle>End-nodes</S.SessionTitle>
-      <S.EndnodeList
-        data={endnodes}
-        keyExtractor={(endnode) => endnode.id}
-        renderItem={({ item }) => (
-          <S.VerticalCard
-            iconName="endnode"
-            title={item.name}
-            subTitle={item.room}
-          />
-        )}
-      />
+      {isEndnodesLoading ? (
+        <EndnodeList data={endnodes} />
+      ) : (
+        <Text>Loading...</Text>
+      )}
     </TabFragment>
   );
 };

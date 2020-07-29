@@ -30,7 +30,8 @@ class GatewaysController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const { gatewayId, location } = req.body;
+    const { location } = req.body;
+    const { gatewayId } = req.params;
 
     const updateGateway = container.resolve(UpdateGatewayService);
 
@@ -46,7 +47,7 @@ class GatewaysController {
   public async delete(req: Request, res: Response): Promise<Response> {
     const deleteGateway = container.resolve(DeleteGatewayService);
 
-    const { gatewayId } = req.body;
+    const { gatewayId } = req.params;
 
     await deleteGateway.execute({
       ownerId: req.user.id,

@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, LogBox } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 
 import AppProvider from '@templates/AppProvider';
@@ -11,6 +11,9 @@ import Routes from './routes';
 
 // Bringing the native navigation component
 enableScreens();
+
+// @temporaty: ignore requie cycle for use SWR lib
+LogBox.ignoreLogs(['Require cycle:']);
 
 const App: React.FC = () => {
   return (
