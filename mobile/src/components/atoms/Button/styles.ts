@@ -11,6 +11,9 @@ interface ContentProps {
 }
 
 export const Container = styled(RectButton)<ContainerProps>`
+  justify-content: center;
+  align-items: center;
+
   background-color: ${({ theme, enabled, optionsButtom }) => {
     if (!enabled) return theme.colours.withoutFocus;
     if (optionsButtom === 'attention') return theme.colours.attention;
@@ -18,8 +21,6 @@ export const Container = styled(RectButton)<ContainerProps>`
     return theme.colours.active;
   }};
 
-  justify-content: center;
-  align-items: center;
   width: 100%;
   height: ${({ hasIcon }) => (hasIcon ? '158px' : '48px')};
   border-radius: 10px;

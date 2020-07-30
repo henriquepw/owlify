@@ -18,12 +18,10 @@ LogBox.ignoreLogs(['Require cycle:']);
 
 const App: React.FC = () => {
   return (
-    <>
-      <AppProvider>
-        <StatusBar barStyle="light-content" backgroundColor="#6BA7AF" />
-        <Routes />
-      </AppProvider>
-    </>
+    <AppProvider>
+      <StatusBar barStyle="light-content" backgroundColor="#6BA7AF" />
+      <Routes />
+    </AppProvider>
   );
 };
 

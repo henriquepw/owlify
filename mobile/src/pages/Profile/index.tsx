@@ -1,15 +1,15 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { ScrollView, Alert } from 'react-native';
+import React from 'react';
+import { Alert } from 'react-native';
 
 import api from '@services/api';
-import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
+import * as Yup from 'yup';
 
-import Buttom from '@atoms/Button';
 import Input from '@atoms/Input';
 
-/* import Header from '@organisms/Header'; */
-import Header from '@molecules/Header';
+import TabFragment from '@templates/TabFragment';
+
+import { useAuth, useForm } from '@hooks';
 
 import * as S from './styles';
 
@@ -18,91 +18,112 @@ interface FormData {
   email: string;
   password: string;
   oldPassword: string;
+  confirmPassword: string;
 }
 
+const validationSchema = {
+  name: Yup.string().required('The name is required'),
+  email: Yup.string()
+    .required('The email is required')
+    .email('Enter a valid email address'),
+  password: Yup.string().when('oldPassword', {
+    is: (val) => !!val.lenght,
+    then: Yup.string().required('The password is required.'),
+    outherwise: Yup.string(),
+  }),
+  confirmPassword: Yup.string()
+    .when('oldPassword', {
+      is: (val) => !!val.lenght,
+      then: Yup.string().required('The password is required.'),
+      outherwise: Yup.string(),
+    })
+    .oneOf([Yup.ref('password'), undefined], 'Passwords not match.'),
+};
+
 const Profile: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
-  const [token, setToken] = useState<string>('');
+  const { signOut, user, updateUser } = useAuth();
+  const { formRef, submitForm, validateForm } = useForm(validationSchema);
 
   async function handleSubmitUpdate(data: FormData): Promise<void> {
-    /* await api.get('users/profile').then((res) => console.log(res.data)); */
-    api
-      .post('sessions', {
-        email: data.email,
-        password: data.oldPassword,
-      })
-      .then((res) => setToken(res.data.token));
-    api.defaults.headers.authorization = `Bearer ${token}`;
+    const isValid = await validateForm(data);
+    if (!isValid) return;
 
-    await api
-      .put('users', data)
-      .then(() => Alert.alert('Updated Successfully!'))
-      .catch(() => Alert.alert('Failed To Update.'));
+    try {
+      const { name, email, oldPassword, password, confirmPassword } = data;
+
+      const formData = {
+        name,
+        email,
+        ...(oldPassword
+          ? {
+              oldPassword,
+              password,
+              confirmPassword,
+            }
+          : {}),
+      };
+
+      const response = await api.put('users', formData);
+
+      updateUser(response.data);
+
+      Alert.alert('Profile Successfully updated!');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  async function handleSubmitDelete(data: FormData): Promise<void> {
-    /* await api.get('users/profile').then((res) => console.log(res.data)); */
-    api
-      .post('sessions', {
-        email: data.email,
-        password: data.oldPassword,
-      })
-      .then((res) => setToken(res.data.token));
-    api.defaults.headers.authorization = `Bearer ${token}`;
-    await api.delete('users').then(() => Alert.alert('Deleted Account!'));
-  }
+  function handleDelete(): void {
+    async function deleteAccount(): Promise<void> {
+      try {
+        await api.delete('users');
 
-  /* useEffect(() => {
-    api
-      .post('sessions', {
-        email: 'glegogle84@gmail.com',
-        password: '12',
-      })
-      .then((res) => setToken(res.data.token));
-  }, []); */
+        signOut();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    Alert.alert('Attention!', 'You are sure you want to delete your account?', [
+      { text: 'Delete', onPress: deleteAccount },
+      { text: 'Cancel' },
+    ]);
+  }
 
   return (
-    <>
-      <ScrollView>
-        <Header>Notifications</Header>
+    <TabFragment
+      title="Notifications"
+      scrollViewStyle={{
+        paddingTop: 16,
+        marginHorizontal: 32,
+      }}
+    >
+      <Form ref={formRef} initialData={user} onSubmit={handleSubmitUpdate}>
+        <Input icon="user" placeholder="Name" name="name" />
+        <S.SecondaryInput icon="mail" placeholder="E-mail" name="email" />
 
-        <Form ref={formRef} onSubmit={() => ''}>
-          <S.Container hasBorder>
-            <Input icon="user" placeholder="Name" name="name" />
-            <Input icon="mail" placeholder="E-mail" name="email" />
-          </S.Container>
+        <S.Divider marginVertical={20} />
 
-          <S.Container hasBorder={false}>
-            <Input icon="lock" placeholder="Password" name="oldPassword" />
-            <Input icon="lock" placeholder="New password" name="password" />
-            <Input
-              icon="lock"
-              placeholder="Confirm new password"
-              name="confirmPassword"
-            />
-            <S.ButtonContainer
-              hasBorder
-              onTouchStart={() => {
-                handleSubmitUpdate(formRef.current?.getData());
-                return formRef.current?.submitForm();
-              }}
-            >
-              <Buttom text="UPDATE" />
-            </S.ButtonContainer>
+        <Input icon="lock" placeholder="Password" name="oldPassword" />
+        <S.SecondaryInput
+          icon="lock"
+          placeholder="New password"
+          name="password"
+        />
+        <S.SecondaryInput
+          icon="lock"
+          placeholder="Confirm new password"
+          name="confirmPassword"
+        />
 
-            <S.ButtonContainer
-              hasBorder={false}
-              onTouchStart={() => {
-                handleSubmitDelete(formRef.current?.getData());
-                return formRef.current?.submitForm();
-              }}
-            >
-              <Buttom text="DELETE" type="attention" />
-            </S.ButtonContainer>
-          </S.Container>
-        </Form>
-      </ScrollView>
-    </>
+        <S.UpdatedButton text="update" onPress={submitForm} />
+      </Form>
+
+      <S.Divider />
+
+      <S.AttentionButton text="delete account" onPress={handleDelete} />
+      <S.AttentionButton text="sign out" onPress={signOut} />
+    </TabFragment>
   );
 };
 

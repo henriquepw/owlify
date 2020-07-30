@@ -33,6 +33,7 @@ interface AuthContextData {
   isLoading: boolean;
   signIn: (data: SignInUserDTO) => Promise<void>;
   signOut: () => Promise<void>;
+  updateUser: (user: User, token?: string) => void;
 }
 
 const AuthContext = createContext({} as AuthContextData);
@@ -85,6 +86,21 @@ const AuthProvider: React.FC = ({ children }) => {
     setData({} as Data);
   }, []);
 
+  const updateUser = useCallback(async (user: User, token?: string) => {
+    if (token) {
+      api.defaults.headers.authorization = `Bearer ${token[1]}`;
+
+      await AsyncStorage.setItem('@Owlidy:token', token);
+    }
+
+    await AsyncStorage.setItem('@Owlify:user', JSON.stringify(user));
+
+    setData((oldData) => ({
+      token: token || oldData.token,
+      user,
+    }));
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -93,6 +109,7 @@ const AuthProvider: React.FC = ({ children }) => {
         signIn,
         signOut,
         isLoading,
+        updateUser,
       }}
     >
       {children}
