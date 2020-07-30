@@ -3,9 +3,11 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { StatusBar, LogBox } from 'react-native';
 import { enableScreens } from 'react-native-screens';
+import SplashScreen from 'react-native-splash-screen';
 
 import AppProvider from '@templates/AppProvider';
 
+import { ENABLE_STORYBOOK } from '../env.json';
 import Storebook from '../storybook';
 import Routes from './routes';
 
@@ -24,5 +26,8 @@ const App: React.FC = () => {
   );
 };
 
-const ENABLE_STORYBOOK = false;
+if (ENABLE_STORYBOOK) {
+  SplashScreen.hide();
+}
+
 export default ENABLE_STORYBOOK ? Storebook : App;
