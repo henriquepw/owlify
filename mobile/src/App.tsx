@@ -6,6 +6,7 @@ import { enableScreens } from 'react-native-screens';
 
 import AppProvider from '@templates/AppProvider';
 
+import { ENABLE_STORYBOOK } from '../env.json';
 import Storebook from '../storybook';
 import Routes from './routes';
 
@@ -24,5 +25,4 @@ const App: React.FC = () => {
   );
 };
 
-const ENABLE_STORYBOOK = false;
 export default ENABLE_STORYBOOK ? Storebook : App;
