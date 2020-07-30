@@ -1,5 +1,5 @@
-import React from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import React, { useEffect } from 'react';
+import SplashScreen from 'react-native-splash-screen';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -19,13 +19,11 @@ const Root = createStackNavigator();
 const Routes: React.FC = () => {
   const { token, isLoading } = useAuth();
 
-  // TODO: add slash screen when is loading
-  if (isLoading)
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#6BA7AF" />
-      </View>
-    );
+  useEffect(() => {
+    if (!isLoading) {
+      SplashScreen.hide();
+    }
+  }, [isLoading]);
 
   if (!token) return <Authentication />;
 
