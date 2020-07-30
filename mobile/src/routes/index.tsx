@@ -4,6 +4,7 @@ import { ActivityIndicator, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Authentication from '@pages/Authentication';
+// import Notification from '@pages/Notifications';
 import ShowEndnode from '@pages/ShowEndnode';
 import ShowGateway from '@pages/ShowGateway';
 
@@ -27,6 +28,7 @@ const Routes: React.FC = () => {
     );
 
   if (!token) return <Authentication />;
+  // if (!token) return <Notification />;
 
   return (
     <DevicesProvider>

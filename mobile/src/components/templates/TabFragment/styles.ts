@@ -8,6 +8,7 @@ export const ScrollView = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
     paddingBottom: 24,
+    flexGrow: 1,
   },
 })`
   flex: 1;
