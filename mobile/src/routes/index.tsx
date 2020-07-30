@@ -8,7 +8,7 @@ import Authentication from '@pages/Authentication';
 import ShowEndnode from '@pages/ShowEndnode';
 import ShowGateway from '@pages/ShowGateway';
 
-import { useAuth } from '@hooks/auth';
+import { useAuth } from '@hooks';
 import { DevicesProvider } from '@hooks/devices';
 
 import RegistrationRoutes from './registration.routes';
@@ -28,7 +28,6 @@ const Routes: React.FC = () => {
     );
 
   if (!token) return <Authentication />;
-  // if (!token) return <Notification />;
 
   return (
     <DevicesProvider>

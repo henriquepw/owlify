@@ -49,18 +49,12 @@ const Profile: React.FC = () => {
     if (!isValid) return;
 
     try {
-      const { name, email, oldPassword, password, confirmPassword } = data;
+      const { name, email, oldPassword, password } = data;
 
       const formData = {
         name,
         email,
-        ...(oldPassword
-          ? {
-              oldPassword,
-              password,
-              confirmPassword,
-            }
-          : {}),
+        ...(oldPassword ? { oldPassword, password } : {}),
       };
 
       const response = await api.put('users', formData);
