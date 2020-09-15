@@ -1,0 +1,68 @@
+{
+  "name": "@owlify/server",
+  "version": "1.2.0",
+  "main": "src/shared/infra/http/server.ts",
+  "license": "MIT",
+  "author": "@henry-ns",
+  "scripts": {
+    "test": "cross-env NODE_ENV=test jest",
+
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ../../node_modules/typeorm/cli.js",
+
+    "prebuild": "rimraf dist",
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
+
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "start": "ts-node -r tsconfig-paths/register --files ./src/shared/infra/http/server.ts",
+
+    "commit": "cd ../.. && yarn commit"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.2.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "factory-girl": "^5.0.4",
+    "influx": "^5.5.1",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.2.1",
+    "pg-hstore": "^2.3.3",
+    "pm2": "^4.4.0",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.2.0",
+    "typeorm": "^0.2.24",
+    "uuidv4": "^6.0.8",
+    "youch": "^2.0.10",
+    "yup": "^0.29.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/node": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/plugin-proposal-decorators": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-typescript": "^7.10.1",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/bluebird": "^3.5.30",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "@types/factory-girl": "^5.0.2",
+    "@types/faker": "^4.1.11",
+    "@types/jsonwebtoken": "^8.3.9",
+    "@types/supertest": "^2.0.9",
+    "@types/validator": "^13.0.0",
+    "@types/yup": "^0.29.3",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.0",
+    "date-fns": "^2.12.0",
+    "faker": "^4.1.0",
+    "rimraf": "^3.0.2",
+    "sqlite3": "^5.0.0",
+    "supertest": "^4.0.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tsconfig-paths": "^3.9.0"
+  }
+}

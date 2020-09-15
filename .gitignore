@@ -3,10 +3,10 @@
 .env
 env.h
 
-# Server
-./server/node_modules
-./server/dist
 node_modules
+
+yarn-error.log
+package-lock.json
 
 # Analytics
 .ipynb_checkpoints

@@ -1,0 +1,6 @@
+__tests__
+.env
+
+dist
+
+__tests__/database.sqlite

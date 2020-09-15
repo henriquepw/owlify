@@ -1,0 +1,29 @@
+{
+  "extends": ["@owlify/eslint-config"],
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["src/**/*.spec.ts", "src/util/tests/*.ts"]
+      }
+    ],
+
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "/^express/",
+          "module",
+          "/^@config/",
+          "/^@shared/",
+          "/^@modules/users/",
+          "/^@modules/gateways/",
+          "/^@modules/endnodes/",
+          ["parent", "sibling", "index"]
+        ],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
+      }
+    ]
+  }
+}

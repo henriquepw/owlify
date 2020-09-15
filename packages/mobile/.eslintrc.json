@@ -1,0 +1,32 @@
+{
+  "extends": ["@owlify/eslint-config"],
+  "rules": {
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "/^(react|styled-components)/",
+          "module",
+          "/^.*atoms/",
+          "/^.*molecules/",
+          "/^.*organisms/",
+          "/^.*templates/",
+          "/^.*pages/",
+          "/^.*hooks/",
+          "/^.*utils/",
+          ["parent", "sibling", "index"],
+          "/^.*assets/",
+          "/^.*styles/"
+        ],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {},
+      "typescript": {}
+    }
+  }
+}
