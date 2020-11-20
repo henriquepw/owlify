@@ -1,3 +1,4 @@
+#include <LowPower.h>
 #include <LoRa.h>
 #include <DHT.h>
 
@@ -17,10 +18,11 @@ DHT dht(DHTPIN, DHTTYPE);
 Data data;
 
 /**
- * Convert data in package string 
+ * Convert data struct on package string 
  */
-String packageParser(Data data) {
+String packageParser() {
   String package = String(data.temperature);
+
   package += ":";
   package += String(data.humidity);
   package += ":";
@@ -29,10 +31,12 @@ String packageParser(Data data) {
   package += String(data.count);
 
   Serial.println(package);
-
   return package;
 }
 
+/**
+ * Read the data from the DHT sensor and incrementes the packet count
+ */
 void getData() {
   data.temperature = dht.readTemperature();
   data.humidity = dht.readHumidity();
@@ -59,10 +63,11 @@ void setup() {
 void loop() {
   getData();
 
-  LoRa.beginPacket();
-  LoRa.print(packageParser(data));
-  LoRa.endPacket();
   LoRa.idle();
+  LoRa.beginPacket();
+  LoRa.print(packageParser());
+  LoRa.endPacket();
+  LoRa.sleep();
 
-  delay(5000); // 300000 = 5 minutos
+  LowPower.deepSleep(SLEEP_TIME);
 }
