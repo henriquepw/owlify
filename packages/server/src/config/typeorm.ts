@@ -1,7 +1,9 @@
 import { ConnectionOptions } from 'typeorm';
 
-const root = process.env.NODE_ENV === 'production' ? 'dist' : 'src';
-const ext = process.env.NODE_ENV === 'production' ? '.js' : '.ts';
+const isProduction = process.env.NODE_ENV === 'production';
+
+const root = isProduction ? 'dist' : 'src';
+const ext = isProduction ? '.js' : '.ts';
 
 const config = {
   type: process.env.PG_DIALECT,
