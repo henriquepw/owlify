@@ -4,3 +4,5 @@ ios
 **/*.js
 
 assets
+
+src/@types/**/*.d.ts
