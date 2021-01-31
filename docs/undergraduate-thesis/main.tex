@@ -18,8 +18,6 @@
 	% subsubsection=TITLE,    % títulos de subsubseções convertidos em letras maiúsculas
   % -- opções do pacote babel --
 	english,                  % idioma adicional para hifenização
-	% french,                 % idioma adicional para hifenização
-	% spanish,                % idioma adicional para hifenização
 	brazil                    % o último idioma é o principal do documento
 ]{abntex2}
 
@@ -44,7 +42,7 @@
 % ---
 % Pacotes de citações
 \usepackage[brazilian,hyperpageref]{backref}  % Paginas com as citações na bibl
-\usepackage[alf]{abntex2cite}                 % Citações padrão ABNT
+\usepackage[num]{abntex2cite}                 % Citações padrão ABNT
 
 % --- 
 % CONFIGURAÇÕES DE PACOTES
@@ -66,7 +64,7 @@
 		Citado #1 vezes nas páginas #2.
 	\fi}
 
-% Novos comandso
+% Novos comando
 \newcommand{\cp}[1]{{\color{orange} [@CopyAndPaste] #1}}
 	
 \input{./sections/preTextual/cover.tex}
@@ -112,18 +110,18 @@
 % ---
 % ELEMENTOS PRÉ-TEXTUAIS
 % ---
-\pretextual
-\imprimircapa
-\imprimirfolhaderosto*
+% \pretextual
+% \imprimircapa
+% \imprimirfolhaderosto*
 
-\input{./sections/preTextual/catalog.tex}       % Ficha bibliografica
+% \input{./sections/preTextual/catalog.tex}       % Ficha bibliografica
 % \input{./sections/preTextual/errata.tex}        % Errata
-\input{./sections/preTextual/approval.tex}      % Folha de aprovação
+% \input{./sections/preTextual/approval.tex}      % Folha de aprovação
 % \input{./sections/preTextual/dedication.tex}    % Dedicatória
-\input{./sections/preTextual/thanks.tex}        % Agradecimentos
+% \input{./sections/preTextual/thanks.tex}        % Agradecimentos
 % \input{./sections/preTextual/epigraph.tex}      % Epígrafe
-\input{./sections/preTextual/abstracts.tex}     % Resumos
-\input{./sections/preTextual/lists.tex}         % Listas
+% \input{./sections/preTextual/abstracts.tex}     % Resumos
+% \input{./sections/preTextual/lists.tex}         % Listas
 
 % ---
 % Sumario
@@ -140,7 +138,7 @@
 % Introdução (exemplo de capítulo sem numeração, mas presente no Sumário)
 \input{sections/textual/introduction.tex}
 
-\input{sections/textual/chapters.tex} % Capítulos
+% \input{sections/textual/chapters.tex} % Capítulos
 
 % ---
 % Finaliza a parte no bookmark do PDF
@@ -151,22 +149,22 @@
 %\phantompart
 
 % Conclusão (outro exemplo de capítulo sem numeração e presente no sumário)
-\input{sections/textual/conclusion.tex}
+% \input{sections/textual/conclusion.tex}
 
 % ---
 % ELEMENTOS PÓS-TEXTUAIS
 % ---
 \postextual
 
-\bibliography{abntex2-modelo-references}        % Referências bibliográficas
+\bibliography{refs.bib}        % Referências bibliográficas
 
 % ---
 % Glossário
 % Consulte o manual da classe abntex2 para orientações sobre o glossário.
 % \glossary
 
-\input{./sections/postTextual/appendixes.tex}   % Apêndices
-\input{./sections/postTextual/annexes.tex}      % Anexos
+% \input{./sections/postTextual/appendixes.tex}   % Apêndices
+% \input{./sections/postTextual/annexes.tex}      % Anexos
 
 %---
 % INDICE REMISSIVO
