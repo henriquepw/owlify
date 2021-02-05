@@ -31,7 +31,7 @@
 \usepackage{color}            % Controle das cores
 \usepackage{graphicx}         % Inclusão de gráficos
 \usepackage{microtype}        % para melhorias de justificação
-\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}         % Colorir linhas de tabelas
 \usepackage[portuges]{datetime2}
 % \DTMlangsetup[portuges]{showdayofmonth=false}
 		
@@ -66,7 +66,10 @@
 
 % Novos comando
 \newcommand{\cp}[1]{{\color{orange} [@CopyAndPaste] #1}}
-	
+\newcommand{\rd}[1]{{\color{blue}[RD] #1}}
+\newcommand{\hm}[1]{{\color{red}[HM] #1}}
+\newcommand{\todo}[1]{{\color{red}[TO-DO] #1}}
+
 \input{./sections/preTextual/cover.tex}
 	
 % ---
@@ -84,10 +87,10 @@
   pdfcreator={LaTeX with abnTeX2},
   pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico}, 
   colorlinks=true,          % false: boxed links; true: colored links
-  linkcolor=blue,           % color of internal links
+  linkcolor=black,           % color of internal links
   citecolor=blue,           % color of links to bibliography
   filecolor=magenta,        % color of file links
-  urlcolor=blue,
+  urlcolor=black,
   bookmarksdepth=4
 }
 \makeatother
@@ -102,6 +105,8 @@
 
 \makeindex  % Compila o indice
 
+\citebrackets[] % fazer com que as citações dentro do texto virem colchetes
+
 % ---
 % Início do documento
 \begin{document}
@@ -110,7 +115,7 @@
 % ---
 % ELEMENTOS PRÉ-TEXTUAIS
 % ---
-% \pretextual
+\pretextual
 % \imprimircapa
 % \imprimirfolhaderosto*
 
