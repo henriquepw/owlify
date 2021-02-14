@@ -1,0 +1,3 @@
+[submodule "docs/underground-thesis"]
+	path = docs/underground-thesis
+	url = https://github.com/henry-ns/telematica-tcc.git
