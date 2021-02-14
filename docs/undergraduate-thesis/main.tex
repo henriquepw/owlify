@@ -65,8 +65,8 @@
 	\fi}
 
 % Novos comando
-\newcommand{\cp}[1]{{\color{orange} [@CopyAndPaste] #1}}
-\newcommand{\rd}[1]{{\color{blue}[RD] #1}}
+\newcommand{\cp}[1]{{\color{orange} [CopyAndPaste] #1}}
+\newcommand{\pr}[1]{{\color{blue}[PR] #1}}
 \newcommand{\hm}[1]{{\color{red}[HM] #1}}
 \newcommand{\todo}[1]{{\color{red}[TO-DO] #1}}
 
@@ -76,6 +76,7 @@
 % Configurações de aparência do PDF final
 
 \definecolor{blue}{RGB}{41,5,195}  % alterando o aspecto da cor azul
+\definecolor{orange}{RGB}{255,127,80}
 
 % informações do PDF
 \makeatletter
@@ -125,7 +126,7 @@
 % \input{./sections/preTextual/dedication.tex}    % Dedicatória
 % \input{./sections/preTextual/thanks.tex}        % Agradecimentos
 % \input{./sections/preTextual/epigraph.tex}      % Epígrafe
-% \input{./sections/preTextual/abstracts.tex}     % Resumos
+\input{./sections/preTextual/abstracts.tex}     % Resumos
 % \input{./sections/preTextual/lists.tex}         % Listas
 
 % ---
